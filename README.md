@@ -2,7 +2,7 @@
 
 This repository is for template React JS use Tailwind, Heroicons, Redux, Axios, React-Router-DOM V6 and Typescript
 
-# Getting Started with Create React App
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
