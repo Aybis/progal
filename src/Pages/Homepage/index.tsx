@@ -1,5 +1,5 @@
-import React from 'react';
+import Layout from '../../Layouts/Layout';
 
 export default function Index() {
-  return <div>index</div>;
+  return <Layout>test</Layout>;
 }

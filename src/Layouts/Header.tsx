@@ -4,15 +4,32 @@ import {
   Squares2X2Icon,
   UserIcon,
 } from '@heroicons/react/24/outline';
+import { useEffect } from 'react';
+import { GetProfileUser } from '../Services/redux/Actions/user';
+import { useAppDispatch, useAppSelector } from '../Services/redux/hook';
 
 export default function Header() {
+  const userState = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  // useeffect async
+  useEffect(() => {
+    const getProfile = async () => {
+      const res: any = await dispatch(GetProfileUser());
+      return res;
+    };
+    getProfile();
+  }, [dispatch]);
+
   return (
-    <header className="relative bg-white shadow-lg shadow-gray-200/50 border-l border-zinc-50 z-10 h-20 box-border">
+    <header className="relative bg-white shadow-lg shadow-gray-200/50 border-l border-zinc-50 z-10 max-h-full box-border">
       <section className="relative gap-8 flex justify-between py-4 pr-8 pl-4 items-center ">
         {/* User */}
         <div className="relative w-fit text-zinc-800 leading-relaxed tracking-wide">
           <p className="tex-sm font-light">Welcome back, </p>
-          <h1 className="text-lg font-semibold">Abdul Muchtar Astria</h1>
+          <h1 className="text-base font-bold mt-2">
+            {userState?.profile?.name}
+          </h1>
         </div>
         {/* Search Bar */}
         <div className="relative w-1/2">

@@ -8,7 +8,7 @@ type LayoutsProps = {
   subHeading?: string;
 };
 
-export default function Index(props: LayoutsProps) {
+export default function Layout(props: LayoutsProps) {
   return (
     <div className="relative min-h-screen max-h-full max-w-full">
       <div className="relative max-w-full pl-64">

@@ -1,15 +1,18 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Anchor, Button } from '../../Components/atoms';
 import { FormInput } from '../../Components/molecules';
-import userApi from '../../Middleware/user-api';
+import { GetProfileUser, LoginUser } from '../../Services/redux/Actions/user';
+import { useAppDispatch, useAppSelector } from '../../Services/redux/hook';
 import { getImageFromAssets } from '../../Services/Utils/assetHelper';
 
 export default function Index() {
-  const [isLoading, setisLoading] = useState(false);
-  const [error, seterror] = useState({
-    isError: false,
-    message: '',
-  });
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  console.log('user redux', user);
+
   const [formInput, setformInput] = useState({
     username: '',
     password: '',
@@ -23,37 +26,17 @@ export default function Index() {
     });
   };
 
-  const handlerLogin = async (username: string, password: string) => {
-    return await userApi
-      .login({ username, password })
-      .then((res) => {
-        setisLoading(false);
-        seterror({
-          isError: false,
-          message: '',
-        });
-
-        return res;
-      })
-      .catch((err) => {
-        setisLoading(false);
-        seterror({
-          isError: true,
-          message: err?.response?.data?.message,
-        });
-        return err;
-      });
-  };
-
   const handlerSubmit = async (e: any) => {
     e.preventDefault();
-    setisLoading(true);
 
-    try {
-      await handlerLogin(formInput.username, formInput.password);
-    } catch (error) {
-      console.log(error);
-      setisLoading(false);
+    const res: any = await dispatch(LoginUser(formInput));
+    if (res.http_code === 200) {
+      const getProfile: any = await dispatch(GetProfileUser());
+      if (getProfile.http_code === 200) {
+        navigate('/dashboard', { replace: true });
+      }
+    } else {
+      alert(res?.message ?? 'Something went wrong');
     }
   };
 
@@ -84,26 +67,26 @@ export default function Index() {
           className="mt-8 grid gap-4"
           onSubmit={handlerSubmit}>
           <FormInput
-            isDisabled={isLoading}
+            isDisabled={user?.loading}
             labelName="Username"
             inputName="username"
             inputType="text"
             isRequired={true}
             placeholder="Username"
-            isError={error.isError}
-            message={error.message}
+            isError={user.isError}
+            message={user.message}
             onChange={handlerChangeInput}
           />
 
           <FormInput
-            isDisabled={isLoading}
+            isDisabled={user?.loading}
             labelName="Password"
             inputName="password"
             inputType="password"
             placeholder="Password"
             isRequired={true}
-            isError={error.isError}
-            message={error.message}
+            isError={user.isError}
+            message={user.message}
             onChange={handlerChangeInput}
           />
 
@@ -117,8 +100,8 @@ export default function Index() {
           </div>
           <div className="relative mt-4">
             <Button
-              isSubmit={isLoading}
-              isDisabled={isLoading}
+              isSubmit={user?.loading}
+              isDisabled={user?.loading}
               typeClass="primary"
               type="submit"
               classButton="w-full">
