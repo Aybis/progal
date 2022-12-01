@@ -4,6 +4,7 @@ export const USER_ERROR = 'USER_ERROR';
 export const USER_SUCCESS = 'USER_SUCCESS';
 export const USER_MESSAGE = 'USER_MESSAGE';
 export const USER_PROFILE = 'USER_PROFILE';
+export const USER_MENU = 'USER_MENU';
 
 export type User = {
   id?: number;
@@ -29,6 +30,7 @@ export interface UserError {
 
 export interface UserMessage {
   type: typeof USER_MESSAGE;
+  payload: string;
 }
 
 export interface UserSuccess {
@@ -41,9 +43,15 @@ export interface UserProfile {
   payload: User;
 }
 
+export interface UserMenu {
+  type: typeof USER_MENU;
+  payload?: any;
+}
+
 export type UserDispatchTypes =
   | UserLoading
   | UserError
   | UserSuccess
   | UserProfile
-  | UserMessage;
+  | UserMessage
+  | UserMenu;

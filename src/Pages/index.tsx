@@ -1,4 +1,10 @@
 export { default as Login } from './Login';
 export { default as ManagerInbox } from './Manager/Inbox';
-export { default as ManagerPIC } from './PIC/Inbox';
-export { default as Homepage } from './Homepage';
+export { default as PICInbox } from './PIC/Inbox';
+export { default as Homepage } from './Dashboard';
+export { default as NotFound } from './NotFound';
+export { default as Project } from './PIC/Project';
+export { default as Mitra } from './PIC/Mitra';
+export { default as Amandemen } from './PIC/Amandemen';
+export { default as CheckProject } from './CheckProject';
+export { default as DetailProject } from './Detail';

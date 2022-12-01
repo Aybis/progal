@@ -1,90 +1,38 @@
-import {
-  EnvelopeIcon,
-  EnvelopeOpenIcon,
-  Squares2X2Icon,
-  WrenchScrewdriverIcon,
-} from '@heroicons/react/24/outline';
-
-import {
-  ChatBubbleLeftEllipsisIcon,
-  EnvelopeIcon as EnvelopeIconActive,
-  EnvelopeOpenIcon as EnvelopeOpenIconActive,
-  Squares2X2Icon as Squares2X2IconActive,
-  WrenchScrewdriverIcon as WrenchScrewdriverIconActive,
-} from '@heroicons/react/24/solid';
+import { ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/solid';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { GetListMenu } from '../Services/redux/Actions/user';
+import { useAppDispatch, useAppSelector } from '../Services/redux/hook';
 
 export default function Sidebar() {
-  const menu = [
-    {
-      sub: 'Homepage',
-      data: [
-        {
-          name: 'Dashboard',
-          icon: Squares2X2Icon,
-          iconActive: Squares2X2IconActive,
-          url: '/',
-        },
-      ],
-    },
-    {
-      sub: 'Assign',
-      data: [
-        {
-          name: 'Inbox',
-          icon: EnvelopeIcon,
-          iconActive: EnvelopeIconActive,
-          url: '/inbox',
-        },
-      ],
-    },
-    {
-      sub: 'Allocate',
-      data: [
-        {
-          name: 'Inbox',
-          icon: EnvelopeIcon,
-          iconActive: EnvelopeIconActive,
+  const [showMenu, setshowMenu] = useState(false);
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
-          url: '/allocate',
-        },
-      ],
-    },
-    {
-      sub: 'Main',
-      data: [
-        {
-          name: 'Project',
-          icon: EnvelopeOpenIcon,
-          iconActive: EnvelopeOpenIconActive,
-          url: '/project',
-        },
-        {
-          name: 'Amandemen',
-          icon: WrenchScrewdriverIcon,
-          iconActive: WrenchScrewdriverIconActive,
-          url: '/amandemen',
-        },
-        {
-          name: 'Monitoring',
-          icon: EnvelopeOpenIcon,
-          iconActive: EnvelopeOpenIconActive,
-          url: '/monitoring',
-        },
-      ],
-    },
-  ];
+  const getListMenu = async () => {
+    const res: any = await dispatch(GetListMenu(await user?.profile?.id));
+    return res;
+  };
 
   const location = useLocation();
 
+  useEffect(() => {
+    getListMenu();
+  }, []);
+
   return (
-    <aside className="w-64 inset-y-0 flex left-0 fixed z-20">
-      <div className="flex min-h-0 flex-1 flex-col shadow-lg shadow-gray-200/50 bg-white">
-        <div className="flex flex-1 flex-col overflow-y-auto pt-6 pb-4">
+    <aside className="flex w-0 lg:w-64 transition-all duration-500 inset-y-0 left-0 fixed z-0 lg:z-20">
+      <div className="flex min-h-0 flex-1 flex-col shadow-lg shadow-gray-200/50 bg-white transition-all duration-500">
+        <div className="flex flex-1 flex-col overflow-y-auto pt-6 pb-4 transition-all duration-500">
           {/* Logo */}
-          <div className="flex gap-2.5 flex-shring-0 items-center px-4">
-            <div className="relative text-center h-14 w-14 p-3 flex justify-center items-center bg-blue-500 border border-gray-100 rounded-lg font-bold text-4xl text-white shadow-inner">
-              <h1 className="-mt-1">e-</h1>
+          <div className="relative flex gap-1 flex-shrink-0 items-center -mt-4">
+            <img
+              src="https://api.pins.co.id/uploads/app/images/app_688234991668997889.jpg"
+              alt=""
+              className="relative h-28 object-cover"
+            />
+            <div className="relative text-center h-14 w-14 p-3 justify-center items-center bg-blue-500 border border-gray-100 rounded-lg font-bold text-4xl text-white shadow-inner hidden">
+              <h1 className="-mt-2">e-</h1>
             </div>
             <div className="relative text-sm uppercase text-zinc-800 leading-relaxed tracking-wide">
               <p className="font-semibold">Procurement</p>
@@ -94,42 +42,31 @@ export default function Sidebar() {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-4 mt-20 space-y-6">
-            {menu.map((item, index) => (
-              <div key={index} className="relative">
-                <h4 className="text-zinc-500 font-medium tracking-wide leading-relaxed text-sm">
-                  {item.sub}
-                </h4>
-                <ul className="relative mt-2 space-y-2">
-                  {item.data.map((subItem, subIndex) => (
-                    <li key={subIndex}>
-                      <Link
-                        to={subItem.url}
-                        className={[
-                          'group flex items-center px-2 py-2 text-base leading-relaxed hover:font-semibold rounded-md hover:bg-blue-50 hover:text-blue-600 transition-all duration-300',
-                          location.pathname === subItem.url
-                            ? 'text-blue-500 font-bold'
-                            : 'text-gray-400 font-normal',
-                        ].join(' ')}>
-                        {location.pathname === subItem.url ? (
-                          <subItem.iconActive
-                            className="flex-shrink-0 h-7 text-blue-500"
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <subItem.icon
-                            className="flex-shrink-0 h-7 text-gray-400/80 group-hover:text-blue-500 transition-all duration-300"
-                            aria-hidden="true"
-                          />
-                        )}
-
-                        <span className="ml-3">{subItem.name}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <nav className="flex-1 px-4 mt-4 space-y-4">
+            {user?.menu?.length > 0
+              ? user?.menu?.map((item: any, index: number) => (
+                  <div className="relative mt-2" key={index}>
+                    <p className="text-[12px] font-extralight text-gray-500">
+                      {item?.name}
+                    </p>
+                    <ul className="space-y-2 mt-2">
+                      {item?.child?.map((sub: any, index: number) => (
+                        <li key={index}>
+                          <Link
+                            to={sub?.link}
+                            className={`flex gap-2 items-center p-2 text-sm leading-relaxed rounded hover:bg-blue-50 hover:text-blue-600 hover:font-semibold transition-all duration-300 ${
+                              location.pathname === sub?.link
+                                ? 'bg-gradient-to-r from-blue-50 to-white text-blue-600 font-semibold'
+                                : 'border-transparent text-gray-400 font-normal'
+                            }`}>
+                            - {sub?.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              : null}
           </nav>
 
           {/* Logout */}

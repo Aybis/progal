@@ -1,11 +1,13 @@
 import {
   User,
-  UserSession,
   UserDispatchTypes,
-  USER_LOADING,
-  USER_SUCCESS,
+  UserSession,
   USER_ERROR,
+  USER_LOADING,
+  USER_MENU,
+  USER_MESSAGE,
   USER_PROFILE,
+  USER_SUCCESS,
 } from './../Types/user';
 
 interface InitialState {
@@ -13,7 +15,8 @@ interface InitialState {
   session?: UserSession;
   profile?: User;
   isError: boolean;
-  message: string;
+  message?: string;
+  menu?: any;
 }
 
 const initialState: InitialState = {
@@ -38,7 +41,6 @@ const userReducer = (
         ...state,
         loading: false,
         isError: false,
-        message: 'Login success',
         session: action.payload,
       };
 
@@ -46,6 +48,7 @@ const userReducer = (
       return {
         ...state,
         loading: false,
+        isError: false,
         profile: action.payload,
       };
 
@@ -56,6 +59,19 @@ const userReducer = (
         isError: true,
       };
 
+    case USER_MESSAGE:
+      return {
+        ...state,
+        message: action.payload,
+      };
+
+    case USER_MENU:
+      return {
+        ...state,
+        loading: false,
+        isError: false,
+        menu: action.payload,
+      };
     default:
       return state;
   }

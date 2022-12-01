@@ -11,7 +11,7 @@ type LayoutsProps = {
 export default function Layout(props: LayoutsProps) {
   return (
     <div className="relative min-h-screen max-h-full max-w-full">
-      <div className="relative max-w-full pl-64">
+      <div className="relative max-w-full pl-0 lg:pl-64">
         {/* Sidebar */}
         <Sidebar />
 
@@ -27,7 +27,7 @@ export default function Layout(props: LayoutsProps) {
               <h1 className="text-3xl font-semibold leading-relaxed text-zinc-900">
                 {props.textHeading}
               </h1>
-              <p className="text-base leading-relaxed mt-1 font-light text-zinc-900 w-1/4">
+              <p className="text-xl leading-relaxed mt-0.5 font-light text-zinc-900">
                 {props.subHeading}
               </p>
             </div>

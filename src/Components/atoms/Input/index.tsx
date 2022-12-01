@@ -20,7 +20,7 @@ export default function Index(props: InputProps) {
       <input
         type={props.type ?? 'text'}
         className={[
-          'w-full px-3 py-3 text-base font-medium text-gray-800 placeholder-gray-500 bg-white border border-gray-300 rounded-lg focus:shadow-outline',
+          'w-full px-3 py-2 text-base font-medium text-gray-800 placeholder:text-sm placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:shadow-outline',
           props.isError && 'border-red-500',
           props.isDisabled &&
             'bg-gray-200 disabled:cursor-not-allowed disabled:pointer-events-none',

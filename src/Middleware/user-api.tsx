@@ -4,4 +4,5 @@ import axios from '../Configs/api';
 export default {
   login: (data: Object) => axios.post('auth/token/request', data),
   profile: () => axios.get('auth/token/detail'),
+  listMenu: (params: Object) => axios.get('procurement/menu', params),
 };

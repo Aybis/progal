@@ -4,22 +4,31 @@ import {
   Squares2X2Icon,
   UserIcon,
 } from '@heroicons/react/24/outline';
-import { useEffect } from 'react';
-import { GetProfileUser } from '../Services/redux/Actions/user';
-import { useAppDispatch, useAppSelector } from '../Services/redux/hook';
+import {
+  ArrowLeftOnRectangleIcon,
+  Square3Stack3DIcon,
+  UserIcon as UserIconActive,
+} from '@heroicons/react/24/solid';
+import Cookies from 'js-cookie';
+import { useState } from 'react';
+import { ModalMessage } from '../Components/atoms';
+import { useAppSelector } from '../Services/redux/hook';
 
 export default function Header() {
   const userState = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+  const [showDropdown, setshowDropdown] = useState<boolean>(false);
+  const [showModalMessage, setshowModalMessage] = useState(false);
 
-  // useeffect async
-  useEffect(() => {
-    const getProfile = async () => {
-      const res: any = await dispatch(GetProfileUser());
-      return res;
-    };
-    getProfile();
-  }, [dispatch]);
+  const handlerLogout = async () => {
+    localStorage.removeItem('token');
+    Cookies.remove('session');
+    setTimeout(() => {
+      setshowModalMessage(true);
+      window.location.reload();
+    }, 400);
+
+    setshowModalMessage(false);
+  };
 
   return (
     <header className="relative bg-white shadow-lg shadow-gray-200/50 border-l border-zinc-50 z-10 max-h-full box-border">
@@ -55,12 +64,43 @@ export default function Header() {
             <div className="group relative p-2 rounded-lg bg-transparent hover:bg-zinc-100 transition-all duration-300 text-zinc-500 hover:text-blue-500 cursor-pointer">
               <BellIcon className="h-6 group-hover:scale-105 transition-all duration-300" />
             </div>
-            <div className="group relative p-2 rounded-lg bg-transparent hover:bg-zinc-100 transition-all duration-300 text-zinc-500 hover:text-blue-500 cursor-pointer">
-              <UserIcon className="h-6 group-hover:scale-105 transition-all duration-300" />
-            </div>
+            <button
+              onClick={() => setshowDropdown(!showDropdown)}
+              className={[
+                'group relative p-2 rounded-lg bg-transparent hover:bg-zinc-100 transition-all duration-150 text-zinc-500 hover:text-blue-500 cursor-pointer',
+                showDropdown ? 'bg-zinc-100 text-blue-500' : '',
+              ].join(' ')}>
+              {showDropdown ? (
+                <UserIconActive className="h-6 group-hover:scale-105 transition-all duration-300" />
+              ) : (
+                <UserIcon className="h-6 group-hover:scale-105 transition-all duration-300" />
+              )}
+            </button>
+
+            {showDropdown ? (
+              <ul className="absolute grid divide-y divide-gray-200 border right-0 top-12 bg-white rounded-md p-2 w-44">
+                <li className="py-1.5 px-4 flex gap-3 items-center text-sm font-medium text-gray-700 leading-relaxed hover:bg-zinc-100 transition-all duration-300">
+                  <Square3Stack3DIcon className="h-4" />
+                  Back to Apps
+                </li>
+                <li
+                  onClick={() => handlerLogout()}
+                  className="py-1.5 px-4 flex gap-3 cursor-pointer items-center text-sm font-medium text-gray-700 leading-relaxed hover:bg-zinc-100 transition-all duration-300">
+                  <ArrowLeftOnRectangleIcon className="h-4" />
+                  Logout
+                </li>
+              </ul>
+            ) : null}
           </div>
         </div>
       </section>
+
+      <ModalMessage
+        isShow={showModalMessage}
+        typeModal="success"
+        heading="Success"
+        description="Logout Berhasil"
+      />
     </header>
   );
 }

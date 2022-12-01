@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { Input, Label } from '../../atoms';
 
 type FormProps = {
-  labelName: string;
+  labelName?: string;
   classLabel?: string;
   inputType?: string;
   classInput?: string;
-  inputName: string;
-  inputValue?: string;
+  inputName?: string;
+  inputValue?: string | any;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   isDisabled?: boolean;
@@ -17,6 +17,7 @@ type FormProps = {
   isRequired?: boolean;
   isError?: boolean;
   message?: string;
+  typeForm?: string;
 };
 
 export default function Index(props: FormProps) {
@@ -45,6 +46,13 @@ export default function Index(props: FormProps) {
           isError={props.isError}
           message={props.message}
         />
+
+        {props.typeForm === 'currency' ? (
+          <span className="absolute inset-y-0 top-2 right-2 flex items-center pr-2 text-gray-500">
+            <span className="text-xs">IDR</span>
+          </span>
+        ) : null}
+
         {props.inputType === 'password' ? (
           showPassword ? (
             <button
