@@ -26,10 +26,12 @@ export interface ListVendor {
 
 export interface VendorLoading {
   type: typeof VENDOR_LOADING;
+  payload: boolean;
 }
 
 export interface VendorError {
   type: typeof VENDOR_ERROR;
+  payload: boolean;
 }
 
 export interface VendorSuccess {

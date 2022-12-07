@@ -8,10 +8,18 @@ import {
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import { Button, Input, Modal } from '../../../Components/atoms';
-import { FormFile, FormUpdateMitra } from '../../../Components/molecules';
+import {
+  ButtonDocument,
+  FormFile,
+  FormSearch,
+  FormUpdateMitra,
+} from '../../../Components/molecules';
 import { setHeader } from '../../../Configs/api';
 import Layout from '../../../Layouts/Layout';
 import progalApi from '../../../Middleware/progal-api';
+import { getMitraHasProject } from '../../../Services/redux/Actions/hasMitra';
+import { useAppDispatch, useAppSelector } from '../../../Services/redux/hook';
+import { DataMitraHasProject } from '../../../Services/redux/Types/hasmitra';
 
 type ProjectMitra = {
   id: number | string;
@@ -52,8 +60,12 @@ type ProjectMitra = {
 };
 
 export default function Index() {
-  const [dataProjectMitra, setdataProjectMitra] = useState<ProjectMitra[]>([]);
-  const [dataFilter, setdataFilter] = useState<ProjectMitra[]>([]);
+  const dispatch = useAppDispatch();
+  const { profile } = useAppSelector((state) => state.user);
+  const { listMitraPic } = useAppSelector((state) => state.hasMitra);
+
+  const [dataFilter, setdataFilter] =
+    useState<DataMitraHasProject[]>(listMitraPic);
   const [showModal, setshowModal] = useState<boolean>(false);
 
   const [modalForm, setmodalForm] = useState({
@@ -73,32 +85,29 @@ export default function Index() {
     const value = e.target.value;
 
     if (value === '') {
-      setdataFilter(dataProjectMitra);
+      setdataFilter(listMitraPic);
     } else {
-      const data = dataProjectMitra.filter((item) => {
-        return item.mitra?.nama_vendor
-          ?.toLowerCase()
-          .includes(value.toLowerCase());
+      const data = listMitraPic.filter((item) => {
+        return (
+          item.mitra?.nama_vendor
+            ?.toLowerCase()
+            .includes(value.toLowerCase()) ||
+          item.deskripsi_pekerjaan
+            ?.toLowerCase()
+            .includes(value.toLowerCase()) ||
+          item.project?.no_io?.toLowerCase().includes(value.toLowerCase())
+        );
       });
       setdataFilter(data);
     }
   };
 
   useEffect(() => {
-    const getProject = async () => {
-      setHeader();
-
-      const response: any = await progalApi.mitra({
-        params: {
-          pic_id: 134,
-        },
-      });
-      setdataProjectMitra(response);
-      setdataFilter(response);
-      return response;
-    };
-    getProject();
-  }, []);
+    (async () => {
+      const res = await dispatch(getMitraHasProject(await profile?.id));
+      setdataFilter(res);
+    })();
+  }, [profile]);
 
   return (
     <Layout
@@ -107,19 +116,7 @@ export default function Index() {
       {/* Section Data Table */}
       <div className="relative bg-white p-4 rounded-lg mt-12">
         {/* Filter Input */}
-        <div className="relative flex gap-2">
-          <div className="relative">
-            <Input
-              onChange={handlerSearchProject}
-              classInput="w-64 placeholder:text-gray-400 placeholder:font-normal placeholder:italic pl-10 text-sm"
-              placeholder="Search Something"
-            />
-            <MagnifyingGlassIcon className="h-5 absolute top-2.5 left-3 text-gray-400" />
-          </div>
-          <Button type="button" typeClass="primary" classButton="text-sm">
-            Search
-          </Button>
-        </div>
+        <FormSearch onChange={handlerSearchProject} />
 
         {/* Section Table */}
         <div className="relative w-full mt-8 overflow-x-auto">
@@ -230,85 +227,59 @@ export default function Index() {
                       Rp {item?.nilai_realisasi_cogs}
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
-                      {/* <Button
-                      handlerClick={() =>
-                        handlerModalForm('spph', itemMitra)
-                      }
-                      title="Upload SPPH"
-                      classButton="p-1 bg-opacity-10 text-indigo-700 hover:text-white"
-                      typeClass="others">
-                      <DocumentPlusIcon className="h-5" />
-                    </Button> */}
-
-                      <div className="relative flex gap-2">
-                        <Button
-                          handlerClick={() => handlerModalForm('update', item)}
-                          title="Preview File"
-                          type="button"
-                          typeClass="others"
-                          classButton="text-sm py-1 gap-1 rounded bg-green-100 border border-green-200 text-green-600 hover:bg-green-500 hover:text-white">
-                          <DocumentCheckIcon className="h-5" />
-                        </Button>
-                        <Button
-                          title="Update File"
-                          type="button"
-                          typeClass="others"
-                          classButton="text-sm py-1 gap-1 rounded bg-indigo-100 border border-indigo-200 text-indigo-600 hover:bg-indigo-500 hover:text-white">
-                          <DocumentDuplicateIcon className="h-5" />
-                        </Button>
-                      </div>
+                      <ButtonDocument
+                        handlerClick={() => handlerModalForm('update', item)}
+                        isUpload={item?.spph}
+                        documentName="SPPH"
+                        item={item}
+                      />
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
-                      <Button
-                        handlerClick={() => handlerModalForm('sph', item)}
-                        title="Upload SPH"
-                        classButton="p-1 bg-opacity-10 text-blue-700 hover:text-white"
-                        typeClass="primary">
-                        <DocumentPlusIcon className="h-5" />
-                      </Button>
+                      <ButtonDocument
+                        handlerClick={() => handlerModalForm('update', item)}
+                        isUpload={item?.sph}
+                        documentName="SPH"
+                        item={item}
+                      />
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
-                      <Button
-                        handlerClick={() => handlerModalForm('bakn', item)}
-                        title="Upload BAKN"
-                        classButton="p-1 bg-opacity-10 text-blue-700 hover:text-white"
-                        typeClass="primary">
-                        <DocumentPlusIcon className="h-5" />
-                      </Button>
+                      <ButtonDocument
+                        handlerClick={() => handlerModalForm('update', item)}
+                        isUpload={item?.bakn}
+                        documentName="BAKN"
+                        item={item}
+                      />
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
-                      <Button
-                        handlerClick={() => handlerModalForm('khs', item)}
-                        title="Upload KHS"
-                        classButton="p-1 bg-opacity-10 text-blue-700 hover:text-white"
-                        typeClass="primary">
-                        <DocumentPlusIcon className="h-5" />
-                      </Button>
+                      <ButtonDocument
+                        handlerClick={() => handlerModalForm('update', item)}
+                        isUpload={item?.khs}
+                        documentName="KHS"
+                        item={item}
+                      />
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
-                      <Button
-                        handlerClick={() => handlerModalForm('kontrak', item)}
-                        title="Upload Kontrak"
-                        classButton="p-1 bg-opacity-10 text-blue-700 hover:text-white"
-                        typeClass="primary">
-                        <DocumentPlusIcon className="h-5" />
-                      </Button>
+                      <ButtonDocument
+                        handlerClick={() => handlerModalForm('update', item)}
+                        isUpload={item?.kontrak}
+                        documentName="KONTRAK"
+                        item={item}
+                      />
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
-                      <Button
-                        handlerClick={() => handlerModalForm('surat', item)}
-                        title="Upload Surat"
-                        classButton="p-1 bg-opacity-10 text-blue-700 hover:text-white"
-                        typeClass="primary">
-                        <DocumentPlusIcon className="h-5" />
-                      </Button>
+                      <ButtonDocument
+                        handlerClick={() => handlerModalForm('update', item)}
+                        isUpload={item?.permohonan}
+                        documentName="Permohonan"
+                        item={item}
+                      />
                     </td>
 
                     <td className="text-center py-3 px-4 border-l capitalize">
-                      {/* {item.pic_procurement.name.toLowerCase()} */}
+                      {item?.project?.pic_procurement.name.toLowerCase()}
                     </td>
                     <td className="text-center py-3 px-4 border-l capitalize">
-                      {/* {item.pic_legal.name.toLowerCase()} */}
+                      {item.project?.pic_legal.name.toLowerCase()}
                     </td>
                   </tr>
                 ))}

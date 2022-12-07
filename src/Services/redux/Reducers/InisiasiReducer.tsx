@@ -3,6 +3,7 @@ import {
   InisiasiDispatchTypes,
   INISIASI_ERROR,
   INISIASI_LOADING,
+  INISIASI_LOADING_DISPOSISI,
   INISIASI_MESSAGE,
   INISIASI_SELECTED,
   LIST_INISIASI,
@@ -11,7 +12,8 @@ import {
 interface InitialState {
   loading: boolean;
   listInisiasi: DataInisiasi[];
-  inisiasiSelected?: DataInisiasi;
+  inisiasiSelected: DataInisiasi;
+  loadingDisposisi: boolean;
   isError: boolean;
   message: string;
 }
@@ -20,7 +22,9 @@ const initialState: InitialState = {
   loading: false,
   isError: false,
   message: '',
+  loadingDisposisi: false,
   listInisiasi: [],
+  inisiasiSelected: {} as DataInisiasi,
 };
 
 export const inisiasiReduccer = (
@@ -60,6 +64,12 @@ export const inisiasiReduccer = (
         ...state,
         loading: false,
         message: action.payload,
+      };
+
+    case INISIASI_LOADING_DISPOSISI:
+      return {
+        ...state,
+        loadingDisposisi: action.payload,
       };
 
     default:

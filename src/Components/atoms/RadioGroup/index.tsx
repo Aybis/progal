@@ -27,7 +27,7 @@ export default function Index(props: PropsRadioGroup) {
         <RadioGroup.Label className="sr-only">
           Choose jenis dokumen
         </RadioGroup.Label>
-        <div className="relative flex flex-wrap gap-2">
+        <div className="relative flex flex-wrap gap-4">
           {props?.listData?.map((option) => (
             <RadioGroup.Option
               key={option}

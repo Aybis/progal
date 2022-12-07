@@ -7,7 +7,7 @@ export const PROJECT_SELECTED = 'PROJECT_SELECTED';
 export const PROJECT_MITRA_SELECTED = 'PROJECT_MITRA_SELECTED';
 
 // type data
-export type Project = {
+export type DataProject = {
   id: number | string;
   inisiasi_id: number;
   kl_dokumen: string;
@@ -36,11 +36,12 @@ export type Project = {
 
 export interface ListProject {
   type: typeof LIST_PROJECT;
-  payload: Project[];
+  payload: DataProject[];
 }
 
 export interface ProjectLoading {
   type: typeof PROJECT_LOADING;
+  payload: boolean;
 }
 
 export interface ProjectError {
@@ -59,10 +60,11 @@ export interface ProjectSuccess {
 
 export interface ProjectSelected {
   type: typeof PROJECT_SELECTED;
-  payload: Project;
+  payload: DataProject;
 }
 
 export type ProjectDispatchTypes =
+  | ListProject
   | ProjectLoading
   | ProjectError
   | ProjectSuccess

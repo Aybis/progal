@@ -57,15 +57,14 @@ export const LoginUser =
       const res = await userApi.login(data);
       dispatch({
         type: USER_SUCCESS,
-        payload: res?.data,
+        payload: res?.data?.data,
       });
-
       // set token to local storage
-      localStorage.setItem('token', res?.data?.access_token);
+      localStorage.setItem('token', res?.data?.data?.access_token);
 
       // set session to cookies
-      Cookies.set('session', res?.data?.access_token, { expires: 0.5 });
-      return res;
+      Cookies.set('session', res?.data?.data?.access_token, { expires: 0.5 });
+      return res.data;
     } catch (error: any) {
       dispatch({
         type: USER_ERROR,
@@ -92,10 +91,10 @@ export const GetProfileUser =
 
       dispatch({
         type: USER_PROFILE,
-        payload: res.data,
+        payload: res.data.data,
       });
 
-      return res;
+      return res.data;
     } catch (error: any) {
       dispatch({
         type: USER_ERROR,
@@ -127,7 +126,7 @@ export const GetListMenu =
 
       dispatch({
         type: USER_MENU,
-        payload: res,
+        payload: res.data,
       });
 
       return res;
@@ -149,9 +148,9 @@ export const GetListProcurementPic =
   () => async (dispatch: Dispatch<UserDispatchTypes>) => {
     try {
       const res = await userApi.userProcurement();
-      dispatch(setUserProcurement(res.data));
+      dispatch(setUserProcurement(res.data.data));
 
-      return res;
+      return res.data;
     } catch (error: any) {
       Swal.fire('Error', error?.response?.data?.message, 'error');
       return error;
@@ -162,9 +161,9 @@ export const GetListLegalPic =
   () => async (dispatch: Dispatch<UserDispatchTypes>) => {
     try {
       const res = await userApi.userLegal();
-      dispatch(setUserLegal(res.data));
+      dispatch(setUserLegal(res.data.data));
 
-      return res;
+      return res.data;
     } catch (error: any) {
       Swal.fire('Error', error?.response?.data?.message, 'error');
       return error;

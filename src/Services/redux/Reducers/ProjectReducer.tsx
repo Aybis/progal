@@ -1,7 +1,6 @@
 import {
-  ListProject,
+  DataProject,
   LIST_PROJECT,
-  ProjectSelected,
   PROJECT_ERROR,
   PROJECT_LOADING,
   PROJECT_MESSAGE,
@@ -10,8 +9,8 @@ import {
 
 interface InitialState {
   loading: boolean;
-  listProject?: ListProject;
-  selectedProject?: ProjectSelected;
+  listProject: DataProject[];
+  selectedProject: DataProject;
   isError: boolean;
   message?: string;
 }
@@ -20,6 +19,8 @@ const initialState: InitialState = {
   loading: false,
   isError: false,
   message: '',
+  listProject: [],
+  selectedProject: {} as DataProject,
 };
 
 const projectReducer = (

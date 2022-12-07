@@ -1,5 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import { Vendor } from '../../../Services/redux/Types/vendor';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -18,7 +19,7 @@ type PropsComboBox = {
 };
 
 export default function Index(props: PropsComboBox) {
-  const filterData: any =
+  const filterData: Vendor[] =
     props.search === ''
       ? props.listData
       : props.listData.filter((item: any) => {

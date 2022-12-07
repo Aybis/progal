@@ -18,8 +18,8 @@ export default function Index(props: ModalProps) {
           ? ' translate-x-0 translate-y-'
           : '-translate-x-full -translate-y-full',
       ].join(' ')}>
-      <div className="relative h-full max-w-4xl mx-auto container bg-white shadow-xl rounded-lg">
-        <div className="relative flex items-center mt-2 border-b border-gray-200 p-4">
+      <div className="relative max-h-full max-w-2xl mx-auto container bg-white shadow-xl rounded-lg">
+        <div className="relative flex justify-between items-center mt-2 border-b border-gray-200 p-4">
           <h1
             className={[
               'text-xl xl:text-2xl font-semibold text-gray-800',
@@ -28,13 +28,17 @@ export default function Index(props: ModalProps) {
             {props.headingModal}
           </h1>
           <Button
-            classButton="absolute top-2 right-4 bg-white/0 text-gray-500 p-1 rounded"
+            classButton="relative bg-white/0 text-gray-500 p-1 rounded"
             handlerClick={() => props.onClose?.(!props.isShow)}
             typeClass="close">
             X
           </Button>
         </div>
-        <div className="relative mt-4 p-4">{props?.children}</div>
+        {props.isShow && (
+          <div className="relative mt-4 h-[50vh] p-4 overflow-auto">
+            {props?.children}
+          </div>
+        )}
 
         <div className="relative flex justify-end items-end mt-4 p-4">
           <Button

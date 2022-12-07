@@ -3,13 +3,16 @@ import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Badges } from '../Components/atoms';
 import { getListInisiasiWon } from '../Services/redux/Actions/inisiasi';
+import { getListProject } from '../Services/redux/Actions/project';
 import { GetListMenu } from '../Services/redux/Actions/user';
 import { useAppDispatch, useAppSelector } from '../Services/redux/hook';
+import { DataProject } from '../Services/redux/Types/project';
 
 export default function Sidebar() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const INISIASI = useAppSelector((state) => state.inisiasi);
+  const { listProject } = useAppSelector((state) => state.project);
 
   const getListMenu = async () => {
     const res: any = await dispatch(GetListMenu(await user?.profile?.id));
@@ -21,13 +24,21 @@ export default function Sidebar() {
     return res;
   };
 
+  const getDisposisiForPIC = async () => {
+    const res: DataProject[] = await dispatch(
+      getListProject(await user?.profile?.id),
+    );
+    return res;
+  };
+
   const location = useLocation();
 
   useEffect(() => {
     getListMenu();
     getInisiasiWonForManager();
+    getDisposisiForPIC();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   return (
     <aside className="flex w-0 lg:w-64 transition-all duration-500 inset-y-0 left-0 fixed z-0 lg:z-20">
@@ -73,6 +84,13 @@ export default function Sidebar() {
                               <Badges
                                 classBadges="absolute right-2"
                                 value={INISIASI.listInisiasi.length}
+                                type="error"
+                              />
+                            )}
+                            {sub.link === '/allocate' && (
+                              <Badges
+                                classBadges="absolute right-2"
+                                value={listProject.length}
                                 type="error"
                               />
                             )}

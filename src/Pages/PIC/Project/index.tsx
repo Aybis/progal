@@ -1,56 +1,32 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
-import { Button, Input } from '../../../Components/atoms';
-import { setHeader } from '../../../Configs/api';
+import { Button, Modal } from '../../../Components/atoms';
+import { FormMappingMitra, FormSearch } from '../../../Components/molecules';
 import Layout from '../../../Layouts/Layout';
-import progalApi from '../../../Middleware/progal-api';
-
-type ProjectMitra = {
-  id: number | string;
-  inisiasi_id: number;
-  kl_dokumen: string;
-  no_io: string;
-  p6_dokumen: string;
-  p8_dokumen: string;
-  pic_legal: {
-    id: number;
-    name: string;
-  };
-  pic_procurement: {
-    id: number;
-    name: string;
-  };
-  inisiasi: {
-    desc_project: string;
-    end_customer: string;
-    nilai_cogs: number;
-    nilai_kl: number;
-    nilai_penawaran: number;
-    nilai_project: number;
-    no_insisasi: string;
-    tgl_target_win: string;
-  };
-  project_mitra: Array<string>;
-};
+import {
+  getProjectHasMitra,
+  setSelectedProjectMitra,
+} from '../../../Services/redux/Actions/hasMitra';
+import { useAppDispatch, useAppSelector } from '../../../Services/redux/hook';
+import { DataProjectHasMitra } from '../../../Services/redux/Types/hasmitra';
 
 export default function Index() {
-  const [dataProjectMitra, setdataProjectMitra] = useState<ProjectMitra[]>([]);
+  const dispatch = useAppDispatch();
+  const { profile } = useAppSelector((state) => state.user);
+  const ProjectMitra = useAppSelector((state) => state.hasMitra);
+  const [showModal, setshowModal] = useState<boolean>(false);
+
+  const handlerShowModal = (item: DataProjectHasMitra) => {
+    dispatch(setSelectedProjectMitra(item));
+    setshowModal(true);
+  };
 
   useEffect(() => {
-    const getProject = async () => {
-      setHeader();
-
-      const response: any = await progalApi.listProjectMitra({
-        params: {
-          user_id: 134,
-        },
-      });
-      setdataProjectMitra(response);
-      return response;
-    };
-    getProject();
-  }, []);
+    (async () => {
+      await dispatch(getProjectHasMitra(await profile?.id));
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile]);
 
   return (
     <Layout
@@ -59,18 +35,7 @@ export default function Index() {
       {/* Section Table Data */}
       <div className="relative bg-white p-4 rounded-lg mt-12">
         {/* Filter Search */}
-        <div className="relative flex gap-2">
-          <div className="relative">
-            <Input
-              classInput="w-64 placeholder:text-gray-400 placeholder:font-normal placeholder:italic pl-10 text-sm"
-              placeholder="Search Something"
-            />
-            <MagnifyingGlassIcon className="h-5 absolute top-2.5 left-3 text-gray-400" />
-          </div>
-          <Button type="button" typeClass="primary" classButton="text-sm">
-            Search
-          </Button>
-        </div>
+        <FormSearch />
 
         {/* Section Table */}
         <div className="relative w-full mt-8 overflow-x-auto">
@@ -105,12 +70,15 @@ export default function Index() {
               </tr>
             </thead>
             <tbody>
-              {dataProjectMitra.length > 0 &&
-                dataProjectMitra.map((item, index) => (
-                  <tr key={index} className="text-sm">
+              {ProjectMitra.listProjectMitra.length > 0 &&
+                ProjectMitra.listProjectMitra.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="text-sm hover:bg-zinc-50 transition-all duration-300">
                     <td className="text-center py-3 px-4">{index + 1}</td>
                     <td className="text-center py-3 px-4">
                       <Button
+                        handlerClick={() => handlerShowModal(item)}
                         title="Tambah Mitra"
                         type="button"
                         typeClass="primary"
@@ -125,10 +93,10 @@ export default function Index() {
                     <td className="text-left py-3 px-4 whitespace-nowrap">
                       Rp {item.inisiasi.nilai_project.toLocaleString('id-ID')}
                     </td>
-                    <td className="text-center py-3 px-4 ">
+                    <td className="text-center py-3 px-4 w-24">
                       {item.project_mitra.length}
                     </td>
-                    <td className="text-center py-3 px-4">
+                    <td className="text-center py-3 px-4 border-l">
                       {item.pic_procurement.name}
                     </td>
                     <td className="text-center py-3 px-4 border-l">
@@ -140,6 +108,16 @@ export default function Index() {
           </table>
         </div>
       </div>
+
+      <Modal
+        headingModal="Form Tambah Mitra"
+        isShow={showModal}
+        onClose={(arg) => setshowModal(arg)}>
+        <FormMappingMitra
+          typePage="project"
+          handlerClose={(arg) => setshowModal(arg)}
+        />
+      </Modal>
     </Layout>
   );
 }

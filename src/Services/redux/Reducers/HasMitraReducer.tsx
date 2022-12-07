@@ -1,17 +1,22 @@
 import {
-  ListProjectMitra,
-  ListProjectMitraSelected,
+  DataMitraHasProject,
+  DataProjectHasMitra,
+  LIST_MITRA_PIC,
+  LIST_MITRA_PIC_SELECTED,
   LIST_PROJECT_MITRA,
   LIST_PROJECT_MITRA_ERROR,
   LIST_PROJECT_MITRA_LOADING,
   LIST_PROJECT_MITRA_MESSAGE,
   LIST_PROJECT_MITRA_SELECTED,
+  ProjectMitraDispatchTypes,
 } from '../Types/hasmitra';
 
 interface InitialState {
   loading: boolean;
-  listProjectMitra?: ListProjectMitra;
-  selectedMitra?: ListProjectMitraSelected;
+  listProjectMitra: DataProjectHasMitra[];
+  selectedProjectMitra: DataProjectHasMitra;
+  listMitraPic: DataMitraHasProject[];
+  selectedMitraPic: DataMitraHasProject;
   isError: boolean;
   message?: string;
 }
@@ -20,11 +25,15 @@ const initialState: InitialState = {
   loading: false,
   isError: false,
   message: '',
+  listProjectMitra: [],
+  selectedProjectMitra: {} as DataProjectHasMitra,
+  listMitraPic: [],
+  selectedMitraPic: {} as DataMitraHasProject,
 };
 
 const hasMitraReducer = (
   state: InitialState = initialState,
-  action: any,
+  action: ProjectMitraDispatchTypes,
 ): InitialState => {
   switch (action.type) {
     case LIST_PROJECT_MITRA:
@@ -38,7 +47,7 @@ const hasMitraReducer = (
       return {
         ...state,
         loading: false,
-        selectedMitra: action.payload,
+        selectedProjectMitra: action.payload,
       };
 
     case LIST_PROJECT_MITRA_ERROR:
@@ -46,7 +55,6 @@ const hasMitraReducer = (
         ...state,
         loading: false,
         isError: true,
-        message: action.payload,
       };
 
     case LIST_PROJECT_MITRA_LOADING:
@@ -59,6 +67,18 @@ const hasMitraReducer = (
       return {
         ...state,
         message: action.payload,
+      };
+
+    case LIST_MITRA_PIC:
+      return {
+        ...state,
+        listMitraPic: action.payload,
+      };
+
+    case LIST_MITRA_PIC_SELECTED:
+      return {
+        ...state,
+        selectedMitraPic: action.payload,
       };
 
     default:

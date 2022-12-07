@@ -4,6 +4,7 @@ export const INISIASI_ERROR = 'INISIASI_ERROR';
 export const INISIASI_MESSAGE = 'INISIASI_MESSAGE';
 export const INISIASI_SUCCESS = 'INISIASI_SUCCESS';
 export const INISIASI_SELECTED = 'INISIASI_SELECTED';
+export const INISIASI_LOADING_DISPOSISI = 'INISIASI_LOADING_DISPOSISI';
 
 // type
 
@@ -50,10 +51,16 @@ export interface InisiasiSelected {
   payload: DataInisiasi;
 }
 
+export interface InisiasiLoadingDisposisi {
+  type: typeof INISIASI_LOADING_DISPOSISI;
+  payload: boolean;
+}
+
 export type InisiasiDispatchTypes =
   | InisiasiLoading
   | InisiasiError
   | InisiasiSuccess
   | InisiasiMessage
   | ListInisiasi
-  | InisiasiSelected;
+  | InisiasiSelected
+  | InisiasiLoadingDisposisi;

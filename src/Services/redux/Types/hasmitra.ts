@@ -4,9 +4,13 @@ export const LIST_PROJECT_MITRA_ERROR = 'LIST_PROJECT_MITRA_ERROR';
 export const LIST_PROJECT_MITRA_SUCCESS = 'LIST_PROJECT_MITRA_SUCCESS';
 export const LIST_PROJECT_MITRA_MESSAGE = 'LIST_PROJECT_MITRA_MESSAGE';
 export const LIST_PROJECT_MITRA_SELECTED = 'LIST_PROJECT_MITRA_SELECTED';
+export const LIST_MITRA_PIC = 'LIST_MITRA_PIC';
+export const LIST_MITRA_PIC_SELECTED = 'LIST_MITRA_PIC_SELECTED';
+export const LIST_MITRA_PIC_LOADING = 'LIST_MITRA_PIC_LOADING';
+export const LOADING_UPDATE_MITRA = 'LOADING_UPDATE_MITRA';
 
 // type data
-export type DataMitra = {
+export type DataMitraHasProject = {
   id: number | string;
   amandemen?: [];
   bakn?: any;
@@ -33,10 +37,24 @@ export type DataMitra = {
   };
   nilai_down_payment?: string;
   nilai_pekerjaan?: string;
-  nilai_realisasi_cogs?: string;
+  nilai_realisasi_cogs?: number;
   permohonan?: any;
   persetujuan?: any;
-  project?: any;
+  project?: {
+    id: number;
+    kl_document: any;
+    no_io: string;
+    p6_dokument: any;
+    p8_dokument: any;
+    pic_legal: {
+      id: number;
+      name: string;
+    };
+    pic_procurement: {
+      id: number;
+      name: string;
+    };
+  };
   sph?: any;
   spph?: any;
   start_jangka_waktu_pekerjaan: string;
@@ -44,40 +62,86 @@ export type DataMitra = {
   tata_cara_pembayaran?: string;
 };
 
-// interface
+export type DataProjectHasMitra = {
+  id: number | string;
+  inisiasi_id: number;
+  kl_dokumen: string;
+  no_io: string;
+  p6_dokumen: string;
+  p8_dokumen: string;
+  pic_legal: {
+    id: number;
+    name: string;
+  };
+  pic_procurement: {
+    id: number;
+    name: string;
+  };
+  inisiasi: {
+    desc_project: string;
+    end_customer: string;
+    nilai_cogs: number;
+    nilai_kl: number;
+    nilai_penawaran: number;
+    nilai_project: number;
+    no_insisasi: string;
+    tgl_target_win: string;
+  };
+  project_mitra: Array<string>;
+};
 
+// interfaces
 export interface ListProjectMitra {
   type: typeof LIST_PROJECT_MITRA;
-  payload: DataMitra[];
+  payload: DataProjectHasMitra[];
 }
 
-export interface ListProjectMitraLoading {
+export interface ProjectMitraLoading {
   type: typeof LIST_PROJECT_MITRA_LOADING;
+  payload: boolean;
 }
 
-export interface ListProjectMitraError {
+export interface ProjectMitraError {
   type: typeof LIST_PROJECT_MITRA_ERROR;
 }
 
-export interface ListProjectMitraMessage {
+export interface ProjectMitraMessage {
   type: typeof LIST_PROJECT_MITRA_MESSAGE;
   payload: string;
 }
 
-export interface ListProjectMitraSuccess {
+export interface ProjectMitraSuccess {
   type: typeof LIST_PROJECT_MITRA_SUCCESS;
   payload: boolean;
 }
 
-export interface ListProjectMitraSelected {
+export interface ProjectMitraSelected {
   type: typeof LIST_PROJECT_MITRA_SELECTED;
-  payload: DataMitra;
+  payload: DataProjectHasMitra;
 }
 
-export type ProjectDispatchTypes =
+// Mitra has project
+export interface ListMitraPIC {
+  type: typeof LIST_MITRA_PIC;
+  payload: DataMitraHasProject[];
+}
+
+export interface ListMitraPICSelected {
+  type: typeof LIST_MITRA_PIC_SELECTED;
+  payload: DataMitraHasProject;
+}
+export interface ListMitraPICUpdate {
+  type: typeof LOADING_UPDATE_MITRA;
+  payload: boolean;
+}
+
+export type ProjectMitraDispatchTypes =
   | ListProjectMitra
-  | ListProjectMitraLoading
-  | ListProjectMitraError
-  | ListProjectMitraMessage
-  | ListProjectMitraSuccess
-  | ListProjectMitraSelected;
+  | ProjectMitraLoading
+  | ProjectMitraError
+  | ProjectMitraMessage
+  | ProjectMitraSuccess
+  | ProjectMitraSelected
+  | ListMitraPIC
+  | ListMitraPICSelected
+  | ListMitraPICUpdate;

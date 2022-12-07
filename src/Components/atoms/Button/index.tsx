@@ -11,6 +11,14 @@ type ButtonProps = {
   typeClass?: 'primary' | 'success' | 'danger' | 'warning' | 'close' | string;
   type?: 'button' | 'submit' | 'reset' | undefined;
   title?: string;
+  isTransparent?:
+    | 'primary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'close'
+    | 'update'
+    | string;
 };
 
 export default function Index(props: ButtonProps) {
@@ -21,7 +29,7 @@ export default function Index(props: ButtonProps) {
       type={props.type ?? 'button'}
       disabled={props.isDisabled ?? false}
       className={[
-        'inline-flex items-center justify-center p-2 text-base font-medium leading-5 ease-in-out border border-transparent rounded-md focus:outline-none transition-all duration-300',
+        'inline-flex items-center justify-center p-1 text-base font-medium leading-5 ease-in-out border border-transparent rounded focus:outline-none transition-all duration-300',
         'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
         props.typeClass === 'primary'
           ? 'bg-blue-500 hover:bg-blue-400 focus:shadow-outline-blue active:bg-blue-800 focus:border-blue-300 text-white'
@@ -37,8 +45,19 @@ export default function Index(props: ButtonProps) {
           ? 'bg-red-500 hover:bg-red-400 focus:shadow-outline-red active:bg-red-800 focus:border-red-300 text-white'
           : props.typeClass === 'others'
           ? 'bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline-red active:bg-indigo-800 focus:border-indigo-300 text-white'
-          : 'bg-gray-500 hover:bg-gray-400 focus:shadow-outline-gray text-white',
-
+          : 'bg-transparent',
+        props.isTransparent === 'primary' &&
+          'bg-blue-100/50 border-blue-100  text-blue-700 hover:bg-blue-500 focus:shadow-outline-blue active:bg-blue-800 focus:border-blue-300 hover:text-white',
+        props.isTransparent === 'success' &&
+          'bg-green-100/50 border-green-100  text-green-700 hover:bg-green-500 focus:shadow-outline-green active:bg-green-800 focus:border-green-300 hover:text-white',
+        props.isTransparent === 'warning' &&
+          'bg-yellow-100/50 border-yellow-100  text-yellow-700 hover:bg-yellow-500 focus:shadow-outline-blue active:bg-yellow-800 focus:border-yellow-300 hover:text-white',
+        props.isTransparent === 'danger' &&
+          'bg-red-100/50 border-red-100  text-red-700 hover:bg-red-500 focus:shadow-outline-red active:bg-red-800 focus:border-red-300 hover:text-white',
+        props.isTransparent === 'info' &&
+          'bg-cyan-100/50 border-cyan-100  text-cyan-700 hover:bg-cyan-500 focus:shadow-outline-cyan active:bg-cyan-800 focus:border-cyan-300 hover:text-white',
+        props.isTransparent === 'update' &&
+          'bg-indigo-100/50 border-indigo-100  text-indigo-700 hover:bg-indigo-500 focus:shadow-outline-indigo active:bg-indigo-800 focus:border-indigo-300 hover:text-white',
         props.classButton,
       ].join(' ')}>
       {props.isSubmit ? (

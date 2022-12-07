@@ -1,6 +1,8 @@
 import {
   ListVendor,
   LIST_VENDOR,
+  Vendor,
+  VendorDispatchTypes,
   VendorSelected,
   VENDOR_ERROR,
   VENDOR_LOADING,
@@ -10,21 +12,23 @@ import {
 
 interface InitialState {
   loading: boolean;
-  listVendor?: ListVendor;
-  selectedVendor?: VendorSelected;
+  listVendor: Vendor[];
+  selectedVendor: Vendor;
   isError: boolean;
-  message?: string;
+  message: string;
 }
 
 const initialState: InitialState = {
   loading: false,
   isError: false,
   message: '',
+  listVendor: [],
+  selectedVendor: {} as Vendor,
 };
 
 const vendorReducer = (
   state: InitialState = initialState,
-  action: any,
+  action: VendorDispatchTypes,
 ): InitialState => {
   switch (action.type) {
     case VENDOR_LOADING:
@@ -52,7 +56,6 @@ const vendorReducer = (
         ...state,
         loading: false,
         isError: true,
-        message: action.payload,
       };
 
     case VENDOR_MESSAGE:

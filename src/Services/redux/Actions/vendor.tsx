@@ -1,6 +1,15 @@
 import Swal from 'sweetalert2';
-import userApi from '../../../Middleware/user-api';
-import { VENDOR_ERROR, VENDOR_LOADING, VENDOR_MESSAGE } from '../Types/vendor';
+import progalApi from '../../../Middleware/progal-api';
+import {
+  ListVendor,
+  LIST_VENDOR,
+  Vendor,
+  VendorSelected,
+  VENDOR_ERROR,
+  VENDOR_LOADING,
+  VENDOR_MESSAGE,
+  VENDOR_SELECTED,
+} from '../Types/vendor';
 
 export const setLoadingVendor = (data: boolean) => ({
   type: VENDOR_LOADING,
@@ -17,20 +26,31 @@ export const setVendorError = (data: any) => ({
   payload: data,
 });
 
+export const setListVendor = (data: Vendor[]): ListVendor => ({
+  type: LIST_VENDOR,
+  payload: data,
+});
+
+export const setVendorSelected = (data: Vendor): VendorSelected => ({
+  type: VENDOR_SELECTED,
+  payload: data,
+});
+
 export const getListVendor = () => async (dispatch: any) => {
   try {
     dispatch(setLoadingVendor(true));
 
-    const response = await userApi.listVendor();
+    const response = await progalApi.listMitra();
 
-    console.log(response);
+    dispatch(setListVendor(response.data.data));
     dispatch(setLoadingVendor(false));
+
+    return response;
   } catch (error: any) {
-    console.log(error?.response?.data?.message);
     dispatch(setLoadingVendor(false));
     dispatch(setVendorMessage(error?.response?.data?.message));
     dispatch(setVendorError(true));
 
-    Swal.fire('Error', error?.response?.data?.message, 'error');
+    return error;
   }
 };

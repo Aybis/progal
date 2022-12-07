@@ -8,3 +8,6 @@ export { default as ModalMessage } from './ModalMessage';
 export { default as Comboboxes } from './Comboboxes';
 export { default as RadioGroup } from './RadioGroup';
 export { default as Badges } from './Badges';
+export { default as Table } from './Table';
+export { default as Thead } from './Thead';
+export { default as Tbody } from './Tbody';
