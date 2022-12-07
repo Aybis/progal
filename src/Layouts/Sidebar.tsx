@@ -1,16 +1,23 @@
 import { ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Badges } from '../Components/atoms';
+import { getListInisiasiWon } from '../Services/redux/Actions/inisiasi';
 import { GetListMenu } from '../Services/redux/Actions/user';
 import { useAppDispatch, useAppSelector } from '../Services/redux/hook';
 
 export default function Sidebar() {
-  const [showMenu, setshowMenu] = useState(false);
-  const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const INISIASI = useAppSelector((state) => state.inisiasi);
 
   const getListMenu = async () => {
     const res: any = await dispatch(GetListMenu(await user?.profile?.id));
+    return res;
+  };
+
+  const getInisiasiWonForManager = async () => {
+    const res: any = await dispatch(getListInisiasiWon());
     return res;
   };
 
@@ -18,6 +25,8 @@ export default function Sidebar() {
 
   useEffect(() => {
     getListMenu();
+    getInisiasiWonForManager();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -60,6 +69,13 @@ export default function Sidebar() {
                                 : 'border-transparent text-gray-400 font-normal'
                             }`}>
                             - {sub?.name}
+                            {sub.link === '/inbox' && (
+                              <Badges
+                                classBadges="absolute right-2"
+                                value={INISIASI.listInisiasi.length}
+                                type="error"
+                              />
+                            )}
                           </Link>
                         </li>
                       ))}

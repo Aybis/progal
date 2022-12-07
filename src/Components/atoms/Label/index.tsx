@@ -10,7 +10,7 @@ const Index = (props: LabelProps) => {
   return (
     <label
       className={[
-        'text-base font-medium text-gray-800 leading-relaxed',
+        'block text-sm font-medium text-gray-700 leading-relaxed',
         props.classLabel,
       ].join(' ')}>
       {props.labelName}

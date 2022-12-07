@@ -1,7 +1,10 @@
 import { PlusIcon } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
-import { Button, Comboboxes } from '../../Components/atoms';
+import { FormEvent, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { Button, Comboboxes, RadioGroup } from '../../Components/atoms';
 import { FormInput } from '../../Components/molecules';
+import { setHeader } from '../../Configs/api';
 import Layout from '../../Layouts/Layout';
 import progalApi from '../../Middleware/progal-api';
 
@@ -10,52 +13,51 @@ type Mitra = {
   deskripsi_vendor?: string | null;
   direktur?: string | null;
   email?: string | null;
-  id?: number;
+  id?: string | number;
   jenis_vendor_id?: number | string;
   nama_vendor?: string;
   no_tlpn?: string | null;
   pic?: string | null;
 };
 
+type DataProject = {
+  id: number;
+  inisiasi_id?: number;
+  kl_dokumen?: string;
+  no_io: string;
+  p6_dokumen?: string;
+  p8_dokumen?: string;
+  inisiasi: {
+    desc_project: string;
+  };
+  pic_legal: {
+    id: number;
+    name: string;
+  };
+  pic_procurement: {
+    id: number;
+    name: string;
+  };
+};
+
 export default function Index() {
+  const { id } = useParams();
   const [search, setsearch] = useState<string>('');
+  const [loadingSubmit, setloadingSubmit] = useState<boolean>(false);
+  const [jenis_dokumen, setjenis_dokumen] = useState<string>('');
   const [mitraSelected, setmitraSelected] = useState<Mitra>();
-  const dataProject = JSON.parse(localStorage.getItem('project') ?? '{}');
+  const dataProject: DataProject = JSON.parse(
+    localStorage.getItem('project') ?? '{}',
+  );
   const [listMitra, setlistMitra] = useState<Mitra[]>([]);
-  const [formMitra, setformMitra] = useState([
-    {
-      labelName: 'Deskripsi Pekerjaan',
-      data: [],
-      name: 'description',
-      value: '',
-      typeForm: 'text',
-      placeholder: 'Deskripsi Pekerjaan',
-    },
-    {
-      labelName: 'Nilai Realisasi',
-      data: [],
-      name: 'realisasi',
-      value: '0',
-      typeForm: 'currency',
-      placeholder: 'Rp. 123.456.789',
-    },
-    {
-      labelName: 'Nilai Pengerjaan',
-      data: [],
-      name: 'pengerjaan',
-      value: '0',
-      typeForm: 'currency',
-      placeholder: 'Rp. 123.456.789',
-    },
-    {
-      labelName: 'Efisiensi',
-      data: [],
-      name: 'efisiensi',
-      value: '',
-      typeForm: 'text',
-      placeholder: 'Nilai Realisasi - Nilai Pengerjaan',
-    },
-  ]);
+  const [formMitra, setformMitra] = useState({
+    jenis_dokumen: '',
+    project_id: id,
+    mitra_id: '',
+    nilai_realisasi_cogs: '',
+  });
+
+  const listDokumen: Array<string> = ['nopes', 'kontrak', 'spk'];
 
   // handler convert string to curency
   const convertToCurrency = (value: string) => {
@@ -66,20 +68,11 @@ export default function Index() {
   // handler onchange input
   const handlerInputChange = (e: any) => {
     const { name, value } = e.target;
+    let pattern = /([0-9])\w+/g;
 
-    setformMitra((prev) => {
-      return prev.map((item) => {
-        console.log(convertToCurrency(value));
-
-        if (item.name === name) {
-          return {
-            ...item,
-            value:
-              item.typeForm === 'currency' ? convertToCurrency(value) : value,
-          };
-        }
-        return item;
-      });
+    setformMitra({
+      ...formMitra,
+      [name]: pattern.test(value) ? convertToCurrency(value) : value,
     });
   };
 
@@ -96,15 +89,42 @@ export default function Index() {
     setlistMitra(res.data);
   };
 
+  const handlerMappingMitra = async (data: object) => {
+    setHeader();
+
+    try {
+      const res: any = await progalApi.mappingMitra(data);
+      console.log('res', res);
+      Swal.fire('Berhasil', 'Mitra berhasil dimapping', 'success');
+      setloadingSubmit(false);
+      return res;
+    } catch (error: any) {
+      console.log('err', error);
+      setloadingSubmit(false);
+      Swal.fire('Error', error?.message, 'error');
+    }
+  };
+
+  const handlerSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setloadingSubmit(true);
+    formMitra.mitra_id = mitraSelected?.id?.toString() ?? '';
+    formMitra.jenis_dokumen = jenis_dokumen;
+    formMitra.nilai_realisasi_cogs = convertCurrencyToNumber(
+      formMitra.nilai_realisasi_cogs,
+    ).toString();
+    handlerMappingMitra(formMitra);
+  };
+
   useEffect(() => {
     getListMitra();
   }, []);
 
   return (
-    <Layout textHeading="Update Project">
+    <Layout textHeading="Mapping Mitra">
       {/* Detail Project  */}
-      <div className="relative p-4 mt-4 rounded-lg flex justify-center items-center bg-blue-200/30 backdrop-blur-sm">
-        <h1 className="text-center text-xl leading-relaxed text-blue-700 font-bold">
+      <div className="relative p-4 mt-10 rounded-lg flex justify-center items-center bg-blue-200/30 backdrop-blur-sm">
+        <h1 className="text-center text-xl leading-relaxed text-blue-700 font-semibold">
           {dataProject?.no_io} - {dataProject?.inisiasi?.desc_project ?? ''}
         </h1>
       </div>
@@ -113,14 +133,16 @@ export default function Index() {
       <div className="relative mt-10">
         <div className="relative flex justify-between items-center">
           <h1 className="font-semibold text-lg leading-relaxed text-gray-800">
-            Input Mitra
+            Tambah Mitra
           </h1>
-          <Button typeClass="primary">
+          <Button typeClass="primary" isDisabled={true} classButton="p-0.5">
             <PlusIcon className="h-5 text-white" />
           </Button>
         </div>
         {/* Form Mitra */}
-        <div className="relative mt-4 p-4 bg-white rounded-lg flex flex-col gap-4">
+        <form
+          onSubmit={handlerSubmit}
+          className="relative mt-4 p-4 bg-white rounded-lg flex flex-col gap-4">
           <Comboboxes
             label="Mitra"
             search={search}
@@ -130,48 +152,42 @@ export default function Index() {
             setSearch={setsearch}
             listData={listMitra}
           />
-          {formMitra.map((item, index) => {
-            return (
-              <FormInput
-                key={index}
-                labelName={item.labelName}
-                classLabel="text-sm"
-                inputType={item.typeForm}
-                classInput="w-full"
-                inputName={item.name}
-                typeForm={item.typeForm}
-                inputValue={
-                  item.name === 'efisiensi'
-                    ? convertToCurrency(
-                        (
-                          convertCurrencyToNumber(
-                            formMitra.find((item) => item.name === 'realisasi')
-                              ?.value || '',
-                          ) -
-                          convertCurrencyToNumber(
-                            formMitra.find((item) => item.name === 'pengerjaan')
-                              ?.value || '',
-                          )
-                        ).toString(),
-                      )
-                    : item.value
-                }
-                onChange={(e) => handlerInputChange(e)}
-                placeholder={item.placeholder}
-                isDisabled={item.name === 'efisiensi'}
-                isReadOnly={false}
-                formClassRoot="w-full"
-                isRequired={false}
-                isError={false}
-                message=""
-              />
-            );
-          })}
 
-          <Button typeClass="primary" classButton="mt-4 w-fit px-6 text-sm">
+          <FormInput
+            placeholder="Rp 123.456.789"
+            typeForm="currency"
+            inputType="text"
+            labelName="Nilai Realisasi COGS"
+            inputValue={formMitra.nilai_realisasi_cogs}
+            onChange={handlerInputChange}
+            inputName="nilai_realisasi_cogs"
+            isError={
+              formMitra.nilai_realisasi_cogs.length > 0 &&
+              !/([0-9])\w+/g.test(formMitra.nilai_realisasi_cogs)
+            }
+            message="Nilai Realisasi COGS harus berupa angka"
+          />
+
+          <RadioGroup
+            label="Jenis Dokumen"
+            dokumenSelected={jenis_dokumen}
+            setDokumenSelected={setjenis_dokumen}
+            listData={listDokumen}
+          />
+
+          <Button
+            isDisabled={
+              jenis_dokumen === '' ||
+              mitraSelected?.id === '' ||
+              formMitra.nilai_realisasi_cogs === ''
+            }
+            isSubmit={loadingSubmit}
+            type="submit"
+            typeClass="primary"
+            classButton="mt-4 w-fit px-4 py-1.5 text-sm">
             Submit
           </Button>
-        </div>
+        </form>
       </div>
     </Layout>
   );

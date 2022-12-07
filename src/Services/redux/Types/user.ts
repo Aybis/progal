@@ -5,6 +5,8 @@ export const USER_SUCCESS = 'USER_SUCCESS';
 export const USER_MESSAGE = 'USER_MESSAGE';
 export const USER_PROFILE = 'USER_PROFILE';
 export const USER_MENU = 'USER_MENU';
+export const USER_PROCUREMENT = 'USER_PROCUREMENT';
+export const USER_LEGAL = 'USER_LEGAL';
 
 export type User = {
   id?: number;
@@ -18,6 +20,13 @@ export type UserSession = {
   access_token?: string;
   refresh_token?: string;
   token_type?: string;
+};
+
+export type UserProcurementPic = {
+  users: User[];
+};
+export type UserLegalPic = {
+  users: User[];
 };
 
 export interface UserLoading {
@@ -48,10 +57,22 @@ export interface UserMenu {
   payload?: any;
 }
 
+export interface UserProcurement {
+  type: typeof USER_PROCUREMENT;
+  payload?: any;
+}
+
+export interface UserLegal {
+  type: typeof USER_LEGAL;
+  payload?: any;
+}
+
 export type UserDispatchTypes =
   | UserLoading
   | UserError
   | UserSuccess
   | UserProfile
   | UserMessage
-  | UserMenu;
+  | UserMenu
+  | UserProcurement
+  | UserLegal;

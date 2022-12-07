@@ -6,6 +6,7 @@ type ModalProps = {
   isShow?: boolean;
   onClose?: (arg: boolean) => void;
   headingModal?: string;
+  classHeading?: string;
 };
 
 export default function Index(props: ModalProps) {
@@ -19,7 +20,11 @@ export default function Index(props: ModalProps) {
       ].join(' ')}>
       <div className="relative h-full max-w-4xl mx-auto container bg-white shadow-xl rounded-lg">
         <div className="relative flex items-center mt-2 border-b border-gray-200 p-4">
-          <h1 className="text-xl xl:text-2xl font-semibold text-gray-800">
+          <h1
+            className={[
+              'text-xl xl:text-2xl font-semibold text-gray-800',
+              props.classHeading,
+            ].join(' ')}>
             {props.headingModal}
           </h1>
           <Button

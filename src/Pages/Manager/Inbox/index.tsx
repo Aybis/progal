@@ -9,18 +9,12 @@ import { Button, Input, Modal } from '../../../Components/atoms';
 import { setHeader } from '../../../Configs/api';
 import Layout from '../../../Layouts/Layout';
 import progalApi from '../../../Middleware/progal-api';
-
-type DataInisiasi = {
-  id?: number | string;
-  io: {
-    internal_order: string;
-  };
-  tgl_target_win: string;
-  desc_project?: string;
-  nilai_cogs: number;
-  end_customer?: string;
-  jasbisis?: any;
-};
+import {
+  GetListLegalPic,
+  GetListProcurementPic,
+} from '../../../Services/redux/Actions/user';
+import { useAppDispatch, useAppSelector } from '../../../Services/redux/hook';
+import { DataInisiasi } from '../../../Services/redux/Types/inisiasi';
 
 type FormDisposisi = {
   pic_procurement?: string;
@@ -30,10 +24,13 @@ type FormDisposisi = {
 };
 
 export default function Index() {
-  const [data, setdata] = useState<DataInisiasi[]>([]);
-  const [filterData, setfilterData] = useState<DataInisiasi[]>([]);
+  const dispatch = useAppDispatch();
+  const INISIASI = useAppSelector((state) => state.inisiasi);
+  const USER = useAppSelector((state) => state.user);
+  const [filterData, setfilterData] = useState<DataInisiasi[]>(
+    INISIASI.listInisiasi,
+  );
   const [showModalDisposisi, setshowModalDisposisi] = useState(false);
-  const [loadingData, setloadingData] = useState(false);
   const [loadingDisposisi, setloadingDisposisi] = useState(false);
   const [projectSelected, setprojectSelected] = useState<DataInisiasi>();
   const [formDisposisi, setformDisposisi] = useState<FormDisposisi>({
@@ -52,10 +49,9 @@ export default function Index() {
 
   const handlerFilterData = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === '') {
-      setfilterData(data);
+      setfilterData(INISIASI.listInisiasi);
     } else {
-      console.log('masil');
-      const filter = data.filter((item) => {
+      const filter = INISIASI.listInisiasi.filter((item) => {
         return (
           item.io.internal_order
             ?.toString()
@@ -74,16 +70,6 @@ export default function Index() {
 
       setfilterData(filter);
     }
-  };
-
-  const getInboxInisiasi = async () => {
-    setloadingData(true);
-    setHeader();
-    const res: any = await progalApi.inisiasiWon();
-    setdata(res);
-    setfilterData(res);
-    setloadingData(false);
-    return res;
   };
 
   const handlerShowModalDisposisi = (data: any) => {
@@ -134,7 +120,9 @@ export default function Index() {
   };
 
   useEffect(() => {
-    getInboxInisiasi();
+    dispatch(GetListProcurementPic());
+    dispatch(GetListLegalPic());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -156,7 +144,7 @@ export default function Index() {
           </div>
         </div>
 
-        {loadingData ? (
+        {INISIASI.loading ? (
           'Loading...'
         ) : (
           <div className="relative w-full overflow-auto">
@@ -187,7 +175,7 @@ export default function Index() {
                 </tr>
               </thead>
               <tbody>
-                {filterData.length === 0 ? (
+                {INISIASI.listInisiasi.length === 0 ? (
                   <tr>
                     <td
                       colSpan={7}
@@ -196,48 +184,54 @@ export default function Index() {
                     </td>
                   </tr>
                 ) : (
-                  filterData.map((item, index) => (
-                    <tr
-                      key={item.id}
-                      className={[
-                        index % 2 === 0 ? 'bg-white' : 'bg-zinc-50',
-                        'hover:bg-blue-50 transition-all duration-300 text-sm leading-relaxed font-medium text-gray-800',
-                      ].join(' ')}>
-                      <td className="p-4 text-sm font-medium text-gray-800 text-center">
-                        {index + 1}
-                      </td>
-                      <td className="p-4 relative text-sm h-20 max-h-full font-medium text-gray-800">
-                        <div className="relative flex justify-center items-center gap-2 h-full">
-                          <Button
-                            handlerClick={() => handlerShowModalDisposisi(item)}
-                            title="Disposisi"
-                            typeClass="success"
-                            classButton="text-xs py-1.5 txt-center">
-                            <UserIcon className="h-4" />
-                          </Button>
-                          <Button
-                            title="View Detail Project"
-                            typeClass="others"
-                            classButton="text-xs py-1.5 txt-center">
-                            <DocumentIcon className="h-4" />
-                          </Button>
-                        </div>
-                      </td>
-                      <td className="p-4 relative">{item.io.internal_order}</td>
-                      <td className="p-4 whitespace-pre-line">
-                        {item.desc_project?.toUpperCase()}
-                      </td>
-                      <td className="p-4 whitespace-nowrap">
-                        Rp {item.nilai_cogs.toLocaleString('id-ID')}
-                      </td>
-                      <td className="p-4 whitespace-pre-line">
-                        {item.end_customer}
-                      </td>
-                      <td className="p-4 whitespace-nowrap">
-                        {item.tgl_target_win}
-                      </td>
-                    </tr>
-                  ))
+                  INISIASI.listInisiasi.map(
+                    (item: DataInisiasi, index: number) => (
+                      <tr
+                        key={item?.id}
+                        className={[
+                          index % 2 === 0 ? 'bg-white' : 'bg-zinc-50',
+                          'hover:bg-blue-50 transition-all duration-300 text-sm leading-relaxed font-medium text-gray-800',
+                        ].join(' ')}>
+                        <td className="p-4 text-sm font-medium text-gray-800 text-center">
+                          {index + 1}
+                        </td>
+                        <td className="p-4 relative text-sm h-20 max-h-full font-medium text-gray-800">
+                          <div className="relative flex justify-center items-center gap-2 h-full">
+                            <Button
+                              handlerClick={() =>
+                                handlerShowModalDisposisi(item)
+                              }
+                              title="Disposisi"
+                              typeClass="success"
+                              classButton="text-xs py-1.5 txt-center">
+                              <UserIcon className="h-4" />
+                            </Button>
+                            <Button
+                              title="View Detail Project"
+                              typeClass="others"
+                              classButton="text-xs py-1.5 txt-center">
+                              <DocumentIcon className="h-4" />
+                            </Button>
+                          </div>
+                        </td>
+                        <td className="p-4 relative">
+                          {item?.io?.internal_order ?? ''}
+                        </td>
+                        <td className="p-4 whitespace-pre-line">
+                          {item?.desc_project?.toUpperCase()}
+                        </td>
+                        <td className="p-4 whitespace-nowrap">
+                          Rp {item.nilai_cogs.toLocaleString('id-ID')}
+                        </td>
+                        <td className="p-4 whitespace-pre-line">
+                          {item.end_customer}
+                        </td>
+                        <td className="p-4 whitespace-nowrap">
+                          {item.tgl_target_win}
+                        </td>
+                      </tr>
+                    ),
+                  )
                 )}
               </tbody>
             </table>
@@ -262,19 +256,21 @@ export default function Index() {
               value={formDisposisi.pic_procurement}
               onChange={(e) => handlerOnChange(e as any)}
               className="relative w-full mt-2 border border-gray-200 pl-4 py-3 rounded-md">
-              <option selected value="">
+              <option disabled value="">
                 Select PIC
               </option>
-              <option value="">Bang Hanif</option>
-              <option value="135">Mas Bay</option>
-              <option value="134">UE</option>
+              {USER?.procurement.map((item: any) => (
+                <option value={item.id} key={item.id}>
+                  {item.name}
+                </option>
+              ))}
             </select>
           </div>
           <div>
             <label
               htmlFor=""
               className="font-medium leading-relaxed text-gray-700">
-              PIC Legal :{' '}
+              PIC Legal :
             </label>
             <select
               required={true}
@@ -282,12 +278,14 @@ export default function Index() {
               value={formDisposisi.pic_legal}
               onChange={(e) => handlerOnChange(e as any)}
               className="relative w-full mt-2 border border-gray-200 pl-4 py-3 rounded-md">
-              <option selected value="">
+              <option disabled value="">
                 Select PIC
               </option>
-              <option value="">Bang Hanif</option>
-              <option value="135">Mas Bay</option>
-              <option value="134">UE</option>
+              {USER?.legal.map((item: any) => (
+                <option value={item.id} key={item.id}>
+                  {item.name}
+                </option>
+              ))}
             </select>
           </div>
 

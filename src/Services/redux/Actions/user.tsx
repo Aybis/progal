@@ -1,16 +1,50 @@
 import Cookies from 'js-cookie';
 import { Dispatch } from 'redux';
+import Swal from 'sweetalert2';
 import { setHeader } from '../../../Configs/api';
 import userApi from '../../../Middleware/user-api';
 import {
+  User,
   UserDispatchTypes,
+  UserLegal,
+  UserMenu,
+  UserProcurement,
+  UserProfile,
+  UserSuccess,
   USER_ERROR,
+  USER_LEGAL,
   USER_LOADING,
   USER_MENU,
   USER_MESSAGE,
+  USER_PROCUREMENT,
   USER_PROFILE,
   USER_SUCCESS,
-} from './../Types/user';
+} from '../Types/user';
+
+export const setProfileUser = (data: User): UserProfile => ({
+  type: USER_PROFILE,
+  payload: data,
+});
+
+export const setMenuUser = (data: any): UserMenu => ({
+  type: USER_MENU,
+  payload: data,
+});
+
+export const setUserSession = (data: any): UserSuccess => ({
+  type: USER_SUCCESS,
+  payload: data,
+});
+
+export const setUserProcurement = (data: User[]): UserProcurement => ({
+  type: USER_PROCUREMENT,
+  payload: data,
+});
+
+export const setUserLegal = (data: User[]): UserLegal => ({
+  type: USER_LEGAL,
+  payload: data,
+});
 
 export const LoginUser =
   (data: Object) => async (dispatch: Dispatch<UserDispatchTypes>) => {
@@ -107,6 +141,32 @@ export const GetListMenu =
         payload: error?.response?.data?.message ?? 'Something Happened!',
       });
 
+      return error;
+    }
+  };
+
+export const GetListProcurementPic =
+  () => async (dispatch: Dispatch<UserDispatchTypes>) => {
+    try {
+      const res = await userApi.userProcurement();
+      dispatch(setUserProcurement(res.data));
+
+      return res;
+    } catch (error: any) {
+      Swal.fire('Error', error?.response?.data?.message, 'error');
+      return error;
+    }
+  };
+
+export const GetListLegalPic =
+  () => async (dispatch: Dispatch<UserDispatchTypes>) => {
+    try {
+      const res = await userApi.userLegal();
+      dispatch(setUserLegal(res.data));
+
+      return res;
+    } catch (error: any) {
+      Swal.fire('Error', error?.response?.data?.message, 'error');
       return error;
     }
   };

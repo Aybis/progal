@@ -8,12 +8,18 @@ import {
   USER_MESSAGE,
   USER_PROFILE,
   USER_SUCCESS,
+  UserProcurementPic,
+  UserLegalPic,
+  USER_PROCUREMENT,
+  USER_LEGAL,
 } from './../Types/user';
 
 interface InitialState {
   loading: boolean;
   session?: UserSession;
   profile?: User;
+  procurement: UserProcurementPic[];
+  legal: UserLegalPic[];
   isError: boolean;
   message?: string;
   menu?: any;
@@ -23,6 +29,8 @@ const initialState: InitialState = {
   loading: false,
   isError: false,
   message: '',
+  procurement: [],
+  legal: [],
 };
 
 const userReducer = (
@@ -72,6 +80,23 @@ const userReducer = (
         isError: false,
         menu: action.payload,
       };
+
+    case USER_PROCUREMENT:
+      return {
+        ...state,
+        loading: false,
+        isError: false,
+        procurement: action.payload,
+      };
+
+    case USER_LEGAL:
+      return {
+        ...state,
+        loading: false,
+        isError: false,
+        legal: action.payload,
+      };
+
     default:
       return state;
   }

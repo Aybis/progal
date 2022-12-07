@@ -1,11 +1,5 @@
-import { useState } from 'react';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { Combobox } from '@headlessui/react';
-
-const people = [
-  { id: 1, name: 'Leslie Alexander' },
-  // More users...
-];
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -41,9 +35,9 @@ export default function Index(props: PropsComboBox) {
       <Combobox.Label className="block text-sm font-medium text-gray-700">
         {props.label}
       </Combobox.Label>
-      <div className="relative mt-1">
+      <div className="relative mt-2">
         <Combobox.Input
-          placeholder="Type to search"
+          placeholder={`Type to search ${props.label}`}
           className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
           onChange={(e) => props.setSearch(e.target.value)}
           displayValue={(item: any) => item?.[props.keyIndex]}
@@ -63,7 +57,7 @@ export default function Index(props: PropsComboBox) {
                 value={item}
                 className={({ active }) =>
                   classNames(
-                    'relative cursor-default select-none py-2 pl-3 pr-9',
+                    'relative cursor-default select-none py-2 pl-3 pr-9 transition-all duration-300',
                     active ? 'bg-blue-600 text-white' : 'text-gray-900',
                   )
                 }>

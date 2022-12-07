@@ -6,3 +6,5 @@ export { default as Anchor } from './Anchor';
 export { default as Modal } from './Modal';
 export { default as ModalMessage } from './ModalMessage';
 export { default as Comboboxes } from './Comboboxes';
+export { default as RadioGroup } from './RadioGroup';
+export { default as Badges } from './Badges';
