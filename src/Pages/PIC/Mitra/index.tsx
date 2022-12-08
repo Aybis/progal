@@ -1,78 +1,28 @@
-import {
-  DocumentPlusIcon,
-  PencilIcon,
-  TrashIcon,
-  DocumentCheckIcon,
-  DocumentDuplicateIcon,
-} from '@heroicons/react/24/outline';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
-import { Button, Input, Modal } from '../../../Components/atoms';
+import { Button, Modal } from '../../../Components/atoms';
 import {
   ButtonDocument,
   FormFile,
   FormSearch,
   FormUpdateMitra,
 } from '../../../Components/molecules';
-import { setHeader } from '../../../Configs/api';
 import Layout from '../../../Layouts/Layout';
-import progalApi from '../../../Middleware/progal-api';
 import { getMitraHasProject } from '../../../Services/redux/Actions/hasMitra';
 import { useAppDispatch, useAppSelector } from '../../../Services/redux/hook';
-import { DataMitraHasProject } from '../../../Services/redux/Types/hasmitra';
-
-type ProjectMitra = {
-  id: number | string;
-  amandemen?: [];
-  bakn?: any;
-  bast?: any;
-  boq_item?: [];
-  deskripsi_pekerjaan?: string;
-  end_jangka_waktu_pekerjaan?: string;
-  is_down_payment?: boolean;
-  jenis_dokumen?: string;
-  khs?: any;
-  kontrak?: any;
-  mitra?: {
-    akun_vendor?: string;
-    alamat?: string;
-    deskripsi_vendor?: string;
-    direktur?: string;
-    email?: string;
-    fax?: string;
-    id: number;
-    jenis_vendor_id?: number;
-    nama_vendor?: string;
-    no_tlpn?: string;
-    pic?: string;
-  };
-  nilai_down_payment?: string;
-  nilai_pekerjaan?: string;
-  nilai_realisasi_cogs?: string;
-  permohonan?: any;
-  persetujuan?: any;
-  project?: any;
-  sph?: any;
-  spph?: any;
-  start_jangka_waktu_pekerjaan: string;
-  status?: string;
-  tata_cara_pembayaran?: string;
-};
 
 export default function Index() {
   const dispatch = useAppDispatch();
   const { profile } = useAppSelector((state) => state.user);
   const { listMitraPic } = useAppSelector((state) => state.hasMitra);
-
-  const [dataFilter, setdataFilter] =
-    useState<DataMitraHasProject[]>(listMitraPic);
   const [showModal, setshowModal] = useState<boolean>(false);
 
+  // const [dataFilter, setdataFilter] =
+  //   useState<DataMitraHasProject[]>(listMitraPic);
   const [modalForm, setmodalForm] = useState({
     type: '',
     data: {},
   });
-
   const handlerModalForm = (type: string, data: any) => {
     setmodalForm({
       type,
@@ -81,32 +31,32 @@ export default function Index() {
     setshowModal(true);
   };
 
-  const handlerSearchProject = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    if (value === '') {
-      setdataFilter(listMitraPic);
-    } else {
-      const data = listMitraPic.filter((item) => {
-        return (
-          item.mitra?.nama_vendor
-            ?.toLowerCase()
-            .includes(value.toLowerCase()) ||
-          item.deskripsi_pekerjaan
-            ?.toLowerCase()
-            .includes(value.toLowerCase()) ||
-          item.project?.no_io?.toLowerCase().includes(value.toLowerCase())
-        );
-      });
-      setdataFilter(data);
-    }
-  };
+  // const handlerSearchProject = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value;
+  //   console.log(dataFilter);
+  //   if (value === '') {
+  //     setdataFilter(listMitraPic);
+  //   } else {
+  //     const data = listMitraPic.filter((item) => {
+  //       return (
+  //         item.mitra?.nama_vendor
+  //           ?.toLowerCase()
+  //           .includes(value.toLowerCase()) ||
+  //         item.deskripsi_pekerjaan
+  //           ?.toLowerCase()
+  //           .includes(value.toLowerCase()) ||
+  //         item.project?.no_io?.toLowerCase().includes(value.toLowerCase())
+  //       );
+  //     });
+  //     setdataFilter(data);
+  //   }
+  // };
 
   useEffect(() => {
     (async () => {
-      const res = await dispatch(getMitraHasProject(await profile?.id));
-      setdataFilter(res);
+      await dispatch(getMitraHasProject(await profile?.id));
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
 
   return (
@@ -116,7 +66,7 @@ export default function Index() {
       {/* Section Data Table */}
       <div className="relative bg-white p-4 rounded-lg mt-12">
         {/* Filter Input */}
-        <FormSearch onChange={handlerSearchProject} />
+        <FormSearch />
 
         {/* Section Table */}
         <div className="relative w-full mt-8 overflow-x-auto">
@@ -192,8 +142,8 @@ export default function Index() {
               </tr>
             </thead>
             <tbody>
-              {dataFilter.length > 0 &&
-                dataFilter.map((item, index) => (
+              {listMitraPic.length > 0 &&
+                listMitraPic.map((item, index) => (
                   <tr key={item?.id} className="text-sm">
                     <td className="text-center py-3 px-4">{index + 1}</td>
                     <td className="text-center py-3 px-4">
@@ -224,7 +174,7 @@ export default function Index() {
                       {item?.mitra?.nama_vendor}
                     </td>
                     <td className="text-left py-3 px-4 whitespace-nowrap">
-                      Rp {item?.nilai_realisasi_cogs}
+                      Rp {item?.nilai_realisasi_cogs?.toLocaleString('id-ID')}
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
                       <ButtonDocument
@@ -294,7 +244,10 @@ export default function Index() {
         isShow={showModal}
         onClose={setshowModal}>
         {modalForm.type === 'update' ? (
-          <FormUpdateMitra projectMitra={modalForm.data} />
+          <FormUpdateMitra
+            onClose={(arg) => setshowModal(arg)}
+            projectMitra={modalForm.data}
+          />
         ) : modalForm.type !== '' ? (
           <FormFile name={modalForm.type} data={modalForm.data} />
         ) : null}

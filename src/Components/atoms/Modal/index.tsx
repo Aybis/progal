@@ -1,3 +1,4 @@
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 import { Button } from '../';
 
@@ -28,10 +29,10 @@ export default function Index(props: ModalProps) {
             {props.headingModal}
           </h1>
           <Button
-            classButton="relative bg-white/0 text-gray-500 p-1 rounded"
+            classButton="relative bg-white/0 text-gray-500 p-0.5 rounded"
             handlerClick={() => props.onClose?.(!props.isShow)}
             typeClass="close">
-            X
+            <XMarkIcon className="h-5" />
           </Button>
         </div>
         {props.isShow && (

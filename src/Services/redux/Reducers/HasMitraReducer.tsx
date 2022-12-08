@@ -8,6 +8,7 @@ import {
   LIST_PROJECT_MITRA_LOADING,
   LIST_PROJECT_MITRA_MESSAGE,
   LIST_PROJECT_MITRA_SELECTED,
+  LOADING_UPDATE_MITRA,
   ProjectMitraDispatchTypes,
 } from '../Types/hasmitra';
 
@@ -19,6 +20,7 @@ interface InitialState {
   selectedMitraPic: DataMitraHasProject;
   isError: boolean;
   message?: string;
+  loadingUpdateMitra?: boolean;
 }
 
 const initialState: InitialState = {
@@ -29,6 +31,7 @@ const initialState: InitialState = {
   selectedProjectMitra: {} as DataProjectHasMitra,
   listMitraPic: [],
   selectedMitraPic: {} as DataMitraHasProject,
+  loadingUpdateMitra: false,
 };
 
 const hasMitraReducer = (
@@ -79,6 +82,12 @@ const hasMitraReducer = (
       return {
         ...state,
         selectedMitraPic: action.payload,
+      };
+
+    case LOADING_UPDATE_MITRA:
+      return {
+        ...state,
+        loadingUpdateMitra: action.payload,
       };
 
     default:

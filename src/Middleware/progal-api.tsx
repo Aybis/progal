@@ -11,7 +11,7 @@ export default {
     axios.post('procurement/project/disposition', data),
   mappingMitra: (data: Object) => axios.post('procurement/project-mitra', data),
   updateMitra: (id: string, data: Object) =>
-    axios.put(`procurement/project-mitra/update/${id}`, data),
+    axios.post(`procurement/project-mitra/update/${id}`, data),
   listMitra: () => axios.get('cms/vendor/get'),
   mitra: (params: Object) =>
     axios.get('procurement/project-mitra/by-pic', params),

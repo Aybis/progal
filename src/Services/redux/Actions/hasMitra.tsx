@@ -6,6 +6,7 @@ import {
   DataProjectHasMitra,
   ListMitraPIC,
   ListMitraPICSelected,
+  ListMitraPICUpdate,
   ListProjectMitra,
   LIST_MITRA_PIC,
   LIST_MITRA_PIC_SELECTED,
@@ -13,6 +14,7 @@ import {
   LIST_PROJECT_MITRA_LOADING,
   LIST_PROJECT_MITRA_MESSAGE,
   LIST_PROJECT_MITRA_SELECTED,
+  LOADING_UPDATE_MITRA,
   ProjectMitraDispatchTypes,
   ProjectMitraLoading,
   ProjectMitraMessage,
@@ -57,6 +59,11 @@ export const setMitraPICSelected = (
   payload: data,
 });
 
+export const setLoadingUpdateMitra = (data: boolean): ListMitraPICUpdate => ({
+  type: LOADING_UPDATE_MITRA,
+  payload: data,
+});
+
 // get project has mitra
 export const getProjectHasMitra =
   (id?: number | string) =>
@@ -80,6 +87,7 @@ export const getProjectHasMitra =
 export const getMitraHasProject =
   (id?: number | string) =>
   async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    console.log('test', id);
     dispatch(setLoadingProjectMitra(true));
     try {
       const response = await progalApi.mitra({
@@ -94,6 +102,23 @@ export const getMitraHasProject =
       dispatch(setLoadingProjectMitra(false));
 
       Swal.fire('Error', error?.response?.data?.message, 'error');
+      return error;
+    }
+  };
+
+export const updateMitraHasProject =
+  (id: string, data: any, user_id?: number) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    dispatch(setLoadingUpdateMitra(true));
+    try {
+      const res = await progalApi.updateMitra(id, data);
+
+      dispatch(setLoadingUpdateMitra(false));
+      getMitraHasProject(user_id)(dispatch);
+      return res;
+    } catch (error: any) {
+      dispatch(setLoadingUpdateMitra(false));
+
       return error;
     }
   };

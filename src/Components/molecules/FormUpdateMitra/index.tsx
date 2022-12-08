@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import { FormInput } from '../';
+import { updateMitraHasProject } from '../../../Services/redux/Actions/hasMitra';
+import { useAppDispatch, useAppSelector } from '../../../Services/redux/hook';
 import {
   convertCurrencyToNumber,
   convertToCurrency,
@@ -7,12 +10,14 @@ import {
 import { Button, RadioGroup } from '../../atoms';
 
 type ProjectMitra = {
-  onSubmit?: (data: any) => void;
+  onClose: (arg: boolean) => void;
   projectMitra?: any;
 };
 
 export default function Index(props: ProjectMitra) {
-  console.log('data', props.projectMitra);
+  const dispatch = useAppDispatch();
+  const { loadingUpdateMitra } = useAppSelector((state) => state.hasMitra);
+  const { profile } = useAppSelector((state) => state.user);
   const [caraBayarSelected, setcaraBayarSelected] = useState('');
 
   const dataCaraBayar: Array<string> = [
@@ -44,24 +49,40 @@ export default function Index(props: ProjectMitra) {
     });
   };
 
-  const handlerSubmit = (e: React.FormEvent) => {
+  const handlerSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // set form value currency
     form.tata_cara_pembayaran = caraBayarSelected;
     form.is_down_payment = form.nilai_down_payment.length > 0;
     form.nilai_realisasi_cogs =
-      form.nilai_realisasi_cogs !== ''
+      form.nilai_realisasi_cogs === ''
         ? ''
         : convertCurrencyToNumber(form.nilai_realisasi_cogs).toString();
     form.nilai_down_payment =
-      form.nilai_down_payment !== ''
+      form.nilai_down_payment === ''
         ? ''
         : convertCurrencyToNumber(form.nilai_down_payment).toString();
     form.nilai_pekerjaan =
-      form.nilai_pekerjaan !== ''
+      form.nilai_pekerjaan === ''
         ? ''
         : convertCurrencyToNumber(form.nilai_pekerjaan).toString();
-    console.log(form);
+
+    // handler update
+    const res = await dispatch(
+      updateMitraHasProject(props.projectMitra.id, form, profile?.id),
+    );
+
+    // condition result
+    if (res.status === 200) {
+      Swal.fire('Berhasil', res?.data ?? 'Data berhasil diupdate', 'success');
+      props.onClose(false);
+    } else {
+      Swal.fire('Gagal', 'Data gagal diupdate', 'error');
+    }
   };
+
+  console.log(profile?.id);
 
   return (
     <form onSubmit={handlerSubmit} className="relative flex flex-col gap-4">
@@ -119,6 +140,8 @@ export default function Index(props: ProjectMitra) {
         })}
 
       <Button
+        isDisabled={loadingUpdateMitra}
+        isSubmit={loadingUpdateMitra}
         type="submit"
         typeClass="primary"
         classButton="px-4 w-fit py-2 mt-4 text-base">

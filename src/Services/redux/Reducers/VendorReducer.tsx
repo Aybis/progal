@@ -1,9 +1,7 @@
 import {
-  ListVendor,
   LIST_VENDOR,
   Vendor,
   VendorDispatchTypes,
-  VendorSelected,
   VENDOR_ERROR,
   VENDOR_LOADING,
   VENDOR_MESSAGE,
