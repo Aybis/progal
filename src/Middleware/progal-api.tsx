@@ -13,6 +13,7 @@ export default {
   updateMitra: (id: string, data: Object) =>
     axios.post(`procurement/project-mitra/update/${id}`, data),
   listMitra: () => axios.get('cms/vendor/get'),
+  listItem: () => axios.get('cms/item/get'),
   mitra: (params: Object) =>
     axios.get('procurement/project-mitra/by-pic', params),
 
@@ -21,7 +22,24 @@ export default {
   insertSph: (data: Object) => axios.post('procurement/sph', data),
   insertBakn: (data: Object) => axios.post('procurement/bakn', data),
   insertKontrak: (data: Object) => axios.post('procurement/kontrak', data),
-  insertKhs: (data: Object) => axios.post('procurement/spph', data),
-  insertAgreement: (data: Object) => axios.post('procurement/spph', data),
-  insertRequest: (data: Object) => axios.post('procurement/spph', data),
+  insertKhs: (data: Object) => axios.post('procurement/khs', data),
+  insertAgreement: (data: Object) =>
+    axios.post('procurement/persetujuan', data),
+  insertRequest: (data: Object) => axios.post('procurement/permohonan', data),
+
+  // File Pendukung Update
+  updateSpph: (id: string, data: Object) =>
+    axios.post(`procurement/spph/update/${id}`, data),
+  updateSph: (id: string, data: Object) =>
+    axios.post(`procurement/sph/update/${id}`, data),
+  updateBakn: (id: string, data: Object) =>
+    axios.post(`procurement/bakn/update/${id}`, data),
+  updateKontrak: (id: string, data: Object) =>
+    axios.post(`procurement/kontrak/update/${id}`, data),
+  updateKhs: (id: string, data: Object) =>
+    axios.post(`procurement/khs/update/${id}`, data),
+  updateAgreement: (id: string, data: Object) =>
+    axios.post(`procurement/persetujuan/update/${id}`, data),
+  updateRequest: (id: string, data: Object) =>
+    axios.post(`procurement/permohonan/update/${id}`, data),
 };

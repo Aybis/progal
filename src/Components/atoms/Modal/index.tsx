@@ -36,7 +36,7 @@ export default function Index(props: ModalProps) {
           </Button>
         </div>
         {props.isShow && (
-          <div className="relative mt-4 h-[50vh] p-4 overflow-auto">
+          <div className="relative mt-4 min-h-full max-h-96 p-4 overflow-auto">
             {props?.children}
           </div>
         )}

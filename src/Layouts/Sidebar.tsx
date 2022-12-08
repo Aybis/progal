@@ -38,7 +38,7 @@ export default function Sidebar() {
     getInisiasiWonForManager();
     getDisposisiForPIC();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, []);
 
   return (
     <aside className="flex w-0 lg:w-64 transition-all duration-500 inset-y-0 left-0 fixed z-0 lg:z-20">

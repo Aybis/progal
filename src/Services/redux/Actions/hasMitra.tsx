@@ -1,5 +1,6 @@
 import { Dispatch } from 'react';
 import Swal from 'sweetalert2';
+import { setHeader } from '../../../Configs/api';
 import progalApi from '../../../Middleware/progal-api';
 import {
   DataMitraHasProject,
@@ -87,7 +88,6 @@ export const getProjectHasMitra =
 export const getMitraHasProject =
   (id?: number | string) =>
   async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
-    console.log('test', id);
     dispatch(setLoadingProjectMitra(true));
     try {
       const response = await progalApi.mitra({
@@ -119,6 +119,159 @@ export const updateMitraHasProject =
     } catch (error: any) {
       dispatch(setLoadingUpdateMitra(false));
 
+      return error;
+    }
+  };
+
+// Upload File Pendukung
+export const uploadFileSPPH =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    dispatch(setLoadingUpdateMitra(true));
+    try {
+      setHeader();
+      const res = await progalApi.insertSpph(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const uploadFileSPH =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertSph(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const uploadFileBAKN =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertBakn(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const uploadFileKHS =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertKhs(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const uploadFileKontrak =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertKontrak(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const uploadFilePersetujuan =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertAgreement(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const uploadFilePermohonan =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertRequest(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+// Update File Pendukung
+export const updateFileSPPH =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    dispatch(setLoadingUpdateMitra(true));
+    try {
+      setHeader();
+      const res = await progalApi.updateSpph(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFileSPH =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateSph(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFileBAKN =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateBakn(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFileKHS =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateKhs(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFileKontrak =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateKontrak(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFilePersetujuan =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateAgreement(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFilePermohonan =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateRequest(id, data);
+      return res;
+    } catch (error: any) {
       return error;
     }
   };

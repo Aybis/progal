@@ -85,7 +85,7 @@ export default function Index(props: FormProps) {
         name="pic_legal"
         value={form.pic_legal}
         onChange={(e) => handlerOnChange(e as any)}>
-        {USER?.procurement.map((item: any) => (
+        {USER?.legal.map((item: any) => (
           <option value={item.id} key={item.id}>
             {item.name}
           </option>

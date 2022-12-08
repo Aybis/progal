@@ -7,8 +7,12 @@ import { Button } from '../../atoms';
 
 type Props = {
   isUpload?: boolean;
-  handlerClick?: (type: string, item: any) => void | null;
-  type?: string;
+  handlerClick?: (
+    type: string,
+    item: any,
+    document?: any,
+    typeForm?: any,
+  ) => void | null;
   item?: any;
   document?: any;
   documentName?: string;
@@ -29,14 +33,28 @@ export default function Index(props: Props) {
       ) : (
         <>
           <Button
-            handlerClick={() => props.handlerClick?.('preview', props.item)}
+            handlerClick={() =>
+              props.handlerClick?.(
+                props.documentName ?? '',
+                props.item,
+                props.isUpload,
+                'preview',
+              )
+            }
             title={`Preview File ${props.documentName ?? ''}`}
             type="button"
             isTransparent="warning">
             <DocumentCheckIcon className="h-5" />
           </Button>
           <Button
-            handlerClick={() => props.handlerClick?.('update', props.item)}
+            handlerClick={() =>
+              props.handlerClick?.(
+                props.documentName ?? '',
+                props.item,
+                props.isUpload,
+                'update',
+              )
+            }
             title={`Update File ${props.documentName}`}
             type="button"
             isTransparent="update">

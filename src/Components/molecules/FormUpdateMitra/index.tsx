@@ -18,7 +18,9 @@ export default function Index(props: ProjectMitra) {
   const dispatch = useAppDispatch();
   const { loadingUpdateMitra } = useAppSelector((state) => state.hasMitra);
   const { profile } = useAppSelector((state) => state.user);
-  const [caraBayarSelected, setcaraBayarSelected] = useState('');
+  const [caraBayarSelected, setcaraBayarSelected] = useState(
+    props.projectMitra?.tata_cara_pembayaran ?? '',
+  );
 
   const dataCaraBayar: Array<string> = [
     'One Time Charge',
@@ -29,14 +31,16 @@ export default function Index(props: ProjectMitra) {
   ];
 
   const [form, setForm] = useState<any>({
-    deskripsi_pekerjaan: '',
-    is_down_payment: false,
-    nilai_pekerjaan: '',
-    nilai_realisasi_cogs: props.projectMitra.nilai_realisasi_cogs ?? '',
-    nilai_down_payment: '',
-    start_jangka_waktu_pekerjaan: '',
-    end_jangka_waktu_pekerjaan: '',
-    tata_cara_pembayaran: '',
+    deskripsi_pekerjaan: props.projectMitra?.deskripsi_pekerjaan ?? '',
+    is_down_payment: props.projectMitra?.is_down_payment ?? false,
+    nilai_pekerjaan: props.projectMitra?.nilai_pekerjaan ?? '',
+    nilai_realisasi_cogs: props.projectMitra?.nilai_realisasi_cogs ?? '',
+    nilai_down_payment: props.projectMitra?.nilai_down_payment ?? '',
+    start_jangka_waktu_pekerjaan:
+      props.projectMitra?.start_jangka_waktu_pekerjaan ?? '',
+    end_jangka_waktu_pekerjaan:
+      props.projectMitra?.end_jangka_waktu_pekerjaan ?? '',
+    tata_cara_pembayaran: props.projectMitra?.tata_cara_pembayaran ?? '',
   });
 
   const handlerInputChange = (e: any) => {
@@ -81,8 +85,6 @@ export default function Index(props: ProjectMitra) {
       Swal.fire('Gagal', 'Data gagal diupdate', 'error');
     }
   };
-
-  console.log(profile?.id);
 
   return (
     <form onSubmit={handlerSubmit} className="relative flex flex-col gap-4">
@@ -133,7 +135,8 @@ export default function Index(props: ProjectMitra) {
                 inputType={key.includes('jangka') ? 'date' : 'text'}
                 classLabel="capitalize"
                 labelName={key.replace(/_/g, ' ')}
-                inputName="nilai_realisasi_cogs"
+                inputName={key}
+                inputValue={form[key]}
               />
             );
           }

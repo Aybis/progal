@@ -1,4 +1,5 @@
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { PlusIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import { Button, Modal } from '../../../Components/atoms';
 import {
@@ -17,40 +18,26 @@ export default function Index() {
   const { listMitraPic } = useAppSelector((state) => state.hasMitra);
   const [showModal, setshowModal] = useState<boolean>(false);
 
-  // const [dataFilter, setdataFilter] =
-  //   useState<DataMitraHasProject[]>(listMitraPic);
   const [modalForm, setmodalForm] = useState({
     type: '',
     data: {},
+    document: {},
+    typeForm: '',
   });
-  const handlerModalForm = (type: string, data: any) => {
+  const handlerModalForm = (
+    type: string,
+    data: any,
+    document?: any,
+    typeForm?: any,
+  ) => {
     setmodalForm({
       type,
       data,
+      document,
+      typeForm,
     });
     setshowModal(true);
   };
-
-  // const handlerSearchProject = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const value = e.target.value;
-  //   console.log(dataFilter);
-  //   if (value === '') {
-  //     setdataFilter(listMitraPic);
-  //   } else {
-  //     const data = listMitraPic.filter((item) => {
-  //       return (
-  //         item.mitra?.nama_vendor
-  //           ?.toLowerCase()
-  //           .includes(value.toLowerCase()) ||
-  //         item.deskripsi_pekerjaan
-  //           ?.toLowerCase()
-  //           .includes(value.toLowerCase()) ||
-  //         item.project?.no_io?.toLowerCase().includes(value.toLowerCase())
-  //       );
-  //     });
-  //     setdataFilter(data);
-  //   }
-  // };
 
   useEffect(() => {
     (async () => {
@@ -104,7 +91,7 @@ export default function Index() {
                   Nilai
                 </th>
                 <th
-                  colSpan={6}
+                  colSpan={7}
                   className="text-center py-3 px-4 font-medium text-gray-700 border-b">
                   Dokumen
                 </th>
@@ -131,7 +118,10 @@ export default function Index() {
                   Kontrak
                 </th>
                 <th className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
-                  Surat
+                  Permohonan
+                </th>
+                <th className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+                  Persetujuan
                 </th>
                 <th className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
                   Proc
@@ -160,7 +150,15 @@ export default function Index() {
                           type="button"
                           typeClass="others"
                           classButton="text-sm py-1 gap-1 rounded bg-indigo-100 border border-indigo-200 text-indigo-600 hover:bg-indigo-500 hover:text-white">
-                          <PencilIcon className="h-3" /> Mitra
+                          <PencilIcon className="h-4" /> Mitra
+                        </Button>
+                        <Button
+                          handlerClick={() => handlerModalForm('update', item)}
+                          title="Update Mitra"
+                          type="button"
+                          isTransparent="success"
+                          classButton="text-sm py-1 gap-1 rounded bg-indigo-100 border border-indigo-200 text-indigo-600 hover:bg-indigo-500 hover:text-white">
+                          <PlusIcon className="h-4" /> BoQ
                         </Button>
                       </div>
                     </td>
@@ -178,7 +176,7 @@ export default function Index() {
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
                       <ButtonDocument
-                        handlerClick={() => handlerModalForm('update', item)}
+                        handlerClick={handlerModalForm}
                         isUpload={item?.spph}
                         documentName="SPPH"
                         item={item}
@@ -186,7 +184,7 @@ export default function Index() {
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
                       <ButtonDocument
-                        handlerClick={() => handlerModalForm('update', item)}
+                        handlerClick={handlerModalForm}
                         isUpload={item?.sph}
                         documentName="SPH"
                         item={item}
@@ -194,7 +192,7 @@ export default function Index() {
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
                       <ButtonDocument
-                        handlerClick={() => handlerModalForm('update', item)}
+                        handlerClick={handlerModalForm}
                         isUpload={item?.bakn}
                         documentName="BAKN"
                         item={item}
@@ -202,7 +200,7 @@ export default function Index() {
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
                       <ButtonDocument
-                        handlerClick={() => handlerModalForm('update', item)}
+                        handlerClick={handlerModalForm}
                         isUpload={item?.khs}
                         documentName="KHS"
                         item={item}
@@ -210,7 +208,7 @@ export default function Index() {
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
                       <ButtonDocument
-                        handlerClick={() => handlerModalForm('update', item)}
+                        handlerClick={handlerModalForm}
                         isUpload={item?.kontrak}
                         documentName="KONTRAK"
                         item={item}
@@ -218,9 +216,17 @@ export default function Index() {
                     </td>
                     <td className="text-center py-3 px-8 border-l whitespace-nowrap">
                       <ButtonDocument
-                        handlerClick={() => handlerModalForm('update', item)}
+                        handlerClick={handlerModalForm}
                         isUpload={item?.permohonan}
                         documentName="Permohonan"
+                        item={item}
+                      />
+                    </td>
+                    <td className="text-center py-3 px-8 border-l whitespace-nowrap">
+                      <ButtonDocument
+                        handlerClick={handlerModalForm}
+                        isUpload={item?.persetujuan}
+                        documentName="Persetujuan"
                         item={item}
                       />
                     </td>
@@ -249,7 +255,13 @@ export default function Index() {
             projectMitra={modalForm.data}
           />
         ) : modalForm.type !== '' ? (
-          <FormFile name={modalForm.type} data={modalForm.data} />
+          <FormFile
+            onClose={(arg) => setshowModal(arg)}
+            name={modalForm.type}
+            typeForm={modalForm.typeForm}
+            dataDocument={modalForm.document}
+            dataMitra={modalForm.data}
+          />
         ) : null}
       </Modal>
     </Layout>
