@@ -14,10 +14,8 @@ export default function Index(props: ModalProps) {
   return (
     <div
       className={[
-        'fixed top-0 min-h-screen max-h-full w-full flex left-0 z-40 bg-white/40 backdrop-blur-md justify-center items-center transition-all duration-300',
-        props.isShow
-          ? ' translate-x-0 translate-y-'
-          : '-translate-x-full -translate-y-full',
+        'fixed top-0 min-h-screen max-h-full w-full flex left-0 z-40 bg-white/40 backdrop-blur-md justify-center items-center transition-all duration-300 ease-in-out',
+        props.isShow ? 'translate-y-0' : 'translate-y-full',
       ].join(' ')}>
       <div className="relative max-h-full max-w-2xl mx-auto container bg-white shadow-xl rounded-lg">
         <div className="relative flex justify-between items-center mt-2 border-b border-gray-200 p-4">
@@ -26,7 +24,7 @@ export default function Index(props: ModalProps) {
               'text-xl xl:text-2xl font-semibold text-gray-800',
               props.classHeading,
             ].join(' ')}>
-            {props.headingModal}
+            {props.headingModal ?? 'Heading Modal'}
           </h1>
           <Button
             classButton="relative bg-white/0 text-gray-500 p-0.5 rounded"

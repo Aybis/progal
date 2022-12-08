@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Button, Modal } from '../../../Components/atoms';
 import {
   ButtonDocument,
+  FormBoq,
   FormFile,
   FormSearch,
   FormUpdateMitra,
@@ -74,6 +75,11 @@ export default function Index() {
                   rowSpan={2}
                   className="text-center py-3 px-4 font-medium text-gray-700 whitespace-nowrap">
                   IO
+                </th>
+                <th
+                  rowSpan={2}
+                  className="text-center py-3 px-4 font-medium text-gray-700 whitespace-nowrap">
+                  Judul Pekerjaan
                 </th>
                 <th
                   rowSpan={2}
@@ -150,10 +156,10 @@ export default function Index() {
                           type="button"
                           typeClass="others"
                           classButton="text-sm py-1 gap-1 rounded bg-indigo-100 border border-indigo-200 text-indigo-600 hover:bg-indigo-500 hover:text-white">
-                          <PencilIcon className="h-4" /> Mitra
+                          <PencilIcon className="h-3" /> Mitra
                         </Button>
                         <Button
-                          handlerClick={() => handlerModalForm('update', item)}
+                          handlerClick={() => handlerModalForm('boq', item)}
                           title="Update Mitra"
                           type="button"
                           isTransparent="success"
@@ -164,6 +170,9 @@ export default function Index() {
                     </td>
                     <td className="text-center py-3 px-4">
                       {item?.project?.no_io ?? ''}
+                    </td>
+                    <td className="text-left py-3 px-4 whitespace-pre-wrap">
+                      {item.project?.inisiasi?.desc_project ?? '-'}
                     </td>
                     <td className="text-left py-3 px-4 whitespace-pre-wrap">
                       {item.deskripsi_pekerjaan ?? '-'}
@@ -254,6 +263,8 @@ export default function Index() {
             onClose={(arg) => setshowModal(arg)}
             projectMitra={modalForm.data}
           />
+        ) : modalForm.type === 'boq' ? (
+          <FormBoq />
         ) : modalForm.type !== '' ? (
           <FormFile
             onClose={(arg) => setshowModal(arg)}

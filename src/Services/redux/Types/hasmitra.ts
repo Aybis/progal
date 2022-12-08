@@ -41,6 +41,9 @@ export type DataMitraHasProject = {
   permohonan?: any;
   persetujuan?: any;
   project?: {
+    inisiasi?: {
+      desc_project: string;
+    };
     id: number;
     kl_document: any;
     no_io: string;

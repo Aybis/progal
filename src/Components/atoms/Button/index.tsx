@@ -49,7 +49,7 @@ export default function Index(props: ButtonProps) {
         props.isTransparent === 'primary' &&
           'bg-blue-100/50 border-blue-100  text-blue-700 hover:bg-blue-500 focus:shadow-outline-blue active:bg-blue-800 focus:border-blue-300 hover:text-white',
         props.isTransparent === 'success' &&
-          'bg-green-100/50 border-green-100  text-green-700 hover:bg-green-500 focus:shadow-outline-green active:bg-green-800 focus:border-green-300 hover:text-white',
+          'bg-green-100/50 border-green-200  text-green-700 hover:bg-green-500 focus:shadow-outline-green active:bg-green-800 focus:border-green-300 hover:text-white',
         props.isTransparent === 'warning' &&
           'bg-yellow-100/50 border-yellow-100  text-yellow-700 hover:bg-yellow-500 focus:shadow-outline-blue active:bg-yellow-800 focus:border-yellow-300 hover:text-white',
         props.isTransparent === 'danger' &&

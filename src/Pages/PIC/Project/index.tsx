@@ -1,4 +1,4 @@
-import { PlusIcon } from '@heroicons/react/20/solid';
+import { PlusIcon, PencilIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import { Button, Modal } from '../../../Components/atoms';
 import { FormMappingMitra, FormSearch } from '../../../Components/molecules';
@@ -77,14 +77,24 @@ export default function Index() {
                     className="text-sm hover:bg-zinc-50 transition-all duration-300">
                     <td className="text-center py-3 px-4">{index + 1}</td>
                     <td className="text-center py-3 px-4">
-                      <Button
-                        handlerClick={() => handlerShowModal(item)}
-                        title="Tambah Mitra"
-                        type="button"
-                        typeClass="primary"
-                        classButton="text-sm py-1 rounded bg-blue-100 border border-blue-200 text-blue-600 hover:bg-blue-500 hover:text-white">
-                        <PlusIcon className="h-4" /> Mitra
-                      </Button>
+                      <div className="relative flex gap-2 justify-center items-center">
+                        <Button
+                          handlerClick={() => handlerShowModal(item)}
+                          title="Tambah Mitra"
+                          type="button"
+                          isTransparent="primary"
+                          classButton="flex gap-1 text-sm">
+                          <PlusIcon className="h-4" /> Mitra
+                        </Button>
+                        <Button
+                          handlerClick={() => handlerShowModal(item)}
+                          title="Update Project"
+                          type="button"
+                          isTransparent="update"
+                          classButton="flex gap-1 text-sm">
+                          <PencilIcon className="h-3" /> Project
+                        </Button>
+                      </div>
                     </td>
                     <td className="text-center py-3 px-4">{item.no_io}</td>
                     <td className="text-left py-3 px-4">

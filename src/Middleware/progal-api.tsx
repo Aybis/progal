@@ -2,18 +2,22 @@ import axios from '../Configs/api';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
+  // List Project Iniasi won for Manager
   inisiasiWon: () => axios.get('procurement/project/inisiasi-won'),
-  listProject: (data: Object) =>
-    axios.get('procurement/project/doesnt-have-mitra', data),
-  listProjectMitra: (data: Object) =>
-    axios.get('procurement/project/has-mitra', data),
   disposisi: (data: Object) =>
     axios.post('procurement/project/disposition', data),
+
+  // Project for PIC
+  listProject: (data: Object) =>
+    axios.get('procurement/project/doesnt-have-mitra', data),
+  // document file => file_p6, file_p8, file_kl
+  updateProject: (id: string, data: Object) =>
+    axios.post(`procurement/project/update/${id}`, data),
+  listProjectMitra: (data: Object) =>
+    axios.get('procurement/project/has-mitra', data),
   mappingMitra: (data: Object) => axios.post('procurement/project-mitra', data),
   updateMitra: (id: string, data: Object) =>
     axios.post(`procurement/project-mitra/update/${id}`, data),
-  listMitra: () => axios.get('cms/vendor/get'),
-  listItem: () => axios.get('cms/item/get'),
   mitra: (params: Object) =>
     axios.get('procurement/project-mitra/by-pic', params),
 
@@ -42,4 +46,8 @@ export default {
     axios.post(`procurement/persetujuan/update/${id}`, data),
   updateRequest: (id: string, data: Object) =>
     axios.post(`procurement/permohonan/update/${id}`, data),
+
+  // list vendor and item from master
+  listMitra: () => axios.get('cms/vendor/get'),
+  listItem: () => axios.get('cms/item/get'),
 };

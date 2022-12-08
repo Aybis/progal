@@ -6,3 +6,4 @@ export { default as FormDisposisi } from './FormDisposisi';
 export { default as FormSearch } from './FormSearch';
 export { default as FormMappingMitra } from './FormMappingMitra';
 export { default as ButtonDocument } from './ButtonDocument';
+export { default as FormBoq } from './FormBoq';

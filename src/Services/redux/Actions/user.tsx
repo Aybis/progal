@@ -110,7 +110,8 @@ export const GetProfileUser =
   };
 
 export const GetListMenu =
-  (data?: any) => async (dispatch: Dispatch<UserDispatchTypes>) => {
+  (user_id: any) => async (dispatch: Dispatch<UserDispatchTypes>) => {
+    console.log(user_id);
     try {
       dispatch({
         type: USER_LOADING,
@@ -120,7 +121,7 @@ export const GetListMenu =
       // await get list menu
       const res = await userApi.listMenu({
         params: {
-          user_id: data?.user_id,
+          user_id: user_id,
         },
       });
 
