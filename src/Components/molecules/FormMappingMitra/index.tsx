@@ -41,8 +41,8 @@ export default function Index(props: FormProps) {
     nilai_realisasi_cogs: '',
   });
 
-  const listDokumen: Array<string> = ['nopes', 'kontrak', 'spk'];
-
+  const listDokumen: Array<string> = ['nopes', 'spk', 'pks', 'sp', 'po'];
+  // NoPes/SPK/PO/SP/PKS
   // handler onchange input
   const handlerInputChange = (e: any) => {
     const { name, value } = e.target;

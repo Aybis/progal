@@ -22,14 +22,16 @@ export default function Index(props: Props) {
   return (
     <div className="relative flex gap-2">
       {props.isUpload === null ? (
-        <Button
-          handlerClick={() =>
-            props.handlerClick?.(props.documentName ?? '', props.item)
-          }
-          title={`Upload File ${props.documentName}`}
-          isTransparent="primary">
-          <DocumentPlusIcon className="h-5" />
-        </Button>
+        <div className="flex justify-center items-center w-full h-full">
+          <Button
+            handlerClick={() =>
+              props.handlerClick?.(props.documentName ?? '', props.item)
+            }
+            title={`Upload File ${props.documentName}`}
+            isTransparent="primary">
+            <DocumentPlusIcon className="h-5" />
+          </Button>
+        </div>
       ) : (
         <>
           <Button

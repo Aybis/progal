@@ -13,7 +13,7 @@ export default function Index(props: TheadProps) {
       rowSpan={props.rowSpan}
       colSpan={props.colSpan}
       className={[
-        'py-3 px-4 text-gray-800 whitespace-nowrap text-center text-base font-medium leading-relaxed tracking-wide',
+        'p-4 text-gray-600 whitespace-nowrap text-center text-sm font-medium uppercase leading-relaxed tracking-wide',
         props.className,
       ].join(' ')}>
       {props.children}

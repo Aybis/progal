@@ -1,4 +1,4 @@
-import { DocumentIcon, ShareIcon } from '@heroicons/react/24/solid';
+import { DocumentIcon, ShareIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { Button, Modal, Table, Tbody, Thead } from '../../../Components/atoms';
 import { FormMappingMitra, FormSearch } from '../../../Components/molecules';
@@ -25,14 +25,18 @@ export default function Index() {
         <FormSearch />
 
         {/* Section Table */}
-        <Table classRoot="mt-8">
+        <Table classRoot="mt-5">
           <thead>
             <tr className="bg-zinc-100">
-              <Thead>No</Thead>
-              <Thead>Action</Thead>
-              <Thead>No. IO</Thead>
-              <Thead>Project</Thead>
-              <Thead>Nilai COGS</Thead>
+              <Thead className="sticky top-0">No</Thead>
+              <Thead className="sticky top-0">Action</Thead>
+              <Thead className="sticky top-0">No. IO</Thead>
+              <Thead className="sticky top-0">Project</Thead>
+              <Thead className="sticky top-0">Nilai Realisasi COGS</Thead>
+              <Thead className="sticky top-0">Revenue</Thead>
+              <Thead className="sticky top-0">Project Margin</Thead>
+              <Thead className="sticky top-0">Status</Thead>
+              <Thead className="sticky top-0">Jusbis</Thead>
             </tr>
           </thead>
           <tbody>
@@ -55,28 +59,36 @@ export default function Index() {
               listProject.map((item: DataProject, index: number) => (
                 <tr
                   key={item.id}
-                  className="text-sm text-center border-b border-zinc-100">
+                  className="text-sm text-center border-b border-zinc-100 hover:bg-zinc-50 transition-all duration-300">
                   <Tbody>{index + 1}</Tbody>
                   <Tbody>
                     <div className="relative justify-center items-center flex gap-2">
                       <Button
-                        isTransparent="update"
+                        isTransparent="primary"
                         title="Mapping Mitra"
+                        classButton="text-sm flex gap-2"
                         handlerClick={() => handlerMapping(item)}>
-                        <ShareIcon className="h-5" />
+                        <ShareIcon className="h-4" /> Mapping
                       </Button>
-                      <Button isTransparent="warning" title="Preview Project">
-                        <DocumentIcon className="h-5" />
+                      <Button
+                        isTransparent="warning"
+                        title="Preview Project"
+                        classButton="text-sm flex gap-2">
+                        <DocumentIcon className="h-4" /> Preview
                       </Button>
                     </div>
                   </Tbody>
                   <Tbody>{item.no_io}</Tbody>
-                  <Tbody className="text-left">
-                    {item.inisiasi.desc_project}
+                  <Tbody className="text-left whitespace-pre-line">
+                    {item.inisiasi.title_project}
                   </Tbody>
                   <Tbody className="whitespace-nowrap">
                     Rp {item.inisiasi.nilai_cogs.toLocaleString('id-ID')}
                   </Tbody>
+                  <Tbody className="whitespace-nowrap">-</Tbody>
+                  <Tbody className="whitespace-nowrap">-</Tbody>
+                  <Tbody className="whitespace-nowrap">-</Tbody>
+                  <Tbody className="whitespace-nowrap">-</Tbody>
                 </tr>
               ))
             )}

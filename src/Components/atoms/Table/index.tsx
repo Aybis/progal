@@ -9,10 +9,15 @@ type TableProps = {
 export default function Index(props: TableProps) {
   return (
     <div
-      className={['relative w-full overflow-auto', props.classRoot].join(' ')}>
-      <table className={['w-full', props.classTable].join(' ')}>
-        {props.children}
-      </table>
+      className={['relative flex flex-col max-h-full', props.classRoot].join(
+        ' ',
+      )}>
+      <div className="flex-grow overflow-auto rounded-md pb-4">
+        <table
+          className={['relative w-full border', props.classTable].join(' ')}>
+          {props.children}
+        </table>
+      </div>
     </div>
   );
 }

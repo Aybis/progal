@@ -83,37 +83,37 @@ export default function Index(props: FormMitraProps) {
     switch (props.name?.toLowerCase()) {
       case 'spph':
         return await dispatch(
-          updateFileSPPH(props.dataMitra?.id?.toString(), form),
+          updateFileSPPH(props?.dataDocument?.id.toString(), form),
         );
 
       case 'sph':
         return await dispatch(
-          updateFileSPH(props.dataMitra?.id?.toString(), form),
+          updateFileSPH(props?.dataDocument?.id?.toString(), form),
         );
 
       case 'bakn':
         return await dispatch(
-          updateFileBAKN(props.dataMitra?.id?.toString(), form),
+          updateFileBAKN(props?.dataDocument?.id?.toString(), form),
         );
 
       case 'kontrak':
         return await dispatch(
-          updateFileKontrak(props.dataMitra?.id?.toString(), form),
+          updateFileKontrak(props?.dataDocument?.id?.toString(), form),
         );
 
       case 'permohonan':
         return await dispatch(
-          updateFilePermohonan(props.dataMitra?.id?.toString(), form),
+          updateFilePermohonan(props?.dataDocument?.id?.toString(), form),
         );
 
       case 'persetujuan':
         return await dispatch(
-          updateFilePersetujuan(props.dataMitra?.id?.toString(), form),
+          updateFilePersetujuan(props?.dataDocument?.id?.toString(), form),
         );
 
       case 'khs':
         return await dispatch(
-          updateFileKHS(props.dataMitra?.id?.toString(), form),
+          updateFileKHS(props?.dataDocument?.id?.toString(), form),
         );
 
       default:

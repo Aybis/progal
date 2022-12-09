@@ -13,7 +13,7 @@ export default function Index(props: TbodyProps) {
       rowSpan={props.rowSpan}
       colSpan={props.colSpan}
       className={[
-        'p-4 relative text-sm font-medium text-gray-800',
+        'p-4 relative text-sm leading-relaxed font-medium text-gray-800',
         props.className,
       ].join(' ')}>
       {props.children}

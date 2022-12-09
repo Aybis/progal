@@ -1,4 +1,4 @@
-import { DocumentIcon, UserIcon } from '@heroicons/react/24/solid';
+import { DocumentIcon, UserIcon } from '@heroicons/react/24/outline';
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Table, Tbody, Thead } from '../../../Components/atoms';
 import { FormDisposisi, FormSearch } from '../../../Components/molecules';
@@ -72,7 +72,7 @@ export default function Index() {
           'Loading...'
         ) : (
           <Table classRoot="mt-8">
-            <thead className="bg-blue-100">
+            <thead className="bg-zinc-100">
               <tr>
                 <Thead>No</Thead>
                 <Thead>Action</Thead>
@@ -107,14 +107,14 @@ export default function Index() {
                           isTransparent="success"
                           handlerClick={() => handlerShowModalDisposisi(item)}
                           title="Disposisi"
-                          classButton="text-xs py-1.5 txt-center">
-                          <UserIcon className="h-4" />
+                          classButton="flex gap-1 text-xs">
+                          <UserIcon className="h-4" /> Disposisi
                         </Button>
                         <Button
                           title="View Detail Project"
                           isTransparent="warning"
-                          classButton="text-xs py-1.5 txt-center">
-                          <DocumentIcon className="h-4" />
+                          classButton="text-xs gap-1">
+                          <DocumentIcon className="h-4" /> Preview
                         </Button>
                       </div>
                     </Tbody>

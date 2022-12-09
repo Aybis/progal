@@ -111,7 +111,6 @@ export const GetProfileUser =
 
 export const GetListMenu =
   (user_id: any) => async (dispatch: Dispatch<UserDispatchTypes>) => {
-    console.log(user_id);
     try {
       dispatch({
         type: USER_LOADING,

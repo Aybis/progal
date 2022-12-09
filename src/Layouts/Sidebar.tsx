@@ -9,13 +9,14 @@ import { useAppDispatch, useAppSelector } from '../Services/redux/hook';
 import { DataProject } from '../Services/redux/Types/project';
 
 export default function Sidebar() {
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const INISIASI = useAppSelector((state) => state.inisiasi);
   const { listProject } = useAppSelector((state) => state.project);
 
   const getListMenu = async () => {
-    const res: any = await dispatch(GetListMenu(await user?.profile?.id));
+    const res: any = await dispatch(GetListMenu(user?.profile?.id));
     return res;
   };
 
@@ -26,12 +27,10 @@ export default function Sidebar() {
 
   const getDisposisiForPIC = async () => {
     const res: DataProject[] = await dispatch(
-      getListProject(await user?.profile?.id),
+      getListProject(user?.profile?.id),
     );
     return res;
   };
-
-  const location = useLocation();
 
   useEffect(() => {
     if (user?.profile?.id) {
@@ -39,7 +38,6 @@ export default function Sidebar() {
       getInisiasiWonForManager();
       getDisposisiForPIC();
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.profile?.id, location.pathname]);
 

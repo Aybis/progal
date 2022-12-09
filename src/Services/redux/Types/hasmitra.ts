@@ -35,18 +35,19 @@ export type DataMitraHasProject = {
     no_tlpn?: string;
     pic?: string;
   };
-  nilai_down_payment?: string;
-  nilai_pekerjaan?: string;
-  nilai_realisasi_cogs?: number;
+  nilai_down_payment?: any;
+  nilai_pekerjaan?: any;
+  nilai_realisasi_cogs?: any;
   permohonan?: any;
   persetujuan?: any;
   project?: {
     inisiasi?: {
       desc_project: string;
+      title_project: string;
     };
     id: number;
     kl_document: any;
-    no_io: string;
+    no_io?: string | any;
     p6_dokument: any;
     p8_dokument: any;
     pic_legal: {
@@ -70,6 +71,9 @@ export type DataProjectHasMitra = {
   inisiasi_id: number;
   kl_dokumen: string;
   no_io: string;
+  file_p6: string;
+  file_p8: string;
+  file_kl: string;
   p6_dokumen: string;
   p8_dokumen: string;
   pic_legal: {
@@ -89,8 +93,14 @@ export type DataProjectHasMitra = {
     nilai_project: number;
     no_insisasi: string;
     tgl_target_win: string;
+    tile_project: string;
   };
-  project_mitra: Array<string>;
+  project_mitra: {
+    id: number;
+    nilai_down_payment: any;
+    nilai_pekerjaan: any;
+    nilai_realisasi_cogs: any;
+  }[];
 };
 
 // interfaces

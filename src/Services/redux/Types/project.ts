@@ -25,12 +25,13 @@ export type DataProject = {
   inisiasi: {
     desc_project: string;
     end_customer: string;
-    nilai_cogs: number;
+    nilai_cogs: number | 0;
     nilai_kl: number;
     nilai_penawaran: number;
     nilai_project: number;
     no_insisasi: string;
     tgl_target_win: string;
+    title_project: string;
   };
 };
 
