@@ -8,6 +8,8 @@ export default {
     axios.post('procurement/project/disposition', data),
 
   // Project for PIC
+  detailProject: (params: Object) =>
+    axios.get(`procurement/project/detail`, params),
   listProject: (data: Object) =>
     axios.get('procurement/project/doesnt-have-mitra', data),
   // document file => file_p6, file_p8, file_kl

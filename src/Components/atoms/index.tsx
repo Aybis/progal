@@ -11,3 +11,5 @@ export { default as Badges } from './Badges';
 export { default as Table } from './Table';
 export { default as Thead } from './Thead';
 export { default as Tbody } from './Tbody';
+export { default as TableDataCurrency } from './TableDataCurrency';
+export { default as Divider } from './Divider';

@@ -1,29 +1,43 @@
 import { DocumentIcon, ShareIcon } from '@heroicons/react/24/outline';
 import { Button, Table, Tbody, Thead } from '../../../Components/atoms';
+import { TableData } from '../../../Components/molecules';
 import { useAppSelector } from '../../../Services/redux/hook';
 import { DataProject } from '../../../Services/redux/Types/project';
 
 type Props = {
   dataProject?: DataProject[] | [];
-  handlerMapping: (item: any) => void;
+  handlerMapping: (type: string, item: any) => void;
 };
 
-export default function TableInboxManager(props: Props) {
+export default function TableInboxPIC(props: Props) {
   const { loading } = useAppSelector((state) => state.project);
 
   return (
     <Table classRoot="mt-5">
-      <thead>
-        <tr className="bg-zinc-100">
-          <Thead className="sticky top-0">No</Thead>
-          <Thead className="sticky top-0">Action</Thead>
-          <Thead className="sticky top-0">No. IO</Thead>
-          <Thead className="sticky top-0">Project</Thead>
-          <Thead className="sticky top-0">Nilai Realisasi COGS</Thead>
-          <Thead className="sticky top-0">Revenue</Thead>
-          <Thead className="sticky top-0">Project Margin</Thead>
-          <Thead className="sticky top-0">Status</Thead>
-          <Thead className="sticky top-0">Jusbis</Thead>
+      <thead className="bg-zinc-50 border">
+        <tr className="">
+          <Thead rowSpan={2} className="sticky top-0">
+            No
+          </Thead>
+          <Thead rowSpan={2} className="sticky top-0">
+            Action
+          </Thead>
+          <Thead rowSpan={2} className="sticky top-0">
+            No. IO
+          </Thead>
+          <Thead rowSpan={2} className="sticky top-0">
+            Judul Proyek
+          </Thead>
+
+          <Thead colSpan={4} className="sticky top-0 border-l border-b">
+            Jusbis
+          </Thead>
+        </tr>
+        <tr>
+          <Thead className="sticky top-0 border-l">Nilai COGS</Thead>
+          <Thead className="sticky top-0 border-l">Revenue</Thead>
+          <Thead className="sticky top-0 border-l">Project Margin</Thead>
+          <Thead className="sticky top-0 border-l">Status</Thead>
         </tr>
       </thead>
       <tbody>
@@ -36,11 +50,7 @@ export default function TableInboxManager(props: Props) {
           </tr>
         ) : props?.dataProject?.length === 0 ? (
           // state when data is null
-          <tr>
-            <Tbody colSpan={9} className="text-center text-sm py-4">
-              Tidak ada data
-            </Tbody>
-          </tr>
+          <TableData isEmpty colSpan={9} />
         ) : (
           // state when data is not null
           props?.dataProject?.map((item: DataProject, index: number) => (
@@ -54,13 +64,14 @@ export default function TableInboxManager(props: Props) {
                     isTransparent="primary"
                     title="Mapping Mitra"
                     classButton="text-sm flex gap-2"
-                    handlerClick={() => props.handlerMapping(item)}>
+                    handlerClick={() => props.handlerMapping('mapping', item)}>
                     <ShareIcon className="h-4" /> Mapping
                   </Button>
                   <Button
                     isTransparent="warning"
                     title="Preview Project"
-                    classButton="text-sm flex gap-2">
+                    classButton="text-sm flex gap-2"
+                    handlerClick={() => props.handlerMapping('preview', item)}>
                     <DocumentIcon className="h-4" /> Preview
                   </Button>
                 </div>
@@ -72,7 +83,6 @@ export default function TableInboxManager(props: Props) {
               <Tbody className="whitespace-nowrap">
                 Rp {item.inisiasi.nilai_cogs.toLocaleString('id-ID')}
               </Tbody>
-              <Tbody className="whitespace-nowrap">-</Tbody>
               <Tbody className="whitespace-nowrap">-</Tbody>
               <Tbody className="whitespace-nowrap">-</Tbody>
               <Tbody className="whitespace-nowrap">-</Tbody>

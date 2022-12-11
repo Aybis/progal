@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import {
   Amandemen,
   CheckProject,
+  DetailInisiasi,
   DetailProject,
   Homepage,
   Login,
@@ -51,7 +52,8 @@ function App() {
           <Route path="/project-done" element={<Project />} />
           <Route path="/amandemen" element={<Amandemen />} />
           <Route path="/project-detail" element={<CheckProject />} />
-          <Route path="/detail/:id" element={<DetailProject />} />
+          <Route path="/project/:id" element={<DetailProject />} />
+          <Route path="/inbox/:id" element={<DetailInisiasi />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

@@ -23,7 +23,7 @@ export default function Index(props: InputProps) {
           'w-full px-3 py-2 text-base font-medium text-gray-800 placeholder:text-sm placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:shadow-outline',
           props.isError && 'border-red-500',
           props.isDisabled &&
-            'bg-gray-200 disabled:cursor-not-allowed disabled:pointer-events-none',
+            'bg-gray-50 disabled:cursor-not-allowed disabled:pointer-events-none',
           props.classInput,
         ].join(' ')}
         name={props.inputName}

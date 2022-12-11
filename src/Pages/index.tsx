@@ -8,3 +8,4 @@ export { default as Mitra } from './PIC/Mitra';
 export { default as Amandemen } from './PIC/Amandemen';
 export { default as CheckProject } from './CheckProject';
 export { default as DetailProject } from './Detail';
+export { default as DetailInisiasi } from './Manager/DetailInisiasi';

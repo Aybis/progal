@@ -14,6 +14,7 @@ import {
   handlerMappingMitra,
 } from '../../../Services/redux/Actions/project';
 import { getProjectHasMitra } from '../../../Services/redux/Actions/hasMitra';
+import InfoCurrency from './InfoCurrency';
 
 type FormProps = {
   handlerClose?: (arg: boolean) => void;
@@ -42,7 +43,6 @@ export default function Index(props: FormProps) {
   });
 
   const listDokumen: Array<string> = ['nopes', 'spk', 'pks', 'sp', 'po'];
-  // NoPes/SPK/PO/SP/PKS
   // handler onchange input
   const handlerInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -88,9 +88,13 @@ export default function Index(props: FormProps) {
 
   return (
     <div>
+      {Object.values(selectedProjectMitra).length > 2 && (
+        <InfoCurrency form={form} />
+      )}
+
       <form
         onSubmit={handlerSubmitMappingMitra}
-        className="relative bg-white rounded-lg flex flex-col gap-5">
+        className="relative bg-white rounded-lg flex flex-col gap-5 ">
         <Comboboxes
           label="Mitra"
           search={search}

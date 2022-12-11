@@ -80,3 +80,33 @@ export const handlerMappingMitra =
       return error;
     }
   };
+
+export const getDetailProject =
+  (id: number) => async (dispatch: Dispatch<ProjectDispatchTypes>) => {
+    try {
+      setHeader();
+      const res = await progalApi.detailProject({
+        params: {
+          id: id,
+        },
+      });
+
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+
+export const updateFileProject =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateProject(id, data);
+      console.log(res);
+
+      return res;
+    } catch (error: any) {
+      console.log(error);
+      return error;
+    }
+  };

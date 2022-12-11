@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Modal } from '../../../Components/atoms';
 import { FormMappingMitra, FormSearch } from '../../../Components/molecules';
 import Layout from '../../../Layouts/Layout';
@@ -8,18 +9,25 @@ import {
 } from '../../../Services/redux/Actions/project';
 import { useAppDispatch, useAppSelector } from '../../../Services/redux/hook';
 import { DataProject } from '../../../Services/redux/Types/project';
-import TableInboxManager from './TableInboxManager';
+import TableInboxPIC from './TableInboxPIC';
 
 export default function Index() {
   const dispatch = useAppDispatch();
   const { profile } = useAppSelector((state) => state.user);
-  const { listProject, loading } = useAppSelector((state) => state.project);
+  const { listProject } = useAppSelector((state) => state.project);
   const [showModal, setshowModal] = useState<boolean>(false);
   const [filterData, setfilterData] = useState<DataProject[]>([]);
+  const navigate = useNavigate();
 
-  const handlerMapping = (item: DataProject) => {
-    setshowModal(true);
+  const handlerMapping = (type: string, item: DataProject) => {
     dispatch(setSelectedProject(item));
+    if (type === 'mapping') {
+      setshowModal(true);
+    }
+
+    if (type === 'preview') {
+      navigate(`/project/${item.id}}`);
+    }
   };
 
   const handlerFilterData = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +75,7 @@ export default function Index() {
         <FormSearch onChange={handlerFilterData} />
 
         {/* Section Table */}
-        <TableInboxManager
+        <TableInboxPIC
           dataProject={filterData}
           handlerMapping={handlerMapping}
         />

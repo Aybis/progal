@@ -18,6 +18,7 @@ export type DataInisiasi = {
   nilai_cogs: number;
   end_customer?: string;
   jasbisis?: any;
+  title_project?: string;
 };
 
 // interface

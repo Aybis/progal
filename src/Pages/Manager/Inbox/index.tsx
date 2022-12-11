@@ -1,6 +1,6 @@
-import { DocumentIcon, UserIcon } from '@heroicons/react/24/outline';
 import React, { useEffect, useState } from 'react';
-import { Button, Modal, Table, Tbody, Thead } from '../../../Components/atoms';
+import { useNavigate } from 'react-router-dom';
+import { Modal } from '../../../Components/atoms';
 import { FormDisposisi, FormSearch } from '../../../Components/molecules';
 import Layout from '../../../Layouts/Layout';
 import { setInisiasiSelected } from '../../../Services/redux/Actions/inisiasi';
@@ -10,6 +10,7 @@ import {
 } from '../../../Services/redux/Actions/user';
 import { useAppDispatch, useAppSelector } from '../../../Services/redux/hook';
 import { DataInisiasi } from '../../../Services/redux/Types/inisiasi';
+import TableInboxManager from './TableInboxManager';
 
 export default function Index() {
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ export default function Index() {
     INISIASI.listInisiasi,
   );
   const [showModalDisposisi, setshowModalDisposisi] = useState(false);
+  const navigate = useNavigate();
 
   const handlerFilterData = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === '') {
@@ -44,9 +46,14 @@ export default function Index() {
     }
   };
 
-  const handlerShowModalDisposisi = (data: any) => {
+  const handlerShowModalDisposisi = (type: string, data: any) => {
     dispatch(setInisiasiSelected(data));
-    setshowModalDisposisi(true);
+    if (type === 'disposisi') {
+      setshowModalDisposisi(true);
+    }
+    if (type === 'preview') {
+      navigate(`/inbox/${data.id}`);
+    }
   };
 
   useEffect(() => {
@@ -68,77 +75,10 @@ export default function Index() {
           <FormSearch onChange={handlerFilterData} />
         </div>
 
-        {INISIASI.loading ? (
-          'Loading...'
-        ) : (
-          <Table classRoot="mt-8">
-            <thead className="bg-zinc-100">
-              <tr>
-                <Thead>No</Thead>
-                <Thead>Action</Thead>
-                <Thead>No. IO</Thead>
-                <Thead>Desc. Project</Thead>
-                <Thead>Nilai</Thead>
-                <Thead>Customer</Thead>
-                <Thead>Tgl. Won</Thead>
-              </tr>
-            </thead>
-            <tbody>
-              {filterData.length === 0 ? (
-                <tr className="bg-white">
-                  <Tbody colSpan={7} className="text-center">
-                    <p className="text-sm leading-relaxed text-gray-600">
-                      Data tidak ditemukan
-                    </p>
-                  </Tbody>
-                </tr>
-              ) : (
-                filterData.map((item: DataInisiasi, index: number) => (
-                  <tr
-                    className={[
-                      index % 2 === 0 ? 'bg-white' : 'bg-zinc-50',
-                      'hover:bg-blue-50 transition-all duration-300 text-sm leading-relaxed font-medium text-gray-800',
-                    ].join(' ')}
-                    key={item.id}>
-                    <Tbody className="text-center">{index + 1}</Tbody>
-                    <Tbody>
-                      <div className="relative flex justify-center items-center gap-2 h-full">
-                        <Button
-                          isTransparent="success"
-                          handlerClick={() => handlerShowModalDisposisi(item)}
-                          title="Disposisi"
-                          classButton="flex gap-1 text-xs">
-                          <UserIcon className="h-4" /> Disposisi
-                        </Button>
-                        <Button
-                          title="View Detail Project"
-                          isTransparent="warning"
-                          classButton="text-xs gap-1">
-                          <DocumentIcon className="h-4" /> Preview
-                        </Button>
-                      </div>
-                    </Tbody>
-                    <Tbody className="text-center">
-                      {item?.io?.internal_order}
-                    </Tbody>
-                    <Tbody className="text-left whitespace-pre-wrap">
-                      {item?.desc_project}
-                    </Tbody>
-                    <Tbody className="text-center whitespace-nowrap">
-                      Rp {item?.nilai_cogs?.toLocaleString('id-ID')}
-                    </Tbody>
-                    <Tbody className="text-center whitespace-nowrap">
-                      {item?.end_customer}
-                    </Tbody>
-                    <Tbody className="text-center whitespace-nowrap">
-                      {item?.tgl_target_win}
-                    </Tbody>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
-        )}
+        <TableInboxManager
+          handlerMapping={handlerShowModalDisposisi}
+          data={filterData}
+        />
       </div>
 
       <Modal
