@@ -66,7 +66,7 @@ export default function Index(props: ProjectMitra) {
     form.nilai_down_payment =
       form.nilai_down_payment === ''
         ? ''
-        : convertCurrencyToNumber(form.nilai_down_payment).toString();
+        : convertCurrencyToNumber(form.nilai_down_payment);
     form.nilai_pekerjaan =
       form.nilai_pekerjaan === ''
         ? ''

@@ -6,6 +6,10 @@ export const convertToCurrency = (value: string) => {
 
 // handler convert currency to number
 export const convertCurrencyToNumber = (value: string) => {
-  const number = parseInt(value.replace(/[^0-9]/g, ''), 10);
-  return number;
+  if (typeof value === 'number') {
+    return value;
+  } else {
+    const number = parseInt(value.replace(/[^0-9]/g, ''));
+    return number;
+  }
 };

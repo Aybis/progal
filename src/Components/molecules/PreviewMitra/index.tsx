@@ -8,7 +8,6 @@ type Props = {
 };
 
 export default function Index(props: Props) {
-  console.log(props.data);
   const [handlerPreview, sethandlerPreview] = useState<boolean>(false);
   let filterField: string[] = [
     'project_id',

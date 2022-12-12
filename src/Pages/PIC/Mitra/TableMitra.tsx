@@ -71,6 +71,7 @@ export default function TableMitra(props: Props) {
             rowSpan={2}
             className="text-center py-3 px-4 font-medium text-gray-700 whitespace-nowrap">
             Nilai Efisiensi
+            <p>(COGS - Pekerjaan)</p>
           </Thead>
           <Thead
             rowSpan={2}

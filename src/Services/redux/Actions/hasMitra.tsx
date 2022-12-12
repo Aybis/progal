@@ -6,10 +6,12 @@ import {
   DataMitraHasProject,
   DataProjectHasMitra,
   ListMitraPIC,
+  ListMitraPICFilter,
   ListMitraPICSelected,
   ListMitraPICUpdate,
   ListProjectMitra,
   LIST_MITRA_PIC,
+  LIST_MITRA_PIC_FILTER,
   LIST_MITRA_PIC_SELECTED,
   LIST_PROJECT_MITRA,
   LIST_PROJECT_MITRA_LOADING,
@@ -65,6 +67,13 @@ export const setLoadingUpdateMitra = (data: boolean): ListMitraPICUpdate => ({
   payload: data,
 });
 
+export const setListMitraPicFilter = (
+  data: DataMitraHasProject[],
+): ListMitraPICFilter => ({
+  type: LIST_MITRA_PIC_FILTER,
+  payload: data,
+});
+
 // get project has mitra
 export const getProjectHasMitra =
   (id?: number | string) =>
@@ -96,6 +105,7 @@ export const getMitraHasProject =
         },
       });
       dispatch(setListMitraPIC(response.data));
+      dispatch(setListMitraPicFilter(response.data));
       dispatch(setLoadingProjectMitra(false));
       return response.data;
     } catch (error: any) {
@@ -107,7 +117,7 @@ export const getMitraHasProject =
   };
 
 export const updateMitraHasProject =
-  (id: string, data: any, user_id?: number) =>
+  (id: string, data: any, user_id?: any) =>
   async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
     dispatch(setLoadingUpdateMitra(true));
     try {

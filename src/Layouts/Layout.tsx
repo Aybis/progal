@@ -56,7 +56,7 @@ export default function Layout(props: LayoutsProps) {
           )}
 
           {/* Section Main Content */}
-          <main className="relative bg-zinc-100 p-4 min-h-screen max-h-full max-w-full">
+          <main className="relative bg-zinc-50 p-4 min-h-screen max-h-full max-w-full">
             <div className="relative">
               {/* Back Button  */}
               {props.backNavigation && (

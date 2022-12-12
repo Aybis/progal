@@ -73,7 +73,6 @@ export const handlerMappingMitra =
       getListProject()(dispatch);
       return response;
     } catch (error: any) {
-      console.log(error);
       dispatch(setLoadingProject(false));
       dispatch(setMessageProject(error?.response?.data?.message));
 
@@ -102,11 +101,8 @@ export const updateFileProject =
   async (dispatch: Dispatch<ProjectDispatchTypes>) => {
     try {
       const res = await progalApi.updateProject(id, data);
-      console.log(res);
-
       return res;
     } catch (error: any) {
-      console.log(error);
       return error;
     }
   };

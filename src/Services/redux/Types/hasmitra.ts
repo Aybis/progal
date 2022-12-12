@@ -8,6 +8,7 @@ export const LIST_MITRA_PIC = 'LIST_MITRA_PIC';
 export const LIST_MITRA_PIC_SELECTED = 'LIST_MITRA_PIC_SELECTED';
 export const LIST_MITRA_PIC_LOADING = 'LIST_MITRA_PIC_LOADING';
 export const LOADING_UPDATE_MITRA = 'LOADING_UPDATE_MITRA';
+export const LIST_MITRA_PIC_FILTER = 'LIST_MITRA_PIC_FILTER';
 
 // type data
 export type DataMitraHasProject = {
@@ -148,6 +149,11 @@ export interface ListMitraPICUpdate {
   payload: boolean;
 }
 
+export interface ListMitraPICFilter {
+  type: typeof LIST_MITRA_PIC_FILTER;
+  payload: DataMitraHasProject[];
+}
+
 export type ProjectMitraDispatchTypes =
   | ListProjectMitra
   | ProjectMitraLoading
@@ -157,4 +163,5 @@ export type ProjectMitraDispatchTypes =
   | ProjectMitraSelected
   | ListMitraPIC
   | ListMitraPICSelected
-  | ListMitraPICUpdate;
+  | ListMitraPICUpdate
+  | ListMitraPICFilter;

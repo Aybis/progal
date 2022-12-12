@@ -2,6 +2,7 @@ import {
   DataMitraHasProject,
   DataProjectHasMitra,
   LIST_MITRA_PIC,
+  LIST_MITRA_PIC_FILTER,
   LIST_MITRA_PIC_SELECTED,
   LIST_PROJECT_MITRA,
   LIST_PROJECT_MITRA_ERROR,
@@ -21,6 +22,7 @@ interface InitialState {
   isError: boolean;
   message?: string;
   loadingUpdateMitra?: boolean;
+  listMitraFilter: DataMitraHasProject[];
 }
 
 const initialState: InitialState = {
@@ -32,6 +34,7 @@ const initialState: InitialState = {
   listMitraPic: [],
   selectedMitraPic: {} as DataMitraHasProject,
   loadingUpdateMitra: false,
+  listMitraFilter: [],
 };
 
 const hasMitraReducer = (
@@ -88,6 +91,12 @@ const hasMitraReducer = (
       return {
         ...state,
         loadingUpdateMitra: action.payload,
+      };
+
+    case LIST_MITRA_PIC_FILTER:
+      return {
+        ...state,
+        listMitraFilter: action.payload,
       };
 
     default:
