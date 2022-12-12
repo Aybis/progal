@@ -8,6 +8,7 @@ type Props = {
 };
 
 export default function Index(props: Props) {
+  console.log(props.data);
   const [handlerPreview, sethandlerPreview] = useState<boolean>(false);
   let filterField: string[] = [
     'project_id',
@@ -86,7 +87,13 @@ export default function Index(props: Props) {
             <PreviewDocumentMitra data={props.data} />
 
             <Divider nameDivide="BoQ Item" colorBg="bg-white" />
-            <PreviewBoQ data={props.data.boq_item} />
+            <PreviewBoQ
+              spk={props.data !== undefined ? props?.data?.kontrak?.no : null}
+              nameVendor={
+                props.data !== undefined ? props.data?.mitra?.nama_vendor : null
+              }
+              data={props.data.boq_item}
+            />
           </div>
         </div>
       ) : (

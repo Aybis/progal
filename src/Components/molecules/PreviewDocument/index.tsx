@@ -42,14 +42,14 @@ export default function Index(props: Props) {
               key={item}
               className="flex flex-col gap-4 justify-between items-center mb-4">
               <p className="text-gray-700 font-medium text-sm">
-                {item.replace(/_/g, ' ').toUpperCase()}
+                {item?.replace(/_/g, ' ').toUpperCase()}
               </p>
-              {props.data[item] === null ? (
+              {props?.data?.[item] === null ? (
                 '-'
               ) : (
                 <a
                   title={`View ${item.replace(/_/g, ' ').toUpperCase()}`}
-                  href={props.data[item]}
+                  href={props?.data?.[item]}
                   target="_blank"
                   rel="noreferrer"
                   className="text-blue-500 flex gap-1 text-sm">

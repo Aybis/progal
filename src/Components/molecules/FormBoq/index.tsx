@@ -11,7 +11,6 @@ type Props = {
 };
 
 export default function Index(props: Props) {
-  console.log(props.dataProject);
   const [dataItem, setdataItem] = useState([]);
   const [itemSelected, setitemSelected] = useState<any>();
   const [search, setsearch] = useState<string>('');

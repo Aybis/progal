@@ -6,10 +6,12 @@ import {
   CheckProject,
   DetailInisiasi,
   DetailProject,
+  Done,
   Homepage,
   Login,
   ManagerInbox,
   Mitra,
+  Monitoring,
   NotFound,
   PICInbox,
   Project,
@@ -49,10 +51,11 @@ function App() {
           <Route path="/allocate" element={<PICInbox />} />
           <Route path="/project" element={<Project />} />
           <Route path="/project-mitra" element={<Mitra />} />
-          <Route path="/project-done" element={<Project />} />
+          <Route path="/project-done" element={<Done />} />
           <Route path="/amandemen" element={<Amandemen />} />
           <Route path="/project-detail" element={<CheckProject />} />
           <Route path="/project/:id" element={<DetailProject />} />
+          <Route path="/monitoring" element={<Monitoring />} />
           <Route path="/inbox/:id" element={<DetailInisiasi />} />
         </Route>
 

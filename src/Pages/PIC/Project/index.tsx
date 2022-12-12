@@ -4,6 +4,7 @@ import {
   FormDocument,
   FormMappingMitra,
   FormSearch,
+  LengthData,
 } from '../../../Components/molecules';
 import Layout from '../../../Layouts/Layout';
 import {
@@ -18,6 +19,8 @@ export default function Index() {
   const dispatch = useAppDispatch();
   const { profile } = useAppSelector((state) => state.user);
   const [showModal, setshowModal] = useState<boolean>(false);
+  const ProjectMitra = useAppSelector((state) => state.hasMitra);
+
   const [typeForm, settypeForm] = useState<string>('');
 
   const handlerClick = (type: string, item: DataProjectHasMitra) => {
@@ -41,7 +44,7 @@ export default function Index() {
       <div className="relative bg-white p-4 rounded-lg mt-12">
         {/* Filter Search */}
         <FormSearch />
-
+        <LengthData data={ProjectMitra.listProjectMitra} />
         {/* Section Table */}
         <TableProject handlerClick={handlerClick} />
       </div>

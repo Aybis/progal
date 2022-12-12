@@ -3,6 +3,8 @@ import { Table, TableDataCurrency, Tbody, Thead } from '../../atoms';
 
 type Props = {
   data: any;
+  nameVendor?: string;
+  spk?: any;
 };
 
 export default function Index(props: Props) {
@@ -55,8 +57,10 @@ export default function Index(props: Props) {
                 <Tbody className="px-4 py-2 text-center">
                   {item?.item?.jenis_distribusi}
                 </Tbody>
-                <Tbody className="px-4 py-2 text-center">-</Tbody>
-                <Tbody className="px-4 py-2 text-center">-</Tbody>
+                <Tbody className="px-4 py-2 text-center">
+                  {props?.nameVendor}
+                </Tbody>
+                <Tbody className="px-4 py-2 text-center">{props.spk}</Tbody>
               </tr>
             );
           })

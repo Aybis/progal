@@ -9,3 +9,5 @@ export { default as Amandemen } from './PIC/Amandemen';
 export { default as CheckProject } from './CheckProject';
 export { default as DetailProject } from './Detail';
 export { default as DetailInisiasi } from './Manager/DetailInisiasi';
+export { default as Monitoring } from './Monitoring';
+export { default as Done } from './PIC/Done';

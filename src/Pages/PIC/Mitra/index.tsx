@@ -5,6 +5,7 @@ import {
   FormFile,
   FormSearch,
   FormUpdateMitra,
+  LengthData,
 } from '../../../Components/molecules';
 import Layout from '../../../Layouts/Layout';
 import { getMitraHasProject } from '../../../Services/redux/Actions/hasMitra';
@@ -88,6 +89,7 @@ export default function Index() {
             handlerSearch(event)
           }
         />
+        <LengthData data={filterData} />
 
         {/* Section Table */}
         <TableMitra data={filterData} handlerModalForm={handlerModalForm} />
