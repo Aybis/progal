@@ -63,7 +63,7 @@ export default function Layout(props: LayoutsProps) {
                 <Button
                   handlerClick={() => navigate(-1)}
                   classButton="flex gap-2 hover:scale-105 mb-4 mt-2 text-base tacking-wide">
-                  <ArrowDownLeftIcon className="h-6 transform rotate-45" />
+                  <ArrowDownLeftIcon className="h-4 transform rotate-45" />
                   Kembali
                 </Button>
               )}

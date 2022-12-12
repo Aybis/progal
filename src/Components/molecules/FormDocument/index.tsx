@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import { FormInput } from '..';
 import { updateFileProject } from '../../../Services/redux/Actions/project';
 import { useAppDispatch, useAppSelector } from '../../../Services/redux/hook';
@@ -32,7 +33,13 @@ export default function Index() {
         updateFileProject(selectedProjectMitra?.id?.toString(), form),
       );
       console.log(res);
-    } catch (error: any) {}
+
+      return res;
+    } catch (error: any) {
+      console.log(error);
+      Swal.fire('Error', error.message, 'error');
+      return error;
+    }
   };
 
   return (

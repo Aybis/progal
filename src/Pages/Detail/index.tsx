@@ -49,20 +49,22 @@ export default function Index() {
         </div>
       </div>
 
-      <Divider nameDivide="Detail Projects" />
+      <div className="relative mb-20">
+        <Divider nameDivide="Detail Projects" />
 
-      {/* Inisiasi */}
-      <PreviewInisiasi data={dataProject?.inisiasi} />
+        {/* Inisiasi */}
+        <PreviewInisiasi data={dataProject?.inisiasi} />
 
-      {/* Project  */}
-      <PreviewDocument data={dataProject} />
+        {/* Project  */}
+        <PreviewDocument data={dataProject} />
 
-      {/* Mitra */}
-      {dataProject?.project_mitra?.length > 0
-        ? dataProject?.project_mitra?.map((item: any) => (
-            <PreviewMitra key={item.id} data={item} />
-          ))
-        : null}
+        {/* Mitra */}
+        {dataProject?.project_mitra?.length > 0
+          ? dataProject?.project_mitra?.map((item: any) => (
+              <PreviewMitra key={item.id} data={item} />
+            ))
+          : null}
+      </div>
     </Layout>
   );
 }
