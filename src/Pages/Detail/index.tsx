@@ -25,7 +25,7 @@ export default function Index() {
   }, [dispatch, id]);
 
   return (
-    <Layout textHeading="Detail Project">
+    <Layout textHeading="Detail Project" backNavigation>
       {/* Detail Project  */}
       <div className="relative p-4 mt-10 rounded-lg flex justify-center items-center bg-blue-100/70 backdrop-blur-sm">
         <h1 className="text-center text-2xl leading-relaxed text-blue-600 font-semibold">
@@ -35,13 +35,13 @@ export default function Index() {
 
       {/* PIC  */}
       <div className="relative grid grid-cols-2 mt-4 gap-4 mb-8">
-        <div className="relative flex flex-col justify-center items-center bg-white/40 p-4 rounded-lg">
+        <div className="relative flex flex-col justify-center items-center bg-white/80 p-4 rounded-lg">
           <p className="text-sm font-light text-gray-600">PIC PROCUREMENT</p>
           <h1 className="mt-4 text-xl font-semibold text-gray-800">
             {dataProject?.pic_procurement?.name}
           </h1>
         </div>
-        <div className="relative flex flex-col justify-center items-center bg-white/40 p-4 rounded-lg">
+        <div className="relative flex flex-col justify-center items-center bg-white/80 p-4 rounded-lg">
           <p className="text-sm font-light text-gray-600">PIC LEGAL</p>
           <h1 className="mt-4 text-xl font-semibold text-gray-800">
             {dataProject?.pic_legal?.name}

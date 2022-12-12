@@ -1,6 +1,6 @@
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
-import { FormInput, PreviewDocumentMitra } from '..';
+import { FormInput, PreviewBoQ, PreviewDocumentMitra } from '..';
 import { Button, Divider } from '../../atoms';
 
 type Props = {
@@ -29,14 +29,6 @@ export default function Index(props: Props) {
     'position',
   ];
 
-  const handlerClick = () => {
-    sethandlerPreview(!handlerPreview);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-
   return (
     <div className="relative mt-4">
       <div className="relative flex justify-between items-center">
@@ -46,7 +38,7 @@ export default function Index(props: Props) {
         </h1>
 
         <Button
-          handlerClick={() => handlerClick()}
+          handlerClick={() => sethandlerPreview(!handlerPreview)}
           typeClass="others"
           classButton="transition-all duration-500">
           <ArrowUpIcon
@@ -94,6 +86,7 @@ export default function Index(props: Props) {
             <PreviewDocumentMitra data={props.data} />
 
             <Divider nameDivide="BoQ Item" colorBg="bg-white" />
+            <PreviewBoQ data={props.data.boq_item} />
           </div>
         </div>
       ) : (

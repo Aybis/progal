@@ -14,7 +14,9 @@ type Props = {
 export default function Index(props: Props) {
   return (
     <tr>
-      <Tbody className={props.className} colSpan={props.colSpan}>
+      <Tbody
+        className={[props.className, 'text-center'].join(' ')}
+        colSpan={props.colSpan}>
         {props.children}
         {props.isNull && 'Data tidak ditemukan'}
         {props.isEmpty && 'Tidak ada data'}

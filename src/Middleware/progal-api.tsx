@@ -52,4 +52,7 @@ export default {
   // list vendor and item from master
   listMitra: () => axios.get('cms/vendor/get'),
   listItem: () => axios.get('cms/item/get'),
+
+  // boq
+  insertBoQ: (data: Object) => axios.post('procurement/boq-item', data),
 };

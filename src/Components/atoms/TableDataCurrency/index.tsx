@@ -1,13 +1,13 @@
 import React from 'react';
 
 type Props = {
-  value?: number;
+  value: number;
   className?: string;
   currency?: 'Rp' | 'IDR' | '$' | 'USD' | string;
 };
 
 export default function Index(props: Props) {
-  return props.value !== 0 ? (
+  return props?.value > 0 ? (
     <div
       className={[
         'relative flex justify-between items-center',

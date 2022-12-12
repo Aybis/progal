@@ -13,3 +13,4 @@ export { default as PreviewMitra } from './PreviewMitra';
 export { default as PreviewDocumentMitra } from './PreviewDocumentMitra';
 export { default as PreviewDocument } from './PreviewDocument';
 export { default as FormDocument } from './FormDocument';
+export { default as PreviewBoQ } from './PreviewBoQ';

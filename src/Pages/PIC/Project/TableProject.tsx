@@ -1,4 +1,6 @@
-import { PencilIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { DocumentIcon, DocumentPlusIcon } from '@heroicons/react/24/outline';
+import { PlusIcon } from '@heroicons/react/24/solid';
+import { useNavigate } from 'react-router-dom';
 import { Button, Table, Tbody, Thead } from '../../../Components/atoms';
 import { useAppSelector } from '../../../Services/redux/hook';
 
@@ -8,6 +10,7 @@ type Props = {
 
 export default function TableProject(props: Props) {
   const ProjectMitra = useAppSelector((state) => state.hasMitra);
+  const navigate = useNavigate();
 
   return (
     <Table classRoot="mt-5">
@@ -66,7 +69,16 @@ export default function TableProject(props: Props) {
                     type="button"
                     isTransparent="update"
                     classButton="flex gap-1 px-2 text-sm">
-                    <PencilIcon className="h-3" /> Project
+                    <DocumentPlusIcon className="h-4" /> Project
+                  </Button>
+
+                  <Button
+                    handlerClick={() => navigate(`/project/${item.id}`)}
+                    title="Preview Project"
+                    type="button"
+                    classButton="gap-1"
+                    isTransparent="warning">
+                    <DocumentIcon className="h-4" /> Preview
                   </Button>
                 </div>
               </Tbody>
