@@ -12,6 +12,7 @@ type InputProps = {
   isRequired?: boolean;
   isError?: boolean;
   message?: string;
+  accept?: string;
 };
 
 export default function Index(props: InputProps) {
@@ -33,6 +34,7 @@ export default function Index(props: InputProps) {
         disabled={props.isDisabled ?? false}
         readOnly={props.isReadOnly ?? false}
         required={props.isRequired ?? false}
+        accept={props.accept}
       />
 
       {props.isError && (

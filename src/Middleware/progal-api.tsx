@@ -32,6 +32,7 @@ export default {
   insertAgreement: (data: Object) =>
     axios.post('procurement/persetujuan', data),
   insertRequest: (data: Object) => axios.post('procurement/permohonan', data),
+  insertBast: (data: Object) => axios.post('procurement/bast', data),
 
   // File Pendukung Update
   updateSpph: (id: string, data: Object) =>
@@ -48,6 +49,8 @@ export default {
     axios.post(`procurement/persetujuan/update/${id}`, data),
   updateRequest: (id: string, data: Object) =>
     axios.post(`procurement/permohonan/update/${id}`, data),
+  updateBast: (id: string, data: Object) =>
+    axios.post(`procurement/bast/update/${id}`, data),
 
   // list vendor and item from master
   listMitra: () => axios.get('cms/vendor/get'),

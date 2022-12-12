@@ -37,7 +37,7 @@ export default function TableInboxManager(props: Props) {
           <Thead rowSpan={2} className="sticky top-0">
             End Customer
           </Thead>
-          <Thead colSpan={4} className="sticky top-0 border-l border-b">
+          <Thead colSpan={5} className="sticky top-0 border-l border-b">
             Jusbis
           </Thead>
         </tr>
@@ -46,13 +46,14 @@ export default function TableInboxManager(props: Props) {
           <Thead className="sticky top-0 border-l">Revenue</Thead>
           <Thead className="sticky top-0 border-l">Project Margin</Thead>
           <Thead className="sticky top-0 border-l">Status</Thead>
+          <Thead className="sticky top-0 border-l">Metode Pembiayaan</Thead>
         </tr>
       </thead>
       <tbody>
         {loading ? (
           // state when fetch data
           <tr>
-            <Tbody colSpan={9} className="text-center text-sm py-4">
+            <Tbody colSpan={10} className="text-center text-sm py-4">
               Loading...
             </Tbody>
           </tr>
@@ -100,6 +101,7 @@ export default function TableInboxManager(props: Props) {
                   value={item.nilai_cogs}
                 />
               </Tbody>
+              <Tbody className="whitespace-nowrap">-</Tbody>
               <Tbody className="whitespace-nowrap">-</Tbody>
               <Tbody className="whitespace-nowrap">-</Tbody>
               <Tbody className="whitespace-nowrap">-</Tbody>

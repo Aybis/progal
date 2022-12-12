@@ -28,6 +28,7 @@ export default function Index(props: ProjectMitra) {
     'Cash on Delivery',
     'Progress',
     'Termin',
+    'Monthly',
   ];
 
   const [form, setForm] = useState<any>({

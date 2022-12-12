@@ -33,7 +33,7 @@ export default function Index(props: Props) {
           </Button>
         </div>
       ) : (
-        <>
+        <div className="relative flex justify-center items-center w-full">
           <Button
             handlerClick={() =>
               props.handlerClick?.(
@@ -62,7 +62,7 @@ export default function Index(props: Props) {
             isTransparent="update">
             <DocumentDuplicateIcon className="h-5" />
           </Button>
-        </>
+        </div>
       )}
     </div>
   );

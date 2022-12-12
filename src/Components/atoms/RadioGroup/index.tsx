@@ -41,7 +41,7 @@ export default function Index(props: PropsRadioGroup) {
                   checked
                     ? 'bg-blue-500 font-semibold border-transparent text-white hover:bg-blue-700'
                     : 'bg-white border-gray-200 text-gray-900 hover:bg-gray-50',
-                  'border rounded-md py-3 px-3 flex items-center justify-center text-center text-sm font-medium uppercase sm:flex-1 transition-all duration-300',
+                  'border rounded-md py-3 px-3 flex items-center justify-center text-center text-sm font-medium uppercase sm:flex-none w-fit transition-all duration-300',
                 )
               }>
               <RadioGroup.Label as="span">{option}</RadioGroup.Label>

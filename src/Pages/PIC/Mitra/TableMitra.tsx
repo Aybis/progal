@@ -94,7 +94,7 @@ export default function TableMitra(props: Props) {
             Jenis Dokumen
           </Thead>
           <Thead
-            colSpan={7}
+            colSpan={8}
             className="text-center py-3 px-4 font-medium text-gray-700 border-b">
             Dokumen
           </Thead>
@@ -121,10 +121,13 @@ export default function TableMitra(props: Props) {
             Kontrak
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
-            Permohonan
+            Permohonan Jangka Waktu
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
-            Persetujuan
+            Persetujuan Jangka Waktu
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            BAST
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
             Proc
@@ -286,6 +289,14 @@ export default function TableMitra(props: Props) {
                   handlerClick={props.handlerModalForm}
                   isUpload={item?.persetujuan}
                   documentName="Persetujuan"
+                  item={item}
+                />
+              </Tbody>
+              <Tbody className="border-l py-3 px-8">
+                <ButtonDocument
+                  handlerClick={props.handlerModalForm}
+                  isUpload={item?.bast}
+                  documentName="BAST"
                   item={item}
                 />
               </Tbody>

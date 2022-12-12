@@ -206,6 +206,16 @@ export const uploadFilePermohonan =
     }
   };
 
+export const uploadFileBast =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertBast(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
 // Update File Pendukung
 export const updateFileSPPH =
   (id: string, data: any) =>
@@ -280,6 +290,17 @@ export const updateFilePermohonan =
   async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
     try {
       const res = await progalApi.updateRequest(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFileBast =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateBast(id, data);
       return res;
     } catch (error: any) {
       return error;

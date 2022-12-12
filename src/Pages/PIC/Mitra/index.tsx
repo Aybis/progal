@@ -101,7 +101,13 @@ export default function Index() {
 
       <Modal
         classHeading="uppercase"
-        headingModal={`Form ${modalForm.type}`}
+        headingModal={`Form ${
+          modalForm.type?.toLowerCase() === 'permohonan'
+            ? 'Permohonan Jangka Waktu'
+            : modalForm.type?.toLowerCase() === 'persetujuan'
+            ? 'Persetujuan Jangka Waktu'
+            : modalForm.type
+        }`}
         isShow={showModal}
         onClose={setshowModal}>
         {modalForm.type === 'update' ? (

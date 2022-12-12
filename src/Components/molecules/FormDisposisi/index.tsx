@@ -64,6 +64,20 @@ export default function Index(props: FormProps) {
     }
   };
 
+  // Sei, Putra, Dian
+
+  let filterPicProcurement = [
+    'SEIRAWAN EKA SAKTI',
+    'BIMA RISWANTA TARIGAN',
+    'DWI ANDIKA PUTRA',
+    'ADE HERMAN NASUTION',
+    'RIO ADITYA',
+    'DIAN ABDURRAHMAN',
+    'PUTRA WIDJAYA',
+  ];
+
+  console.log(inisiasiSelected);
+
   return (
     <form onSubmit={handlerSubmit} className="relative flex flex-col gap-4">
       <InputSelect
@@ -72,25 +86,31 @@ export default function Index(props: FormProps) {
         name="pic_procurement"
         value={form.pic_procurement}
         onChange={(e) => handlerOnChange(e as any)}>
-        {USER?.procurement.map((item: any) => (
-          <option value={item.id} key={item.id}>
-            {item.name}
-          </option>
-        ))}
+        {USER?.procurement
+          .filter(
+            (user: any) => filterPicProcurement.includes(user?.name) === true,
+          )
+          .map((item: any) => (
+            <option value={item.id} key={item.id}>
+              {item.name}
+            </option>
+          ))}
       </InputSelect>
 
-      <InputSelect
-        label="PIC Legal :"
-        placeholder="PIC"
-        name="pic_legal"
-        value={form.pic_legal}
-        onChange={(e) => handlerOnChange(e as any)}>
-        {USER?.legal.map((item: any) => (
-          <option value={item.id} key={item.id}>
-            {item.name}
-          </option>
-        ))}
-      </InputSelect>
+      {inisiasiSelected?.nilai_cogs > 100000000 && (
+        <InputSelect
+          label="PIC Legal :"
+          placeholder="PIC"
+          name="pic_legal"
+          value={form.pic_legal}
+          onChange={(e) => handlerOnChange(e as any)}>
+          {USER?.legal.map((item: any) => (
+            <option value={item.id} key={item.id}>
+              {item.name}
+            </option>
+          ))}
+        </InputSelect>
+      )}
 
       <Button
         isSubmit={loadingDisposisi}
