@@ -58,7 +58,7 @@ export default function Index() {
             handlerClose={(arg) => setshowModal(arg)}
           />
         ) : (
-          <FormDocument />
+          <FormDocument handlerClose={(arg) => setshowModal(arg)} />
         )}
       </Modal>
     </Layout>

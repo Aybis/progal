@@ -1,3 +1,4 @@
+import { DocumentIcon } from '@heroicons/react/24/outline';
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { Button } from '../../atoms';
@@ -37,8 +38,25 @@ export default function Index(props: Props) {
         ].join(' ')}>
         {filterFieldDocument.map((item) => {
           return (
-            <div key={item} className="flex justify-between items-center">
-              <p className="text-gray-700 font-medium text-sm">{item}</p>
+            <div
+              key={item}
+              className="flex flex-col gap-4 justify-between items-center mb-4">
+              <p className="text-gray-700 font-medium text-sm">
+                {item.replace(/_/g, ' ').toUpperCase()}
+              </p>
+              {props.data[item] === null ? (
+                '-'
+              ) : (
+                <a
+                  title={`View ${item.replace(/_/g, ' ').toUpperCase()}`}
+                  href={props.data[item]}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-500 flex gap-1 text-sm">
+                  <DocumentIcon className="h-5" />
+                  View
+                </a>
+              )}
             </div>
           );
         })}

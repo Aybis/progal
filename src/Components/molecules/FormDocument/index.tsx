@@ -5,11 +5,13 @@ import { updateFileProject } from '../../../Services/redux/Actions/project';
 import { useAppDispatch, useAppSelector } from '../../../Services/redux/hook';
 import { Button } from '../../atoms';
 
-export default function Index() {
+type Props = {
+  handlerClose: (arg: boolean) => void;
+};
+
+export default function Index(props: Props) {
   const dispatch = useAppDispatch();
   const { selectedProjectMitra } = useAppSelector((state) => state.hasMitra);
-
-  console.log('test', selectedProjectMitra);
 
   const [form, setform] = useState<any>({
     file_p6: '',
@@ -17,26 +19,31 @@ export default function Index() {
     file_kl: '',
   });
 
-  const handlerChangeValueFile = (e: any) => {
-    const { name, files } = e.target;
+  const handlerChangeValueFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+
     setform({
       ...form,
-      [name]: files[0],
+      [name]: e?.target?.files?.[0],
     });
   };
 
   const handlerSubmit = async (e: any) => {
     e.preventDefault();
+    const formData = new FormData();
+
+    Object.keys(form).forEach((item) => {
+      formData.append(item, form[item]);
+    });
 
     try {
       const res = await dispatch(
-        updateFileProject(selectedProjectMitra?.id?.toString(), form),
+        updateFileProject(selectedProjectMitra?.id?.toString(), formData),
       );
-      console.log(res);
-
+      Swal.fire('Success', 'Upload file success', 'success');
+      props?.handlerClose?.(false);
       return res;
     } catch (error: any) {
-      console.log(error);
       Swal.fire('Error', error.message, 'error');
       return error;
     }

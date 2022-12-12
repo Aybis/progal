@@ -118,13 +118,46 @@ export default function TableProject(props: Props) {
 
               {/* DOKUMEN */}
               <Tbody className="text-center py-3 px-4 whitespace-nowrap">
-                {item.file_p6}
+                {item.file_p6 ? (
+                  <a
+                    title="View File P6"
+                    href={item.file_p6}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-500">
+                    <DocumentIcon />
+                  </a>
+                ) : (
+                  '-'
+                )}
               </Tbody>
               <Tbody className="text-center py-3 px-4 whitespace-nowrap">
-                {item.file_p8}
+                {item.file_p8 ? (
+                  <a
+                    title="View File P8"
+                    href={item.file_p8}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-500">
+                    <DocumentIcon />
+                  </a>
+                ) : (
+                  '-'
+                )}
               </Tbody>
               <Tbody className="text-center py-3 px-4 whitespace-nowrap">
-                {item.file_kl}
+                {item.file_kl ? (
+                  <a
+                    href={item.file_kl}
+                    title="View File KL"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-500">
+                    <DocumentIcon />
+                  </a>
+                ) : (
+                  '-'
+                )}
               </Tbody>
               {/* PIC */}
               <Tbody className="text-center py-3 px-4 whitespace-nowrap">

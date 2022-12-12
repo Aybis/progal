@@ -18,7 +18,7 @@ export default function Index(props: Props) {
   let fieldDocumentFilter: string[] = ['no', 'tanggal', 'file_name'];
 
   return (
-    <div className="relative grid grid-cols-3 mt-4 gap-4">
+    <div className="relative grid grid-flow-row-dense md:grid-cols-2 xl:grid-cols-3 mt-4 gap-4">
       {Object.entries(props.data)
         .filter((form) => fielDocument.includes(form[0]) === true)
         ?.map((item: any) => (
