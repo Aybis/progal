@@ -49,9 +49,6 @@ export default function Index(props: Props) {
                         fieldDocumentFilter.includes(document[0]) === true,
                     )
                     .map((doc: any) => {
-                      if (item[0].toLowerCase() === 'bast') {
-                        console.log(item[1][doc[0]]);
-                      }
                       return (
                         <div
                           key={doc[0]}
