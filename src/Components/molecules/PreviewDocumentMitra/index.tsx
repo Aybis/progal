@@ -6,16 +6,25 @@ type Props = {
 
 export default function Index(props: Props) {
   let fielDocument: string[] = [
-    'bakn',
-    'bast',
-    'khs',
     'spph',
     'sph',
+    'bakn',
+    'khs',
     'kontrak',
     'permohonan',
     'persetujuan',
+    'bast',
   ];
-  let fieldDocumentFilter: string[] = ['no', 'tanggal', 'file_name'];
+  let fieldDocumentFilter: string[] = [
+    'no',
+    'tanggal',
+    'file_name',
+    'file_do',
+    'file_baso',
+    'file_ba_rekon',
+    'file_bapp',
+    'file_baut',
+  ];
 
   return (
     <div className="relative grid grid-flow-row-dense md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 mt-4 gap-4">
@@ -39,29 +48,42 @@ export default function Index(props: Props) {
                       (document) =>
                         fieldDocumentFilter.includes(document[0]) === true,
                     )
-                    .map((doc: any) => (
-                      <div
-                        key={doc[0]}
-                        className="relative flex justify-between w-full">
-                        <p className="capitalize font-medium text-sm text-gray-500 ">
-                          {doc[0].replace(/_/g, ' ')} :
-                        </p>
-                        {doc[0] === 'file_name' ? (
-                          <a
-                            href={item[1].file_url}
-                            target="_blank"
-                            className="text-sm font-medium text-blue-500 leading-relaxed "
-                            rel="noreferrer">
-                            View Dokumen{' '}
-                            {item[0].replace(/_/g, ' ').toUpperCase()}
-                          </a>
-                        ) : (
-                          <p className="text-base font-semibold text-gray-800">
-                            {doc[1]}
+                    .map((doc: any) => {
+                      if (item[0].toLowerCase() === 'bast') {
+                        console.log(item[1][doc[0]]);
+                      }
+                      return (
+                        <div
+                          key={doc[0]}
+                          className="relative flex justify-between w-full">
+                          <p className="capitalize font-medium text-sm text-gray-500 ">
+                            {doc[0].replace(/_/g, ' ')} :
                           </p>
-                        )}
-                      </div>
-                    ))}
+                          {doc[0].includes('file') ? (
+                            item[1][doc[0]] !== null ? (
+                              <a
+                                href={
+                                  item[0].toLowerCase() === 'bast'
+                                    ? item[1][doc[0]]
+                                    : item[1].file_url
+                                }
+                                target="_blank"
+                                className="text-sm font-medium text-blue-500 leading-relaxed cursor-pointer"
+                                rel="noreferrer">
+                                View Dokumen{' '}
+                                {item[0].replace(/_/g, ' ').toUpperCase()}
+                              </a>
+                            ) : (
+                              '-'
+                            )
+                          ) : (
+                            <p className="text-base font-semibold text-gray-800">
+                              {doc[1]}
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
                 </div>
               ) : null}
             </div>

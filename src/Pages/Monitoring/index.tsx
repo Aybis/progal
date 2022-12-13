@@ -50,8 +50,8 @@ export default function Index() {
 
   return (
     <Layout
-      textHeading="Project Mitra"
-      subHeading="List Project berdasarkan mitra">
+      textHeading="Monitoring Project"
+      subHeading="List Project untuk Monitoring Log">
       {/* Section Data Table */}
       <div className="relative bg-white p-4 rounded-lg mt-12">
         {/* Filter Input */}

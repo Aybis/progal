@@ -13,3 +13,4 @@ export { default as Thead } from './Thead';
 export { default as Tbody } from './Tbody';
 export { default as TableDataCurrency } from './TableDataCurrency';
 export { default as Divider } from './Divider';
+export { default as LinkDocument } from './LinkDocument';

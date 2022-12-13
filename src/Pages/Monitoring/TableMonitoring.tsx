@@ -2,12 +2,12 @@ import { DocumentIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
+  LinkDocument,
   Table,
   TableDataCurrency,
   Tbody,
   Thead,
 } from '../../Components/atoms';
-import { ButtonDocument } from '../../Components/molecules';
 import { DataMitraHasProject } from '../../Services/redux/Types/hasmitra';
 
 type Props = {
@@ -92,7 +92,7 @@ export default function TableMonitoring(props: Props) {
             Jenis Dokumen
           </Thead>
           <Thead
-            colSpan={7}
+            colSpan={8}
             className="text-center py-3 px-4 font-medium text-gray-700 border-b">
             Dokumen
           </Thead>
@@ -119,10 +119,13 @@ export default function TableMonitoring(props: Props) {
             Kontrak
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
-            Permohonan
+            Permohonan Perpanjangan Waktu
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
-            Persetujuan
+            Persetujuan Perpanjangan Waktu
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            BAST
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
             Proc
@@ -135,145 +138,159 @@ export default function TableMonitoring(props: Props) {
       <tbody>
         {props.data.length > 0 &&
           // sort by number
-          props.data.map((item: DataMitraHasProject, index: number) => (
-            <tr key={item?.id} className="text-sm">
-              <Tbody className="text-center py-3 px-4">{index + 1}</Tbody>
-              <Tbody className="text-center py-3 px-4">
-                <div className="relative flex justify-center gap-2">
-                  <Button
-                    handlerClick={() =>
-                      navigate(`/project/${item?.project?.id}`)
+          props.data.map((item: DataMitraHasProject, index: number) => {
+            return (
+              <tr key={item?.id} className="text-sm">
+                <Tbody className="text-center py-3 px-4">{index + 1}</Tbody>
+                <Tbody className="text-center py-3 px-4">
+                  <div className="relative flex justify-center gap-2">
+                    <Button
+                      handlerClick={() =>
+                        navigate(`/project/${item?.project?.id}`)
+                      }
+                      title="Preview Project"
+                      type="button"
+                      classButton="gap-1"
+                      isTransparent="warning">
+                      <DocumentIcon className="h-4" /> Preview
+                    </Button>
+                  </div>
+                </Tbody>
+
+                <Tbody className="text-center py-3 px-4">
+                  {item?.project?.no_io ?? ''}
+                </Tbody>
+                <Tbody className="text-left py-3 px-4">
+                  {item.project?.inisiasi?.title_project ?? '-'}
+                </Tbody>
+                <Tbody className="text-left py-3 px-4 uppercase">
+                  {item.deskripsi_pekerjaan?.toLowerCase() ?? '-'}
+                </Tbody>
+                <Tbody className="text-center whitespace-nowrap py-3 px-4 uppercase">
+                  {item?.mitra?.nama_vendor?.toLowerCase()}
+                </Tbody>
+                <Tbody className="text-center py-3 px-4">
+                  <TableDataCurrency
+                    currency="Rp"
+                    value={item?.nilai_realisasi_cogs}
+                  />
+                </Tbody>
+                <Tbody className="text-center py-3 px-4">
+                  <TableDataCurrency
+                    currency="Rp"
+                    value={item?.nilai_pekerjaan}
+                  />
+                </Tbody>
+                <Tbody className="text-center py-3 px-4">
+                  <TableDataCurrency
+                    currency="Rp"
+                    value={
+                      item?.nilai_pekerjaan !== null
+                        ? parseInt(item?.nilai_realisasi_cogs) -
+                          parseInt(item?.nilai_pekerjaan)
+                        : 0
                     }
-                    title="Preview Project"
-                    type="button"
-                    classButton="gap-1"
-                    isTransparent="warning">
-                    <DocumentIcon className="h-4" /> Preview
-                  </Button>
-                </div>
-              </Tbody>
+                  />
+                </Tbody>
+                <Tbody className="text-center py-3 px-4">
+                  <TableDataCurrency
+                    currency="Rp"
+                    value={item?.nilai_down_payment}
+                  />
+                </Tbody>
+                <Tbody className="text-center py-3 px-4">
+                  {item?.tata_cara_pembayaran}
+                </Tbody>
+                <Tbody className="text-center whitespace-nowrap py-3 px-4">
+                  {item.start_jangka_waktu_pekerjaan === null
+                    ? ''
+                    : item?.start_jangka_waktu_pekerjaan +
+                      ' s/d ' +
+                      item.end_jangka_waktu_pekerjaan}
+                </Tbody>
+                <Tbody className="text-center uppercase">
+                  <span className="bg-orange-100 px-2 py-1 rounded-md text-orange-700 text-sm">
+                    {item.jenis_dokumen}
+                  </span>
+                </Tbody>
+                <Tbody className="border-l py-3 px-8 text-center">
+                  {item?.spph ? (
+                    <LinkDocument url={item?.spph?.file_url} />
+                  ) : (
+                    '-'
+                  )}
+                </Tbody>
+                <Tbody className="border-l py-3 px-8">
+                  {item?.sph ? <LinkDocument url={item?.sph?.file_url} /> : '-'}
+                </Tbody>
+                <Tbody className="border-l py-3 px-8">
+                  {item?.bakn ? (
+                    <LinkDocument url={item?.bakn?.file_url} />
+                  ) : (
+                    '-'
+                  )}
+                </Tbody>
+                <Tbody className="border-l py-3 px-8">
+                  {item?.khs ? <LinkDocument url={item?.khs?.file_url} /> : '-'}
+                </Tbody>
+                <Tbody className="border-l py-3 px-8">
+                  {item?.kontrak ? (
+                    <LinkDocument url={item?.kontrak?.file_url} />
+                  ) : (
+                    '-'
+                  )}
+                </Tbody>
+                <Tbody className="border-l text-center py-3 px-8">
+                  {item?.permohonan ? (
+                    <LinkDocument url={item?.permohonan?.file_url} />
+                  ) : (
+                    '-'
+                  )}
+                </Tbody>
+                <Tbody className="border-l py-3 px-8">
+                  {item?.persetujuan ? (
+                    <LinkDocument url={item?.persetujuan?.file_url} />
+                  ) : (
+                    '-'
+                  )}
+                </Tbody>
+                <Tbody className="border-l py-3 px-8">
+                  {item?.bast ? (
+                    <div>
+                      {/* BAREKON */}
+                      {item?.bast?.file_ba_rekon !== null && (
+                        <LinkDocument
+                          url={item?.bast?.file_ba_rekon}
+                          name="BA REKON"
+                        />
+                      )}
+                      {item?.bast?.file_bapp !== null && (
+                        <LinkDocument url={item?.bast?.file_bapp} name="BAPP" />
+                      )}
+                      {item?.bast?.file_baso !== null && (
+                        <LinkDocument url={item?.bast?.file_baso} name="BASO" />
+                      )}
+                      {item?.bast?.file_baut !== null && (
+                        <LinkDocument url={item?.bast?.file_baut} name="BAUT" />
+                      )}
+                      {item?.bast?.file_do !== null && (
+                        <LinkDocument url={item?.bast?.file_do} name="DO" />
+                      )}
+                    </div>
+                  ) : (
+                    '-'
+                  )}
+                </Tbody>
 
-              <Tbody className="text-center py-3 px-4">
-                {item?.project?.no_io ?? ''}
-              </Tbody>
-              <Tbody className="text-left py-3 px-4">
-                {item.project?.inisiasi?.title_project ?? '-'}
-              </Tbody>
-              <Tbody className="text-left py-3 px-4 uppercase">
-                {item.deskripsi_pekerjaan?.toLowerCase() ?? '-'}
-              </Tbody>
-              <Tbody className="text-center whitespace-nowrap py-3 px-4 uppercase">
-                {item?.mitra?.nama_vendor?.toLowerCase()}
-              </Tbody>
-              <Tbody className="text-center py-3 px-4">
-                <TableDataCurrency
-                  currency="Rp"
-                  value={item?.nilai_realisasi_cogs}
-                />
-              </Tbody>
-              <Tbody className="text-center py-3 px-4">
-                <TableDataCurrency
-                  currency="Rp"
-                  value={item?.nilai_pekerjaan}
-                />
-              </Tbody>
-              <Tbody className="text-center py-3 px-4">
-                <TableDataCurrency
-                  currency="Rp"
-                  value={
-                    item?.nilai_pekerjaan !== null
-                      ? parseInt(item?.nilai_realisasi_cogs) -
-                        parseInt(item?.nilai_pekerjaan)
-                      : 0
-                  }
-                />
-              </Tbody>
-              <Tbody className="text-center py-3 px-4">
-                <TableDataCurrency
-                  currency="Rp"
-                  value={item?.nilai_down_payment}
-                />
-              </Tbody>
-              <Tbody className="text-center py-3 px-4">
-                {item?.tata_cara_pembayaran}
-              </Tbody>
-              <Tbody className="text-center whitespace-nowrap py-3 px-4">
-                {item.start_jangka_waktu_pekerjaan === null
-                  ? ''
-                  : item?.start_jangka_waktu_pekerjaan +
-                    ' s/d ' +
-                    item.end_jangka_waktu_pekerjaan}
-              </Tbody>
-              <Tbody className="text-center uppercase">
-                <span className="bg-orange-100 px-2 py-1 rounded-md text-orange-700 text-sm">
-                  {item.jenis_dokumen}
-                </span>
-              </Tbody>
-              <Tbody className="border-l py-3 px-8">
-                <ButtonDocument
-                  handlerClick={props.handlerModalForm}
-                  isUpload={item?.spph}
-                  documentName="SPPH"
-                  item={item}
-                />
-              </Tbody>
-              <Tbody className="border-l py-3 px-8">
-                <ButtonDocument
-                  handlerClick={props.handlerModalForm}
-                  isUpload={item?.sph}
-                  documentName="SPH"
-                  item={item}
-                />
-              </Tbody>
-              <Tbody className="border-l py-3 px-8">
-                <ButtonDocument
-                  handlerClick={props.handlerModalForm}
-                  isUpload={item?.bakn}
-                  documentName="BAKN"
-                  item={item}
-                />
-              </Tbody>
-              <Tbody className="border-l py-3 px-8">
-                <ButtonDocument
-                  handlerClick={props.handlerModalForm}
-                  isUpload={item?.khs}
-                  documentName="KHS"
-                  item={item}
-                />
-              </Tbody>
-              <Tbody className="border-l py-3 px-8">
-                <ButtonDocument
-                  handlerClick={props.handlerModalForm}
-                  isUpload={item?.kontrak}
-                  documentName="KONTRAK"
-                  item={item}
-                />
-              </Tbody>
-              <Tbody className="border-l py-3 px-8">
-                <ButtonDocument
-                  handlerClick={props.handlerModalForm}
-                  isUpload={item?.permohonan}
-                  documentName="Permohonan"
-                  item={item}
-                />
-              </Tbody>
-              <Tbody className="border-l py-3 px-8">
-                <ButtonDocument
-                  handlerClick={props.handlerModalForm}
-                  isUpload={item?.persetujuan}
-                  documentName="Persetujuan"
-                  item={item}
-                />
-              </Tbody>
-
-              <Tbody className="border-l text-center whitespace-nowrap">
-                {item?.project?.pic_procurement.name}
-              </Tbody>
-              <Tbody className="border-l text-center whitespace-nowrap">
-                {item.project?.pic_legal.name}
-              </Tbody>
-            </tr>
-          ))}
+                <Tbody className="border-l text-center whitespace-nowrap">
+                  {item?.project?.pic_procurement.name}
+                </Tbody>
+                <Tbody className="border-l text-center whitespace-nowrap">
+                  {item.project?.pic_legal.name}
+                </Tbody>
+              </tr>
+            );
+          })}
       </tbody>
     </Table>
   );
