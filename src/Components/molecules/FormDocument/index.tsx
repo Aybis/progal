@@ -58,6 +58,7 @@ export default function Index(props: Props) {
             labelName={item.replace(/_/g, ' ').toUpperCase()}
             inputName={item}
             inputType="file"
+            accept="application/pdf"
             onChange={handlerChangeValueFile}
           />
         );
