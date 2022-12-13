@@ -76,8 +76,6 @@ export default function Index(props: FormProps) {
     'PUTRA WIDJAYA',
   ];
 
-  console.log(inisiasiSelected);
-
   return (
     <form onSubmit={handlerSubmit} className="relative flex flex-col gap-4">
       <InputSelect

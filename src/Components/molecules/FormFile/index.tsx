@@ -168,8 +168,6 @@ export default function Index(props: FormMitraProps) {
       formData.append('file_bapp', formFile.file_bapp);
     }
 
-    console.log(formData);
-
     const res =
       props.typeForm === 'update'
         ? await handlerUpdateFile(formData)
@@ -187,8 +185,6 @@ export default function Index(props: FormMitraProps) {
       );
     }
   };
-
-  console.log(props.dataDocument);
 
   return (
     <form onSubmit={handlerSubmit} className="relative flex flex-col gap-4">
