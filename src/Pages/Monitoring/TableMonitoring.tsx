@@ -215,41 +215,66 @@ export default function TableMonitoring(props: Props) {
                 </Tbody>
                 <Tbody className="border-l py-3 px-8 text-center">
                   {item?.spph ? (
-                    <LinkDocument url={item?.spph?.file_url} />
+                    <>
+                      <LinkDocument
+                        url={item?.spph?.file_url}
+                        data={item?.spph}
+                      />
+                    </>
                   ) : (
                     '-'
                   )}
                 </Tbody>
                 <Tbody className="border-l py-3 px-8">
-                  {item?.sph ? <LinkDocument url={item?.sph?.file_url} /> : '-'}
+                  {item?.sph ? (
+                    <LinkDocument url={item?.sph?.file_url} data={item?.sph} />
+                  ) : (
+                    '-'
+                  )}
                 </Tbody>
                 <Tbody className="border-l py-3 px-8">
                   {item?.bakn ? (
-                    <LinkDocument url={item?.bakn?.file_url} />
+                    <LinkDocument
+                      url={item?.bakn?.file_url}
+                      data={item?.bakn}
+                    />
                   ) : (
                     '-'
                   )}
                 </Tbody>
                 <Tbody className="border-l py-3 px-8">
-                  {item?.khs ? <LinkDocument url={item?.khs?.file_url} /> : '-'}
+                  {item?.khs ? (
+                    <LinkDocument url={item?.khs?.file_url} data={item?.khs} />
+                  ) : (
+                    '-'
+                  )}
                 </Tbody>
                 <Tbody className="border-l py-3 px-8">
                   {item?.kontrak ? (
-                    <LinkDocument url={item?.kontrak?.file_url} />
+                    <LinkDocument
+                      url={item?.kontrak?.file_url}
+                      data={item?.kontrak}
+                    />
                   ) : (
                     '-'
                   )}
                 </Tbody>
                 <Tbody className="border-l text-center py-3 px-8">
                   {item?.permohonan ? (
-                    <LinkDocument url={item?.permohonan?.file_url} />
+                    <LinkDocument
+                      url={item?.permohonan?.file_url}
+                      data={item?.permohonan}
+                    />
                   ) : (
                     '-'
                   )}
                 </Tbody>
                 <Tbody className="border-l py-3 px-8">
                   {item?.persetujuan ? (
-                    <LinkDocument url={item?.persetujuan?.file_url} />
+                    <LinkDocument
+                      url={item?.persetujuan?.file_url}
+                      data={item?.persetujuan}
+                    />
                   ) : (
                     '-'
                   )}
@@ -261,20 +286,37 @@ export default function TableMonitoring(props: Props) {
                       {item?.bast?.file_ba_rekon !== null && (
                         <LinkDocument
                           url={item?.bast?.file_ba_rekon}
+                          data={item?.bast}
                           name="BA REKON"
                         />
                       )}
                       {item?.bast?.file_bapp !== null && (
-                        <LinkDocument url={item?.bast?.file_bapp} name="BAPP" />
+                        <LinkDocument
+                          url={item?.bast?.file_bapp}
+                          data={item?.bast}
+                          name="BAPP"
+                        />
                       )}
                       {item?.bast?.file_baso !== null && (
-                        <LinkDocument url={item?.bast?.file_baso} name="BASO" />
+                        <LinkDocument
+                          url={item?.bast?.file_baso}
+                          data={item?.bast}
+                          name="BASO"
+                        />
                       )}
                       {item?.bast?.file_baut !== null && (
-                        <LinkDocument url={item?.bast?.file_baut} name="BAUT" />
+                        <LinkDocument
+                          url={item?.bast?.file_baut}
+                          name="BAUT"
+                          data={item?.bast}
+                        />
                       )}
                       {item?.bast?.file_do !== null && (
-                        <LinkDocument url={item?.bast?.file_do} name="DO" />
+                        <LinkDocument
+                          url={item?.bast?.file_do}
+                          name="DO"
+                          data={item?.bast}
+                        />
                       )}
                     </div>
                   ) : (
