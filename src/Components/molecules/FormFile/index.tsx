@@ -35,36 +35,18 @@ export default function Index(props: FormMitraProps) {
   const dispatch = useAppDispatch();
   const { profile } = useAppSelector((state) => state.user);
   const [tempFile, settempFile] = useState<string>('');
-  const [tempFileBast, settempFileBast] = useState<any>({
-    file_do: '',
-    file_baut: '',
-    file_ba_rekon: '',
-    file_baso: '',
-    file_bapp: '',
-  });
+
   const [formFile, setformFile] = useState<any>({
     no: props?.dataDocument?.no ?? '',
     tanggal: props?.dataDocument?.tanggal ?? '',
     file: null,
     project_mitra_id: props?.dataMitra?.id,
-    file_do: null,
-    file_baut: null,
-    file_ba_rekon: null,
-    file_baso: null,
-    file_bapp: null,
   });
 
   const handlerChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === 'file') {
       settempFile(value);
-    }
-
-    if (props.name?.toLowerCase() === 'bast') {
-      settempFileBast((prev: any) => ({
-        ...prev,
-        [name]: value,
-      }));
     }
 
     setformFile((prev: any) => ({
@@ -159,14 +141,6 @@ export default function Index(props: FormMitraProps) {
     formData.append('project_mitra_id', props?.dataMitra?.id);
     formData.append('tanggal', formFile.tanggal);
     formData.append('no', formFile.no);
-    // only BAST form
-    if (props.name?.toLowerCase() === 'bast') {
-      formData.append('file_do', formFile.file_do);
-      formData.append('file_baut', formFile.file_baut);
-      formData.append('file_ba_rekon', formFile.file_ba_rekon);
-      formData.append('file_baso', formFile.file_baso);
-      formData.append('file_bapp', formFile.file_bapp);
-    }
 
     const res =
       props.typeForm === 'update'
@@ -191,16 +165,6 @@ export default function Index(props: FormMitraProps) {
       {Object.keys(formFile)
         // hidden form for project mitra id
         .filter((form) => form !== 'project_mitra_id')
-        // show only file when form is bast
-        .filter((form) =>
-          props.name?.toLowerCase() === 'bast'
-            ? form !== 'file'
-            : form !== 'file_do' &&
-              form !== 'file_baut' &&
-              form !== 'file_ba_rekon' &&
-              form !== 'file_baso' &&
-              form !== 'file_bapp',
-        )
         // remove form no when form is bakn
         .filter((form) =>
           props.name?.toLowerCase() === 'bakn' ? form !== 'no' : form,
@@ -216,13 +180,7 @@ export default function Index(props: FormMitraProps) {
               key={key}
               isDisabled={props.typeForm === 'preview'}
               placeholder={key}
-              inputValue={
-                key.includes('file_')
-                  ? tempFileBast[key]
-                  : key === 'file'
-                  ? tempFile
-                  : formFile[key]
-              }
+              inputValue={key === 'file' ? tempFile : formFile[key]}
               typeForm={key.includes('nilai') ? 'currency' : ''}
               inputType={
                 key.includes('tanggal')
@@ -252,7 +210,15 @@ export default function Index(props: FormMitraProps) {
               : ''}
           </label>
 
-          {props.name?.toLowerCase() === 'bast' ? (
+          <a
+            href={props.dataDocument.file_url}
+            target="_blank"
+            rel="noreferrer"
+            className="text-blue-500 font-medium text-sm">
+            View Document
+          </a>
+
+          {/* {props.name?.toLowerCase() === 'bast' ? (
             Object.keys(tempFileBast).map((key) => {
               return props.dataDocument?.[key] === null ? (
                 ''
@@ -268,14 +234,8 @@ export default function Index(props: FormMitraProps) {
               );
             })
           ) : (
-            <a
-              href={props.dataDocument.file_url}
-              target="_blank"
-              rel="noreferrer"
-              className="text-blue-500 font-medium text-sm">
-              View Document
-            </a>
-          )}
+            
+          )} */}
         </>
       )}
 

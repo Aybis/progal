@@ -3,7 +3,7 @@ import axios from '../Configs/api';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   // List Project Iniasi won for Manager
-  inisiasiWon: () => axios.get('procurement/project/inisiasi-won'),
+  inisiasiWon: () => axios.get('procurement/project/inisiasi'),
   disposisi: (data: Object) =>
     axios.post('procurement/project/disposition', data),
 

@@ -3,11 +3,11 @@ import { DocumentIcon } from '@heroicons/react/24/solid';
 type Props = {
   url?: string;
   name?: string;
-  data?: any;
+  data: any;
 };
 
 export default function Index(props: Props) {
-  return (
+  return props?.data ? (
     <div className="relative flex flex-col gap-2 justify-center items-center">
       <a
         href={props?.url}
@@ -18,13 +18,19 @@ export default function Index(props: Props) {
         <DocumentIcon className="h-5" />
       </a>
 
-      <p className="text-sm text-gray-400 text-center my-2">
+      <p className="text-xs text-gray-400 text-center my-2 whitespace-nowrap">
         {new Date(props?.data?.created_at).getDate() +
           '/' +
           new Date(props?.data?.created_at).getMonth() +
           '/' +
-          new Date(props?.data?.created_at).getFullYear()}
+          new Date(props?.data?.created_at).getFullYear() +
+          ' - ' +
+          new Date(props?.data?.created_at).getHours() +
+          ':' +
+          new Date(props?.data?.created_at).getMinutes()}
       </p>
     </div>
+  ) : (
+    <p className="text-center w-full">-</p>
   );
 }

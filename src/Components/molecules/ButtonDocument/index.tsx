@@ -21,7 +21,7 @@ type Props = {
 export default function Index(props: Props) {
   return (
     <div className="relative flex gap-2">
-      {props.isUpload === null ? (
+      {props.isUpload === null || props.isUpload === undefined ? (
         <div className="flex justify-center items-center w-full h-full">
           <Button
             handlerClick={() =>

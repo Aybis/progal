@@ -8,10 +8,14 @@ export default function Index(props: Props) {
   return props?.value !== 0 ? (
     <div
       className={[
-        'relative flex justify-between items-center',
+        'relative flex justify-between items-center tece',
         props.className,
       ].join(' ')}>
-      <p>{props.currency}</p>
+      {props.value === null || props.value === undefined ? (
+        <p className="text-center w-full">-</p>
+      ) : (
+        <p>{props.currency}</p>
+      )}
       <p>{props.value !== 0 ? props.value?.toLocaleString('id-ID') : 0}</p>
     </div>
   ) : (

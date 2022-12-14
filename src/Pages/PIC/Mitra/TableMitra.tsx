@@ -8,7 +8,8 @@ import {
   Tbody,
   Thead,
 } from '../../../Components/atoms';
-import { ButtonDocument } from '../../../Components/molecules';
+import { ButtonDocument, TableData } from '../../../Components/molecules';
+import { useAppSelector } from '../../../Services/redux/hook';
 import { DataMitraHasProject } from '../../../Services/redux/Types/hasmitra';
 
 type Props = {
@@ -23,6 +24,10 @@ type Props = {
 
 export default function TableMitra(props: Props) {
   const navigate = useNavigate();
+  const { listMitraFilter, loading } = useAppSelector(
+    (state) => state.hasMitra,
+  );
+
   return (
     <Table classRoot="mt-5">
       <thead className="border-b">
@@ -94,7 +99,7 @@ export default function TableMitra(props: Props) {
             Jenis Dokumen
           </Thead>
           <Thead
-            colSpan={8}
+            colSpan={15}
             className="text-center py-3 px-4 font-medium text-gray-700 border-b">
             Dokumen
           </Thead>
@@ -121,13 +126,31 @@ export default function TableMitra(props: Props) {
             Kontrak
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
-            Permohonan Jangka Waktu
+            PR SAP
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
-            Persetujuan Jangka Waktu
+            PO SAP
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            DO
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            BAPP
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            BA Progress
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            BAUT
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
             BAST
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            Permohonan Perpanjangan Waktu
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            Persetujuan Perpanjangan Waktu
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
             Proc
@@ -138,19 +161,16 @@ export default function TableMitra(props: Props) {
         </tr>
       </thead>
       <tbody>
-        {props.data.length > 0 &&
-          // sort by number
-          props.data.map((item: DataMitraHasProject, index: number) => (
+        {loading && listMitraFilter.length === 0 ? (
+          <TableData colSpan={30} isLoading={loading} />
+        ) : listMitraFilter.length === 0 ? (
+          <TableData colSpan={30} isEmpty />
+        ) : (
+          listMitraFilter.map((item: DataMitraHasProject, index: number) => (
             <tr key={item?.id} className="text-sm">
               <Tbody className="text-center py-3 px-4">{index + 1}</Tbody>
               <Tbody className="text-center py-3 px-4">
                 <div className="relative flex justify-center gap-2">
-                  {/* <Button
-                title="Delete Mitra"
-                type="button"
-                classButton="text-sm py-1 gap-1 rounded bg-red-100 border border-red-200 text-red-600 hover:bg-red-500 hover:text-white">
-                <TrashIcon className="h-4" /> Mitra
-              </Button> */}
                   <Button
                     handlerClick={() => props.handlerModalForm('update', item)}
                     title="Update Mitra"
@@ -279,6 +299,62 @@ export default function TableMitra(props: Props) {
               <Tbody className="border-l py-3 px-8">
                 <ButtonDocument
                   handlerClick={props.handlerModalForm}
+                  isUpload={item?.pr_sap}
+                  documentName="PR SAP"
+                  item={item}
+                />
+              </Tbody>
+              <Tbody className="border-l py-3 px-8">
+                <ButtonDocument
+                  handlerClick={props.handlerModalForm}
+                  isUpload={item?.po_sap}
+                  documentName="PO SAP"
+                  item={item}
+                />
+              </Tbody>
+              <Tbody className="border-l py-3 px-8">
+                <ButtonDocument
+                  handlerClick={props.handlerModalForm}
+                  isUpload={item?.do}
+                  documentName="DO"
+                  item={item}
+                />
+              </Tbody>
+              <Tbody className="border-l py-3 px-8">
+                <ButtonDocument
+                  handlerClick={props.handlerModalForm}
+                  isUpload={item?.bapp}
+                  documentName="BAPP"
+                  item={item}
+                />
+              </Tbody>
+              <Tbody className="border-l py-3 px-8">
+                <ButtonDocument
+                  handlerClick={props.handlerModalForm}
+                  isUpload={item?.bap}
+                  documentName="BAP"
+                  item={item}
+                />
+              </Tbody>
+              <Tbody className="border-l py-3 px-8">
+                <ButtonDocument
+                  handlerClick={props.handlerModalForm}
+                  isUpload={item?.baut}
+                  documentName="BAUT"
+                  item={item}
+                />
+              </Tbody>
+              <Tbody className="border-l py-3 px-8">
+                <ButtonDocument
+                  handlerClick={props.handlerModalForm}
+                  isUpload={item?.bast}
+                  documentName="BAST"
+                  item={item}
+                />
+              </Tbody>
+              <Tbody className="border-l py-3 px-8">
+                <ButtonDocument
+                  handlerClick={props.handlerModalForm}
                   isUpload={item?.permohonan}
                   documentName="Permohonan"
                   item={item}
@@ -292,14 +368,6 @@ export default function TableMitra(props: Props) {
                   item={item}
                 />
               </Tbody>
-              <Tbody className="border-l py-3 px-8">
-                <ButtonDocument
-                  handlerClick={props.handlerModalForm}
-                  isUpload={item?.bast}
-                  documentName="BAST"
-                  item={item}
-                />
-              </Tbody>
 
               <Tbody className="border-l text-center whitespace-nowrap">
                 {item?.project?.pic_procurement.name}
@@ -308,7 +376,8 @@ export default function TableMitra(props: Props) {
                 {item.project?.pic_legal.name}
               </Tbody>
             </tr>
-          ))}
+          ))
+        )}
       </tbody>
     </Table>
   );

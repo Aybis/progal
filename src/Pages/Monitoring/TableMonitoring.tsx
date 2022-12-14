@@ -70,6 +70,7 @@ export default function TableMonitoring(props: Props) {
             rowSpan={2}
             className="text-center py-3 px-4 font-medium text-gray-700 whitespace-nowrap">
             Nilai Efisiensi
+            <p>(COGS - Pekerjaan)</p>
           </Thead>
           <Thead
             rowSpan={2}
@@ -92,7 +93,7 @@ export default function TableMonitoring(props: Props) {
             Jenis Dokumen
           </Thead>
           <Thead
-            colSpan={8}
+            colSpan={15}
             className="text-center py-3 px-4 font-medium text-gray-700 border-b">
             Dokumen
           </Thead>
@@ -119,13 +120,31 @@ export default function TableMonitoring(props: Props) {
             Kontrak
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            PR SAP
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            PO SAP
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            DO
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            BAPP
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            BA Progress
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            BAUT
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
+            BAST
+          </Thead>
+          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
             Permohonan Perpanjangan Waktu
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
             Persetujuan Perpanjangan Waktu
-          </Thead>
-          <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
-            BAST
           </Thead>
           <Thead className="text-center py-3 px-4 font-medium text-gray-700 border-r whitespace-nowrap">
             Proc
@@ -213,117 +232,68 @@ export default function TableMonitoring(props: Props) {
                     {item.jenis_dokumen}
                   </span>
                 </Tbody>
+
+                {/* Document */}
                 <Tbody className="border-l py-3 px-8 text-center">
-                  {item?.spph ? (
-                    <>
-                      <LinkDocument
-                        url={item?.spph?.file_url}
-                        data={item?.spph}
-                      />
-                    </>
-                  ) : (
-                    '-'
-                  )}
+                  <LinkDocument url={item?.spph?.file_url} data={item?.spph} />
                 </Tbody>
                 <Tbody className="border-l py-3 px-8">
-                  {item?.sph ? (
-                    <LinkDocument url={item?.sph?.file_url} data={item?.sph} />
-                  ) : (
-                    '-'
-                  )}
+                  <LinkDocument url={item?.sph?.file_url} data={item?.sph} />
                 </Tbody>
                 <Tbody className="border-l py-3 px-8">
-                  {item?.bakn ? (
-                    <LinkDocument
-                      url={item?.bakn?.file_url}
-                      data={item?.bakn}
-                    />
-                  ) : (
-                    '-'
-                  )}
+                  <LinkDocument url={item?.bakn?.file_url} data={item?.bakn} />
                 </Tbody>
                 <Tbody className="border-l py-3 px-8">
-                  {item?.khs ? (
-                    <LinkDocument url={item?.khs?.file_url} data={item?.khs} />
-                  ) : (
-                    '-'
-                  )}
+                  <LinkDocument url={item?.khs?.file_url} data={item?.khs} />
                 </Tbody>
                 <Tbody className="border-l py-3 px-8">
-                  {item?.kontrak ? (
-                    <LinkDocument
-                      url={item?.kontrak?.file_url}
-                      data={item?.kontrak}
-                    />
-                  ) : (
-                    '-'
-                  )}
-                </Tbody>
-                <Tbody className="border-l text-center py-3 px-8">
-                  {item?.permohonan ? (
-                    <LinkDocument
-                      url={item?.permohonan?.file_url}
-                      data={item?.permohonan}
-                    />
-                  ) : (
-                    '-'
-                  )}
+                  <LinkDocument
+                    url={item?.kontrak?.file_url}
+                    data={item?.kontrak}
+                  />
                 </Tbody>
                 <Tbody className="border-l py-3 px-8">
-                  {item?.persetujuan ? (
-                    <LinkDocument
-                      url={item?.persetujuan?.file_url}
-                      data={item?.persetujuan}
-                    />
-                  ) : (
-                    '-'
-                  )}
-                </Tbody>
-                <Tbody className="border-l py-3 px-8">
-                  {item?.bast ? (
-                    <div>
-                      {/* BAREKON */}
-                      {item?.bast?.file_ba_rekon !== null && (
-                        <LinkDocument
-                          url={item?.bast?.file_ba_rekon}
-                          data={item?.bast}
-                          name="BA REKON"
-                        />
-                      )}
-                      {item?.bast?.file_bapp !== null && (
-                        <LinkDocument
-                          url={item?.bast?.file_bapp}
-                          data={item?.bast}
-                          name="BAPP"
-                        />
-                      )}
-                      {item?.bast?.file_baso !== null && (
-                        <LinkDocument
-                          url={item?.bast?.file_baso}
-                          data={item?.bast}
-                          name="BASO"
-                        />
-                      )}
-                      {item?.bast?.file_baut !== null && (
-                        <LinkDocument
-                          url={item?.bast?.file_baut}
-                          name="BAUT"
-                          data={item?.bast}
-                        />
-                      )}
-                      {item?.bast?.file_do !== null && (
-                        <LinkDocument
-                          url={item?.bast?.file_do}
-                          name="DO"
-                          data={item?.bast}
-                        />
-                      )}
-                    </div>
-                  ) : (
-                    '-'
-                  )}
+                  <LinkDocument data={item?.pr_sap} />
                 </Tbody>
 
+                <Tbody className="border-l py-3 px-8">
+                  <LinkDocument data={item?.po_sap} />
+                </Tbody>
+
+                <Tbody className="border-l py-3 px-8">
+                  <LinkDocument data={item?.do} />
+                </Tbody>
+
+                <Tbody className="border-l py-3 px-8">
+                  <LinkDocument data={item?.bapp} />
+                </Tbody>
+
+                <Tbody className="border-l py-3 px-8">
+                  <LinkDocument data={item?.bap} />
+                </Tbody>
+
+                <Tbody className="border-l py-3 px-8">
+                  <LinkDocument data={item?.baut} />
+                </Tbody>
+
+                <Tbody className="border-l py-3 px-8">
+                  <LinkDocument data={item?.bast} />
+                </Tbody>
+
+                <Tbody className="border-l text-center py-3 px-8">
+                  <LinkDocument
+                    url={item?.permohonan?.file_url}
+                    data={item?.permohonan}
+                  />
+                </Tbody>
+                <Tbody className="border-l py-3 px-8">
+                  <LinkDocument
+                    url={item?.persetujuan?.file_url}
+                    data={item?.persetujuan}
+                  />
+                </Tbody>
+
+                {/* End Document */}
                 <Tbody className="border-l text-center whitespace-nowrap">
                   {item?.project?.pic_procurement.name}
                 </Tbody>

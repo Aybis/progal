@@ -72,12 +72,34 @@ export default function Index(props: Props) {
         listData={dataItem}
       />
 
+      {itemSelected &&
+        Object.entries(itemSelected)
+          .filter(
+            (key) =>
+              key[0] === 'brand' ||
+              key[0] === 'jenis_distribusi' ||
+              key[0] === 'kategori' ||
+              key[0] === 'deskripsi',
+          )
+          .map(([key, value]) => (
+            <FormInput
+              key={key}
+              classLabel="uppercase"
+              isDisabled={true}
+              labelName={key.replace('_', ' ')}
+              inputName={key}
+              isReadOnly={true}
+              inputValue={value}
+            />
+          ))}
+
       {/* looping form */}
       {Object.keys(form)
         .filter((field) => field !== 'item_id' && field !== 'project_mitra_id')
         .map((item: any) => (
           <FormInput
             key={item}
+            classLabel="uppercase"
             labelName={item}
             inputName={item}
             onChange={handlerChangeInput}

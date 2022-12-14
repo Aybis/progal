@@ -16,6 +16,12 @@ export type DataMitraHasProject = {
   amandemen?: [];
   bakn?: any;
   bast?: any;
+  pr_sap?: any;
+  po_sap?: any;
+  do?: any;
+  bapp?: any;
+  bap?: any;
+  baut?: any;
   boq_item?: [];
   deskripsi_pekerjaan?: string;
   end_jangka_waktu_pekerjaan?: string;

@@ -9,6 +9,7 @@ type Props = {
   rowSpan?: number;
   isNull?: false | boolean;
   isEmpty?: false | boolean;
+  isLoading?: false | boolean;
 };
 
 export default function Index(props: Props) {
@@ -20,6 +21,7 @@ export default function Index(props: Props) {
         {props.children}
         {props.isNull && 'Data tidak ditemukan'}
         {props.isEmpty && 'Tidak ada data'}
+        {props.isLoading && 'Loading...'}
       </Tbody>
     </tr>
   );
