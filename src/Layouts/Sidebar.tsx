@@ -12,19 +12,16 @@ export default function Sidebar() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const INISIASI = useAppSelector((state) => state.inisiasi);
-  const [isManager, setisManager] = useState<boolean>(false);
+  const [listMenu, setlistMenu] = useState<string[]>([]);
   const { listProject } = useAppSelector((state) => state.project);
 
   const checkIsManager = async () => {
-    return await user?.menu?.map((menu: any) => {
-      return menu.child.filter((child: any) => {
-        if (child.link === '/inbox') {
-          setisManager(true);
-          return true;
-        } else {
-          return false;
-        }
+    let data: string[] = [];
+    user?.menu?.forEach((element: any) => {
+      element.child.forEach((child: any) => {
+        data.push(child.link);
       });
+      setlistMenu(data);
     });
   };
 
@@ -39,14 +36,20 @@ export default function Sidebar() {
   };
 
   useEffect(() => {
-    checkIsManager();
     // when manager load inbox manager
-    isManager && getInisiasiWonForManager();
+    checkIsManager();
+    // get data inisiasi won if manager
+    listMenu.includes('/inbox') && getInisiasiWonForManager();
+
     // when route is inbox pic load data disposisi
     location.pathname === '/pic/inbox' && getDisposisiForPIC();
 
+    if (location.pathname === '/inbox' && listMenu.includes('/inbox')) {
+      dispatch(getListProject());
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user?.menu]);
 
   return (
     <aside className="flex w-0 lg:w-64 transition-all duration-500 inset-y-0 left-0 fixed z-0 lg:z-20">

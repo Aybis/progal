@@ -1,5 +1,5 @@
-import Layout from '../../Layouts/Layout';
+import { Content } from '../../Components/molecules';
 
 export default function Index() {
-  return <Layout>Cek Project with Type IO</Layout>;
+  return <Content>Cek Project with Type IO</Content>;
 }

@@ -1,5 +1,5 @@
-import Layout from '../../../Layouts/Layout';
+import { Content } from '../../../Components/molecules';
 
 export default function Index() {
-  return <Layout>Project Amandemen</Layout>;
+  return <Content>Project Amandemen</Content>;
 }
