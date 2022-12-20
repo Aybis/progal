@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { FormInput } from '../../../Components/molecules';
-import Layout from '../../../Layouts/Layout';
+import { Content, FormInput } from '../../../Components/molecules';
 import { useAppSelector } from '../../../Services/redux/hook';
 
 export default function Index() {
@@ -39,7 +38,7 @@ export default function Index() {
   }
 
   return (
-    <Layout
+    <Content
       backNavigation={true}
       textHeading="Detail Inisiasi "
       subHeading="Detail Project with status WON and JUSBIS">
@@ -71,6 +70,6 @@ export default function Index() {
             ))}
         </div>
       </div>
-    </Layout>
+    </Content>
   );
 }

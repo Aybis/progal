@@ -1,42 +1,62 @@
 import Cookies from 'js-cookie';
-import { useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import {
   Amandemen,
   CheckProject,
   DetailInisiasi,
-  DetailProject,
   Done,
-  Homepage,
   Login,
-  ManagerInbox,
-  Mitra,
-  Monitoring,
   NotFound,
-  PICInbox,
   Project,
 } from './Pages';
 import Authenticated from './Routes/Authenticated';
 import Gate from './Routes/Gate';
-import { GetProfileUser } from './Services/redux/Actions/user';
-import { useAppDispatch } from './Services/redux/hook';
+import { GetListMenu, GetProfileUser } from './Services/redux/Actions/user';
+import { useAppDispatch, useAppSelector } from './Services/redux/hook';
+
+// With Lazy
+const Homepage = lazy(() => import('./Pages/Dashboard'));
+const PICInbox = lazy(() => import('./Pages/PIC/Inbox'));
+const ManagerInbox = lazy(() => import('./Pages/Manager/Inbox'));
+const DetailProject = lazy(() => import('./Pages/Detail'));
+const Mitra = lazy(() => import('./Pages/PIC/Mitra'));
+const Monitoring = lazy(() => import('./Pages/Monitoring'));
 
 function App() {
   const dispatch = useAppDispatch();
   const token = Cookies.get('session');
+  const user = useAppSelector((state) => state.user);
+
+  // function for get token from apps
+  // function useQuery() {
+  //   const { search } = useLocation();
+  //   return useMemo(() => new URLSearchParams(search), [search]);
+  // }
+
+  // let query = useQuery().get('tkey');
+
+  // get profile user
+  const getProfile = async () => {
+    const res: any = await dispatch(GetProfileUser());
+    return res;
+  };
+
+  // get list menu user
+  const getListMenu = async () => {
+    const res: any = await dispatch(GetListMenu());
+    return res;
+  };
+
   // useeffect async
   useEffect(() => {
-    const getProfile = async () => {
-      const res: any = await dispatch(GetProfileUser());
-      return res;
-    };
-
     if (token) {
-      getProfile();
+      user?.profile && getProfile();
+      user?.menu?.length === 0 && getListMenu();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user?.profile?.id]);
 
   return (
     <div className="relative">

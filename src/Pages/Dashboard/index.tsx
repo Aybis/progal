@@ -2,8 +2,7 @@ import {
   ChevronRightIcon,
   DocumentCheckIcon,
 } from '@heroicons/react/24/outline';
-import { FilterMonthAndYear } from '../../Components/molecules';
-import Layout from '../../Layouts/Layout';
+import { Content, FilterMonthAndYear } from '../../Components/molecules';
 
 export default function Index() {
   const dummyDataUbis = [
@@ -50,7 +49,7 @@ export default function Index() {
   ];
 
   return (
-    <Layout textHeading="Dashboard">
+    <Content textHeading="Dashboard">
       <div className="relative mt-4">
         <FilterMonthAndYear />
       </div>
@@ -273,6 +272,6 @@ export default function Index() {
           </div>
         </div>
       </div>
-    </Layout>
+    </Content>
   );
 }

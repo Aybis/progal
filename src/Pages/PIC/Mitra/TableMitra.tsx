@@ -24,9 +24,7 @@ type Props = {
 
 export default function TableMitra(props: Props) {
   const navigate = useNavigate();
-  const { listMitraFilter, loading } = useAppSelector(
-    (state) => state.hasMitra,
-  );
+  const { loading } = useAppSelector((state) => state.hasMitra);
 
   return (
     <Table classRoot="mt-5">
@@ -99,7 +97,7 @@ export default function TableMitra(props: Props) {
             Jenis Dokumen
           </Thead>
           <Thead
-            colSpan={15}
+            colSpan={14}
             className="text-center py-3 px-4 font-medium text-gray-700 border-b">
             Dokumen
           </Thead>
@@ -161,13 +159,15 @@ export default function TableMitra(props: Props) {
         </tr>
       </thead>
       <tbody>
-        {loading && listMitraFilter.length === 0 ? (
+        {loading && props.data.length === 0 ? (
           <TableData colSpan={30} isLoading={loading} />
-        ) : listMitraFilter.length === 0 ? (
+        ) : props.data.length === 0 ? (
           <TableData colSpan={30} isEmpty />
         ) : (
-          listMitraFilter.map((item: DataMitraHasProject, index: number) => (
-            <tr key={item?.id} className="text-sm">
+          props.data.map((item: DataMitraHasProject, index: number) => (
+            <tr
+              key={item?.id}
+              className="text-sm border-b border-zinc-100 hover:bg-zinc-50 transition-all duration-300">
               <Tbody className="text-center py-3 px-4">{index + 1}</Tbody>
               <Tbody className="text-center py-3 px-4">
                 <div className="relative flex justify-center gap-2">
@@ -203,10 +203,10 @@ export default function TableMitra(props: Props) {
               <Tbody className="text-center py-3 px-4">
                 {item?.project?.no_io ?? ''}
               </Tbody>
-              <Tbody className="text-left py-3 px-4">
+              <Tbody className="text-left py-3 px-4 whitespace-nowrap">
                 {item.project?.inisiasi?.title_project ?? '-'}
               </Tbody>
-              <Tbody className="text-left py-3 px-4 uppercase">
+              <Tbody className="text-left py-3 px-4 uppercase whitespace-nowrap">
                 {item.deskripsi_pekerjaan?.toLowerCase() ?? '-'}
               </Tbody>
               <Tbody className="text-center whitespace-nowrap py-3 px-4 uppercase">
@@ -300,7 +300,7 @@ export default function TableMitra(props: Props) {
                 <ButtonDocument
                   handlerClick={props.handlerModalForm}
                   isUpload={item?.pr_sap}
-                  documentName="PR SAP"
+                  documentName="PR-SAP"
                   item={item}
                 />
               </Tbody>
@@ -308,7 +308,7 @@ export default function TableMitra(props: Props) {
                 <ButtonDocument
                   handlerClick={props.handlerModalForm}
                   isUpload={item?.po_sap}
-                  documentName="PO SAP"
+                  documentName="PO-SAP"
                   item={item}
                 />
               </Tbody>
@@ -331,8 +331,8 @@ export default function TableMitra(props: Props) {
               <Tbody className="border-l py-3 px-8">
                 <ButtonDocument
                   handlerClick={props.handlerModalForm}
-                  isUpload={item?.bap}
-                  documentName="BAP"
+                  isUpload={item?.ba_progress}
+                  documentName="BA-Progress"
                   item={item}
                 />
               </Tbody>

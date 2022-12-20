@@ -33,7 +33,7 @@ export default function Index(props: Props) {
           </Button>
         </div>
       ) : (
-        <div className="relative flex justify-center items-center w-full">
+        <div className="relative flex justify-center items-center w-full gap-2">
           <Button
             handlerClick={() =>
               props.handlerClick?.(

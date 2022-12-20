@@ -1,9 +1,8 @@
-import { FormSearch } from '../../../Components/molecules';
-import Layout from '../../../Layouts/Layout';
+import { Content, FormSearch } from '../../../Components/molecules';
 
 export default function Index() {
   return (
-    <Layout
+    <Content
       textHeading="Project Mitra Done"
       subHeading="List Project berdasarkan mitra yang sudah selesai">
       {/* Section Data Table */}
@@ -13,6 +12,6 @@ export default function Index() {
 
         {/* Section Table */}
       </div>
-    </Layout>
+    </Content>
   );
 }

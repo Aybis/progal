@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Divider } from '../../Components/atoms';
 import {
+  Content,
   PreviewDocument,
   PreviewInisiasi,
   PreviewMitra,
 } from '../../Components/molecules';
-import Layout from '../../Layouts/Layout';
 import { getDetailProject } from '../../Services/redux/Actions/project';
 import { useAppDispatch } from '../../Services/redux/hook';
 
@@ -25,7 +25,7 @@ export default function Index() {
   }, [dispatch, id]);
 
   return (
-    <Layout textHeading="Detail Project" backNavigation>
+    <Content textHeading="Detail Project" backNavigation>
       {/* Detail Project  */}
       <div className="relative p-4 mt-10 rounded-lg flex justify-center items-center bg-blue-100/70 backdrop-blur-sm">
         <h1 className="text-center text-2xl leading-relaxed text-blue-600 font-semibold">
@@ -65,6 +65,6 @@ export default function Index() {
             ))
           : null}
       </div>
-    </Layout>
+    </Content>
   );
 }

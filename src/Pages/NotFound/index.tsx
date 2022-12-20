@@ -25,7 +25,7 @@ export default function Index() {
           <button
             onClick={() => navigate('/')}
             className="bg-gray-800 shadow-lg hover:shadow-gray-200 px-4 py-2 rounded-lg font-semibold flex justify-center items-center text-white hover:scale-105 transition-all duration-300">
-            Back to the Dashboard
+            Back to the Home
           </button>
         </div>
       </div>

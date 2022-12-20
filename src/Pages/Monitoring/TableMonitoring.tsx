@@ -8,6 +8,8 @@ import {
   Tbody,
   Thead,
 } from '../../Components/atoms';
+import { TableData } from '../../Components/molecules';
+import { useAppSelector } from '../../Services/redux/hook';
 import { DataMitraHasProject } from '../../Services/redux/Types/hasmitra';
 
 type Props = {
@@ -22,6 +24,8 @@ type Props = {
 
 export default function TableMonitoring(props: Props) {
   const navigate = useNavigate();
+  const { loading } = useAppSelector((state) => state.hasMitra);
+
   return (
     <Table classRoot="mt-5">
       <thead className="border-b">
@@ -93,7 +97,7 @@ export default function TableMonitoring(props: Props) {
             Jenis Dokumen
           </Thead>
           <Thead
-            colSpan={15}
+            colSpan={14}
             className="text-center py-3 px-4 font-medium text-gray-700 border-b">
             Dokumen
           </Thead>
@@ -155,11 +159,17 @@ export default function TableMonitoring(props: Props) {
         </tr>
       </thead>
       <tbody>
-        {props.data.length > 0 &&
+        {loading && props.data.length === 0 ? (
+          <TableData colSpan={30} isLoading={loading} />
+        ) : props.data.length === 0 ? (
+          <TableData colSpan={30} isEmpty />
+        ) : (
           // sort by number
           props.data.map((item: DataMitraHasProject, index: number) => {
             return (
-              <tr key={item?.id} className="text-sm">
+              <tr
+                key={item?.id}
+                className="text-sm border-b border-zinc-100 hover:bg-zinc-50 transition-all duration-300">
                 <Tbody className="text-center py-3 px-4">{index + 1}</Tbody>
                 <Tbody className="text-center py-3 px-4">
                   <div className="relative flex justify-center gap-2">
@@ -179,10 +189,10 @@ export default function TableMonitoring(props: Props) {
                 <Tbody className="text-center py-3 px-4">
                   {item?.project?.no_io ?? ''}
                 </Tbody>
-                <Tbody className="text-left py-3 px-4">
+                <Tbody className="text-left py-3 px-4 whitespace-nowrap">
                   {item.project?.inisiasi?.title_project ?? '-'}
                 </Tbody>
-                <Tbody className="text-left py-3 px-4 uppercase">
+                <Tbody className="text-left py-3 px-4 uppercase whitespace-nowrap">
                   {item.deskripsi_pekerjaan?.toLowerCase() ?? '-'}
                 </Tbody>
                 <Tbody className="text-center whitespace-nowrap py-3 px-4 uppercase">
@@ -269,7 +279,7 @@ export default function TableMonitoring(props: Props) {
                 </Tbody>
 
                 <Tbody className="border-l py-3 px-8">
-                  <LinkDocument data={item?.bap} />
+                  <LinkDocument data={item?.ba_progress} />
                 </Tbody>
 
                 <Tbody className="border-l py-3 px-8">
@@ -302,7 +312,8 @@ export default function TableMonitoring(props: Props) {
                 </Tbody>
               </tr>
             );
-          })}
+          })
+        )}
       </tbody>
     </Table>
   );

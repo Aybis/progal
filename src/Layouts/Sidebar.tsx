@@ -1,10 +1,9 @@
 import { ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/solid';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Badges } from '../Components/atoms';
 import { getListInisiasiWon } from '../Services/redux/Actions/inisiasi';
 import { getListProject } from '../Services/redux/Actions/project';
-import { GetListMenu } from '../Services/redux/Actions/user';
 import { useAppDispatch, useAppSelector } from '../Services/redux/hook';
 import { DataProject } from '../Services/redux/Types/project';
 
@@ -13,11 +12,20 @@ export default function Sidebar() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const INISIASI = useAppSelector((state) => state.inisiasi);
+  const [isManager, setisManager] = useState<boolean>(false);
   const { listProject } = useAppSelector((state) => state.project);
 
-  const getListMenu = async () => {
-    const res: any = await dispatch(GetListMenu(user?.profile?.id));
-    return res;
+  const checkIsManager = async () => {
+    return await user?.menu?.map((menu: any) => {
+      return menu.child.filter((child: any) => {
+        if (child.link === '/inbox') {
+          setisManager(true);
+          return true;
+        } else {
+          return false;
+        }
+      });
+    });
   };
 
   const getInisiasiWonForManager = async () => {
@@ -26,20 +34,19 @@ export default function Sidebar() {
   };
 
   const getDisposisiForPIC = async () => {
-    const res: DataProject[] = await dispatch(
-      getListProject(user?.profile?.id),
-    );
+    const res: DataProject[] = await dispatch(getListProject());
     return res;
   };
 
   useEffect(() => {
-    if (user?.profile?.id) {
-      getListMenu();
-      getInisiasiWonForManager();
-      getDisposisiForPIC();
-    }
+    checkIsManager();
+    // when manager load inbox manager
+    isManager && getInisiasiWonForManager();
+    // when route is inbox pic load data disposisi
+    location.pathname === '/pic/inbox' && getDisposisiForPIC();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.profile?.id, location.pathname]);
+  }, []);
 
   return (
     <aside className="flex w-0 lg:w-64 transition-all duration-500 inset-y-0 left-0 fixed z-0 lg:z-20">

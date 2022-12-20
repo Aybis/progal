@@ -3,14 +3,14 @@ import axios from '../Configs/api';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   // List Project Iniasi won for Manager
-  inisiasiWon: () => axios.get('procurement/project/inisiasi'),
+  inisiasiWon: () => axios.get('procurement/project/inisiasi-won'),
   disposisi: (data: Object) =>
     axios.post('procurement/project/disposition', data),
 
   // Project for PIC
   detailProject: (params: Object) =>
     axios.get(`procurement/project/detail`, params),
-  listProject: (data: Object) =>
+  listProject: (data?: Object) =>
     axios.get('procurement/project/doesnt-have-mitra', data),
   // document file => file_p6, file_p8, file_kl
   updateProject: (id: string, data: Object) =>
@@ -33,6 +33,17 @@ export default {
     axios.post('procurement/persetujuan', data),
   insertRequest: (data: Object) => axios.post('procurement/permohonan', data),
   insertBast: (data: Object) => axios.post('procurement/bast', data),
+  /* update requirement 13 - Desember -2022
+   * split file BAST
+   * upload file BAPP, DO, PR SAP, PO SAP, BAP, BAUT
+   */
+  insertBapp: (data: Object) => axios.post('procurement/bapp', data),
+  insertBaut: (data: Object) => axios.post('procurement/baut', data),
+  insertDo: (data: Object) => axios.post('procurement/do', data),
+  insertPrSap: (data: Object) => axios.post('procurement/prsap', data),
+  insertPoSap: (data: Object) => axios.post('procurement/posap', data),
+  insertBaProgress: (data: Object) =>
+    axios.post('procurement/ba-progress', data),
 
   // File Pendukung Update
   updateSpph: (id: string, data: Object) =>
@@ -51,6 +62,22 @@ export default {
     axios.post(`procurement/permohonan/update/${id}`, data),
   updateBast: (id: string, data: Object) =>
     axios.post(`procurement/bast/update/${id}`, data),
+  /* update requirement 13 - Desember -2022
+   * split file BAST
+   * upload file BAPP, DO, PR SAP, PO SAP, BAP
+   */
+  updateBapp: (id: string, data: Object) =>
+    axios.post(`procurement/bapp/update/${id}`, data),
+  updateBaut: (id: string, data: Object) =>
+    axios.post(`procurement/baut/update/${id}`, data),
+  updateBapProgress: (id: string, data: Object) =>
+    axios.post(`procurement/ba-progress/update/${id}`, data),
+  updateDo: (id: string, data: Object) =>
+    axios.post(`procurement/do/update/${id}`, data),
+  updatePrSap: (id: string, data: Object) =>
+    axios.post(`procurement/prsap/update/${id}`, data),
+  updatePoSap: (id: string, data: Object) =>
+    axios.post(`procurement/posap/update/${id}`, data),
 
   // list vendor and item from master
   listMitra: () => axios.get('cms/vendor/get'),

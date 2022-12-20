@@ -1,20 +1,21 @@
-import { useEffect, useState } from 'react';
-import { FormSearch } from '../../Components/molecules';
-import Layout from '../../Layouts/Layout';
-import { getMitraHasProject } from '../../Services/redux/Actions/hasMitra';
+import { useEffect } from 'react';
+import { Content, FormSearch } from '../../Components/molecules';
+import {
+  getMitraHasProject,
+  setListMitraPicFilter,
+} from '../../Services/redux/Actions/hasMitra';
 import { useAppDispatch, useAppSelector } from '../../Services/redux/hook';
-import { DataMitraHasProject } from '../../Services/redux/Types/hasmitra';
 import TableMonitoring from './TableMonitoring';
 
 export default function Index() {
   const dispatch = useAppDispatch();
-  const { profile } = useAppSelector((state) => state.user);
-  const { listMitraPic } = useAppSelector((state) => state.hasMitra);
-  const [filterData, setfilterData] = useState<DataMitraHasProject[]>([]);
+  const { listMitraPic, listMitraFilter } = useAppSelector(
+    (state) => state.hasMitra,
+  );
 
   const handlerSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === '') {
-      setfilterData(listMitraPic);
+      dispatch(setListMitraPicFilter(listMitraPic));
     } else {
       const filter = listMitraPic.filter((item) => {
         return (
@@ -36,20 +37,19 @@ export default function Index() {
             .includes(event.target.value.toLowerCase())
         );
       });
-      setfilterData(filter);
+      dispatch(setListMitraPicFilter(filter));
     }
   };
 
   useEffect(() => {
     (async () => {
-      const res = await dispatch(getMitraHasProject());
-      setfilterData(res);
+      return await dispatch(getMitraHasProject());
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile]);
+  }, []);
 
   return (
-    <Layout
+    <Content
       textHeading="Monitoring Project"
       subHeading="List Project untuk Monitoring Log">
       {/* Section Data Table */}
@@ -62,13 +62,13 @@ export default function Index() {
         />
         <div className="mt-4 relative">
           <p className="font-normal text-sm leading-relaxed text-gray-600">
-            Result : {filterData.length} project
+            Result : {listMitraFilter.length} project
           </p>
         </div>
 
         {/* Section Table */}
-        <TableMonitoring data={filterData} />
+        <TableMonitoring data={listMitraFilter} />
       </div>
-    </Layout>
+    </Content>
   );
 }

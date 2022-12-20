@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
 import { InputSelect } from '..';
 import { DisposisiProjectToPIC } from '../../../Services/redux/Actions/inisiasi';
+import {
+  GetListLegalPic,
+  GetListProcurementPic,
+} from '../../../Services/redux/Actions/user';
 import { useAppDispatch, useAppSelector } from '../../../Services/redux/hook';
 import { Button } from '../../atoms';
 
@@ -64,8 +68,6 @@ export default function Index(props: FormProps) {
     }
   };
 
-  // Sei, Putra, Dian
-
   let filterPicProcurement = [
     'SEIRAWAN EKA SAKTI',
     'BIMA RISWANTA TARIGAN',
@@ -75,6 +77,13 @@ export default function Index(props: FormProps) {
     'DIAN ABDURRAHMAN',
     'PUTRA WIDJAYA',
   ];
+
+  useEffect(() => {
+    if (USER?.procurement.length === 0 && USER?.legal.length === 0) {
+      dispatch(GetListProcurementPic());
+      dispatch(GetListLegalPic());
+    }
+  }, [USER?.procurement, USER?.legal, dispatch]);
 
   return (
     <form onSubmit={handlerSubmit} className="relative flex flex-col gap-4">

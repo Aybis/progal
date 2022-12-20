@@ -11,23 +11,20 @@ import {
 } from '@heroicons/react/24/solid';
 import Cookies from 'js-cookie';
 import { useState } from 'react';
-import { ModalMessage } from '../Components/atoms';
+import Swal from 'sweetalert2';
 import { useAppSelector } from '../Services/redux/hook';
 
 export default function Header() {
   const userState = useAppSelector((state) => state.user);
   const [showDropdown, setshowDropdown] = useState<boolean>(false);
-  const [showModalMessage, setshowModalMessage] = useState(false);
 
   const handlerLogout = async () => {
     localStorage.removeItem('token');
     Cookies.remove('session');
+    Swal.fire('Success', 'Logout Success', 'success');
     setTimeout(() => {
-      setshowModalMessage(true);
       window.location.reload();
     }, 400);
-
-    setshowModalMessage(false);
   };
 
   return (
@@ -58,10 +55,10 @@ export default function Header() {
         {/* Icon */}
         <div>
           <div className="relative flex gap-4">
-            <div className="group relative p-2 rounded-lg bg-transparent hover:bg-zinc-100 transition-all duration-300 text-zinc-500 hover:text-blue-500 cursor-pointer">
+            <div className="group hidden relative p-2 rounded-lg bg-transparent hover:bg-zinc-100 transition-all duration-300 text-zinc-500 hover:text-blue-500 cursor-pointer">
               <Squares2X2Icon className="h-6 group-hover:scale-105 transition-all duration-300" />
             </div>
-            <div className="group relative p-2 rounded-lg bg-transparent hover:bg-zinc-100 transition-all duration-300 text-zinc-500 hover:text-blue-500 cursor-pointer">
+            <div className="group hidden relative p-2 rounded-lg bg-transparent hover:bg-zinc-100 transition-all duration-300 text-zinc-500 hover:text-blue-500 cursor-pointer">
               <BellIcon className="h-6 group-hover:scale-105 transition-all duration-300" />
             </div>
             <button
@@ -94,13 +91,6 @@ export default function Header() {
           </div>
         </div>
       </section>
-
-      <ModalMessage
-        isShow={showModalMessage}
-        typeModal="success"
-        heading="Success"
-        description="Logout Berhasil"
-      />
     </header>
   );
 }

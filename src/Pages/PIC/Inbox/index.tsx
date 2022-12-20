@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../../../Components/atoms';
-import { FormMappingMitra, FormSearch } from '../../../Components/molecules';
-import Layout from '../../../Layouts/Layout';
+import {
+  Content,
+  FormMappingMitra,
+  FormSearch,
+  LengthData,
+} from '../../../Components/molecules';
 import {
   getListProject,
   setSelectedProject,
@@ -59,7 +63,7 @@ export default function Index() {
   useEffect(() => {
     if (profile?.id) {
       (async () => {
-        const res = await dispatch(getListProject(profile?.id));
+        const res = await dispatch(getListProject());
         setfilterData(res.data);
         return res;
       })();
@@ -68,11 +72,12 @@ export default function Index() {
   }, [profile]);
 
   return (
-    <Layout
+    <Content
       textHeading="Disposisi"
       subHeading="List Project Disposisi oleh Manager">
       <div className="relative bg-white p-4 rounded-lg mt-12">
         <FormSearch onChange={handlerFilterData} />
+        <LengthData data={filterData} />
 
         {/* Section Table */}
         <TableInboxPIC
@@ -90,6 +95,6 @@ export default function Index() {
           handlerClose={(arg) => setshowModal(arg)}
         />
       </Modal>
-    </Layout>
+    </Content>
   );
 }

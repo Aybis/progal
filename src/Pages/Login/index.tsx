@@ -45,8 +45,6 @@ export default function Index() {
           navigate('/', { replace: true });
         }, 300);
       }
-    } else {
-      setshowModalMessage(true);
     }
   };
 
@@ -116,7 +114,7 @@ export default function Index() {
               isDisabled={user?.loading}
               typeClass="primary"
               type="submit"
-              classButton="w-full">
+              classButton="w-full py-2.5 rounded-lg tracking-wide font-semibold">
               Login
             </Button>
           </div>

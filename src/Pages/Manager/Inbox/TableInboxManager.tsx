@@ -87,7 +87,7 @@ export default function TableInboxManager(props: Props) {
                   </Button>
                 </div>
               </Tbody>
-              <Tbody>{item?.io?.internal_order}</Tbody>
+              <Tbody>{item?.io?.io_format}</Tbody>
               <Tbody className="text-left whitespace-pre-line">
                 {item?.title_project ?? item?.desc_project}
               </Tbody>
@@ -101,10 +101,18 @@ export default function TableInboxManager(props: Props) {
                   value={item.nilai_cogs}
                 />
               </Tbody>
-              <Tbody className="whitespace-nowrap">-</Tbody>
-              <Tbody className="whitespace-nowrap">-</Tbody>
-              <Tbody className="whitespace-nowrap">-</Tbody>
-              <Tbody className="whitespace-nowrap">-</Tbody>
+              <Tbody className="whitespace-nowrap">
+                {item.jasbisis?.revenue}
+              </Tbody>
+              <Tbody className="whitespace-nowrap">
+                {item.jasbisis?.ebitda_project_margin}
+              </Tbody>
+              <Tbody className="whitespace-nowrap">
+                {item?.jasbisis?.status}
+              </Tbody>
+              <Tbody className="whitespace-nowrap">
+                {item?.jasbisis?.status}
+              </Tbody>
             </tr>
           ))
         )}

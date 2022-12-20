@@ -8,7 +8,8 @@ export default function Index(props: Props) {
   return props?.value !== 0 ? (
     <div
       className={[
-        'relative flex justify-between items-center tece',
+        'relative flex justify-between items-center text-center',
+        props.value < 0 ? 'text-red-600' : 'text-gray-800',
         props.className,
       ].join(' ')}>
       {props.value === null || props.value === undefined ? (

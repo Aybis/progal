@@ -4,19 +4,31 @@ import { FormInput } from '../';
 import {
   getMitraHasProject,
   updateFileBAKN,
+  updateFileBapp,
+  updateFileBapProgress,
   updateFileBast,
+  updateFileBaut,
+  updateFileDo,
   updateFileKHS,
   updateFileKontrak,
   updateFilePermohonan,
   updateFilePersetujuan,
+  updateFilePoSap,
+  updateFilePrSap,
   updateFileSPH,
   updateFileSPPH,
   uploadFileBAKN,
+  uploadFileBapp,
+  uploadFileBaProgress,
   uploadFileBast,
+  uploadFileBaut,
+  uploadFileDo,
   uploadFileKHS,
   uploadFileKontrak,
   uploadFilePermohonan,
   uploadFilePersetujuan,
+  uploadFilePoSap,
+  uploadFilePrSap,
   uploadFileSPH,
   uploadFileSPPH,
 } from '../../../Services/redux/Actions/hasMitra';
@@ -32,6 +44,7 @@ type FormMitraProps = {
 };
 
 export default function Index(props: FormMitraProps) {
+  console.log(props.name?.toLowerCase());
   const dispatch = useAppDispatch();
   const { profile } = useAppSelector((state) => state.user);
   const [tempFile, settempFile] = useState<string>('');
@@ -81,6 +94,29 @@ export default function Index(props: FormMitraProps) {
       case 'bast':
         return await dispatch(uploadFileBast(form));
 
+      /*
+      -------------------------------------
+      */
+      case 'baut':
+        return await dispatch(uploadFileBaut(form));
+
+      case 'bapp':
+        return await dispatch(uploadFileBapp(form));
+
+      case 'ba-progress':
+        return await dispatch(uploadFileBaProgress(form));
+
+      case 'do':
+        return await dispatch(uploadFileDo(form));
+
+      case 'pr-sap':
+        return await dispatch(uploadFilePrSap(form));
+
+      case 'po-sap':
+        return await dispatch(uploadFilePoSap(form));
+      /*
+      -------------------------------------
+      */
       default:
         return;
     }
@@ -127,6 +163,42 @@ export default function Index(props: FormMitraProps) {
         return await dispatch(
           updateFileBast(props?.dataDocument?.id?.toString(), form),
         );
+
+      /*
+      -------------------------------------
+      */
+      case 'baut':
+        return await dispatch(
+          updateFileBaut(props?.dataDocument?.id?.toString(), form),
+        );
+
+      case 'bapp':
+        return await dispatch(
+          updateFileBapp(props?.dataDocument?.id?.toString(), form),
+        );
+
+      case 'ba-progress':
+        return await dispatch(
+          updateFileBapProgress(props?.dataDocument?.id?.toString(), form),
+        );
+
+      case 'do':
+        return await dispatch(
+          updateFileDo(props?.dataDocument?.id?.toString(), form),
+        );
+
+      case 'pr-sap':
+        return await dispatch(
+          updateFilePrSap(props?.dataDocument?.id?.toString(), form),
+        );
+
+      case 'po-sap':
+        return await dispatch(
+          updateFilePoSap(props?.dataDocument?.id?.toString(), form),
+        );
+      /*
+      -------------------------------------
+      */
 
       default:
         return;
@@ -217,25 +289,6 @@ export default function Index(props: FormMitraProps) {
             className="text-blue-500 font-medium text-sm">
             View Document
           </a>
-
-          {/* {props.name?.toLowerCase() === 'bast' ? (
-            Object.keys(tempFileBast).map((key) => {
-              return props.dataDocument?.[key] === null ? (
-                ''
-              ) : (
-                <a
-                  key={key}
-                  href={props.dataDocument?.[key]}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-blue-500 font-medium text-sm">
-                  View {key.replace('_', ' ').toUpperCase()}
-                </a>
-              );
-            })
-          ) : (
-            
-          )} */}
         </>
       )}
 

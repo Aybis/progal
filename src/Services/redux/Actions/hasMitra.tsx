@@ -216,6 +216,76 @@ export const uploadFileBast =
     }
   };
 
+/*
+New requirement 13-12-2022
+split upload file bast 
+-BAST
+-BAPP
+-BA Progress
+-DO
+-PR SAP
+-PO SAP
+*/
+export const uploadFileBapp =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertBapp(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const uploadFileBaProgress =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertBaProgress(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const uploadFileDo =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertDo(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const uploadFileBaut =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertBaut(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const uploadFilePrSap =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertPrSap(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const uploadFilePoSap =
+  (data: any) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.insertPoSap(data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
 // Update File Pendukung
 export const updateFileSPPH =
   (id: string, data: any) =>
@@ -301,6 +371,83 @@ export const updateFileBast =
   async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
     try {
       const res = await progalApi.updateBast(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+/*
+New requirement 13-12-2022
+split upload file bast 
+-BAST
+-BAPP
+-BA Progress
+-DO
+-PR SAP
+-PO SAP
+*/
+
+export const updateFileBapp =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateBapp(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFileBapProgress =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateBapProgress(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFileDo =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateDo(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFileBaut =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updateBaut(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFilePrSap =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updatePrSap(id, data);
+      return res;
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+export const updateFilePoSap =
+  (id: string, data: any) =>
+  async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    try {
+      const res = await progalApi.updatePoSap(id, data);
       return res;
     } catch (error: any) {
       return error;

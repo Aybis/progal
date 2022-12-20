@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Modal } from '../../../Components/atoms';
 import {
+  Content,
   FormDocument,
   FormMappingMitra,
   FormSearch,
   LengthData,
 } from '../../../Components/molecules';
-import Layout from '../../../Layouts/Layout';
 import {
   getProjectHasMitra,
   setSelectedProjectMitra,
@@ -37,7 +37,7 @@ export default function Index() {
   }, [profile]);
 
   return (
-    <Layout
+    <Content
       textHeading="Project Update"
       subHeading="List Project Update oleh PIC">
       {/* Section Table Data */}
@@ -64,6 +64,6 @@ export default function Index() {
           <FormDocument handlerClose={(arg) => setshowModal(arg)} />
         )}
       </Modal>
-    </Layout>
+    </Content>
   );
 }

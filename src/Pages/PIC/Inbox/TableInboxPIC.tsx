@@ -1,5 +1,11 @@
 import { DocumentIcon, ShareIcon } from '@heroicons/react/24/outline';
-import { Button, Table, Tbody, Thead } from '../../../Components/atoms';
+import {
+  Button,
+  Table,
+  TableDataCurrency,
+  Tbody,
+  Thead,
+} from '../../../Components/atoms';
 import { TableData } from '../../../Components/molecules';
 import { useAppSelector } from '../../../Services/redux/hook';
 import { DataProject } from '../../../Services/redux/Types/project';
@@ -78,11 +84,16 @@ export default function TableInboxPIC(props: Props) {
                 </div>
               </Tbody>
               <Tbody>{item.no_io}</Tbody>
-              <Tbody className="text-left whitespace-pre-line">
+              <Tbody className="text-left whitespace-nowrap">
                 {item.inisiasi.title_project}
               </Tbody>
               <Tbody className="whitespace-nowrap">
-                Rp {item.inisiasi.nilai_cogs.toLocaleString('id-ID')}
+                <TableDataCurrency
+                  className="w-40"
+                  value={item.inisiasi.nilai_cogs}
+                  currency="Rp"
+                />
+                {/* Rp {.toLocaleString('id-ID')} */}
               </Tbody>
               <Tbody className="whitespace-nowrap">-</Tbody>
               <Tbody className="whitespace-nowrap">-</Tbody>

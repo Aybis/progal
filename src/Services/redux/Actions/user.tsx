@@ -110,7 +110,7 @@ export const GetProfileUser =
   };
 
 export const GetListMenu =
-  (user_id: any) => async (dispatch: Dispatch<UserDispatchTypes>) => {
+  (user_id?: any) => async (dispatch: Dispatch<UserDispatchTypes>) => {
     try {
       dispatch({
         type: USER_LOADING,
@@ -118,11 +118,7 @@ export const GetListMenu =
 
       setHeader();
       // await get list menu
-      const res = await userApi.listMenu({
-        params: {
-          user_id: user_id,
-        },
-      });
+      const res = await userApi.listMenu();
 
       dispatch({
         type: USER_MENU,

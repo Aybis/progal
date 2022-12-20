@@ -20,7 +20,7 @@ export type DataMitraHasProject = {
   po_sap?: any;
   do?: any;
   bapp?: any;
-  bap?: any;
+  ba_progress?: any;
   baut?: any;
   boq_item?: [];
   deskripsi_pekerjaan?: string;

@@ -44,14 +44,9 @@ export const getListProject =
   (id?: number | string) =>
   async (dispatch: Dispatch<ProjectDispatchTypes>) => {
     dispatch(setLoadingProject(true));
-
     try {
       setHeader();
-      const response = await progalApi.listProject({
-        params: {
-          user_id: id,
-        },
-      });
+      const response = await progalApi.listProject();
 
       dispatch(setListProject(response.data));
 

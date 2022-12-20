@@ -31,6 +31,9 @@ const initialState: InitialState = {
   message: '',
   procurement: [],
   legal: [],
+  profile: {} as User,
+  session: {} as UserSession,
+  menu: [],
 };
 
 const userReducer = (

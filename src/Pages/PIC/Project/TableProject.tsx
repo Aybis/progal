@@ -51,7 +51,7 @@ export default function TableProject(props: Props) {
           ProjectMitra.listProjectMitra.map((item, index) => (
             <tr
               key={index}
-              className="text-sm hover:bg-zinc-50 transition-all duration-300">
+              className="text-sm border-b border-zinc-100 hover:bg-zinc-50 transition-all duration-300">
               <Tbody className="text-center py-3 px-4">{index + 1}</Tbody>
               <Tbody className="text-center py-3 px-4">
                 <div className="relative flex gap-2 justify-center items-center">
@@ -83,8 +83,8 @@ export default function TableProject(props: Props) {
                 </div>
               </Tbody>
               <Tbody className="text-center py-3 px-4">{item.no_io}</Tbody>
-              <Tbody className="text-left py-3 px-4 uppercase">
-                {item.inisiasi.desc_project}
+              <Tbody className="text-left py-3 px-4 uppercase whitespace-nowrap">
+                {item.inisiasi?.tile_project ?? '-'}
               </Tbody>
 
               {/* Mitra */}

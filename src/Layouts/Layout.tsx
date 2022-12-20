@@ -1,6 +1,5 @@
-import { ArrowDownLeftIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
+import { ArrowUpIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '../Components/atoms';
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -13,8 +12,6 @@ type LayoutsProps = {
 };
 
 export default function Layout(props: LayoutsProps) {
-  const navigate = useNavigate();
-
   const [showButtonUp, setshowButtonUp] = useState<boolean>(false);
 
   const handlerClickGoToTop = () => {
@@ -56,26 +53,7 @@ export default function Layout(props: LayoutsProps) {
           )}
 
           {/* Section Main Content */}
-          <main className="relative bg-zinc-50 p-4 min-h-screen max-h-full max-w-full">
-            <div className="relative">
-              {/* Back Button  */}
-              {props.backNavigation && (
-                <Button
-                  handlerClick={() => navigate(-1)}
-                  classButton="flex gap-2 hover:scale-105 mb-4 mt-2 text-base tacking-wide">
-                  <ArrowDownLeftIcon className="h-4 transform rotate-45" />
-                  Kembali
-                </Button>
-              )}
-              <h1 className="text-3xl font-semibold leading-relaxed text-zinc-900">
-                {props.textHeading}
-              </h1>
-              <p className="text-xl leading-relaxed mt-0.5 font-light text-zinc-900">
-                {props.subHeading}
-              </p>
-            </div>
-            {props.children}
-          </main>
+          {props.children}
           {/*End Section Main Content */}
         </div>
       </div>

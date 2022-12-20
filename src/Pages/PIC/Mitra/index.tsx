@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Modal } from '../../../Components/atoms';
 import {
+  Content,
   FormBoq,
   FormFile,
   FormSearch,
   FormUpdateMitra,
   LengthData,
 } from '../../../Components/molecules';
-import Layout from '../../../Layouts/Layout';
 import {
   getMitraHasProject,
   setListMitraPicFilter,
@@ -72,14 +72,16 @@ export default function Index() {
   };
 
   useEffect(() => {
-    (async () => {
-      return await dispatch(getMitraHasProject(await profile?.id));
-    })();
+    if (profile?.id) {
+      (async () => {
+        return await dispatch(getMitraHasProject(await profile?.id));
+      })();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
 
   return (
-    <Layout
+    <Content
       textHeading="Project Mitra"
       subHeading="List Project berdasarkan mitra">
       {/* Section Data Table */}
@@ -130,6 +132,6 @@ export default function Index() {
           />
         ) : null}
       </Modal>
-    </Layout>
+    </Content>
   );
 }
