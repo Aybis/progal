@@ -3,6 +3,8 @@ import { setHeader } from '../../../Configs/api';
 import progalApi from '../../../Middleware/progal-api';
 import {
   DataProject,
+  FilterListProject,
+  FILTER_LIST_PROJECT,
   ListProject,
   LIST_PROJECT,
   ProjectDispatchTypes,
@@ -40,6 +42,13 @@ export const setListProject = (data: DataProject[]): ListProject => ({
   payload: data,
 });
 
+export const setListFilterProject = (
+  data: DataProject[],
+): FilterListProject => ({
+  type: FILTER_LIST_PROJECT,
+  payload: data,
+});
+
 export const getListProject =
   (id?: number | string) =>
   async (dispatch: Dispatch<ProjectDispatchTypes>) => {
@@ -49,7 +58,7 @@ export const getListProject =
       const response = await progalApi.listProject();
 
       dispatch(setListProject(response.data));
-
+      dispatch(setListFilterProject(response.data));
       return response;
     } catch (error: any) {
       dispatch(setLoadingProject(false));

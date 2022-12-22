@@ -27,7 +27,7 @@ export default function TableMitra(props: Props) {
   const { loading } = useAppSelector((state) => state.hasMitra);
 
   return (
-    <Table classRoot="mt-5">
+    <Table classRoot="my-5">
       <thead className="border-b">
         <tr className="bg-zinc-50 text-base">
           <Thead
@@ -299,7 +299,7 @@ export default function TableMitra(props: Props) {
               <Tbody className="border-l py-3 px-8">
                 <ButtonDocument
                   handlerClick={props.handlerModalForm}
-                  isUpload={item?.pr_sap}
+                  isUpload={item?.prsap}
                   documentName="PR-SAP"
                   item={item}
                 />
@@ -307,7 +307,7 @@ export default function TableMitra(props: Props) {
               <Tbody className="border-l py-3 px-8">
                 <ButtonDocument
                   handlerClick={props.handlerModalForm}
-                  isUpload={item?.po_sap}
+                  isUpload={item?.posap}
                   documentName="PO-SAP"
                   item={item}
                 />
@@ -315,8 +315,8 @@ export default function TableMitra(props: Props) {
               <Tbody className="border-l py-3 px-8">
                 <ButtonDocument
                   handlerClick={props.handlerModalForm}
-                  isUpload={item?.do}
-                  documentName="DO"
+                  isUpload={item?.do_file}
+                  documentName="DO_FILE"
                   item={item}
                 />
               </Tbody>

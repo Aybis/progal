@@ -27,6 +27,13 @@ export default function Index(props: Props) {
     'is_down_payment',
     'mitra_id',
     'position',
+    'baut',
+    'bapp',
+    'ba_progress',
+    'do_file',
+    'prsap',
+    'posap',
+    'mitra',
   ];
 
   return (

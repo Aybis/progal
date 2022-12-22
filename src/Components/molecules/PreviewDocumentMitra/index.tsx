@@ -14,6 +14,12 @@ export default function Index(props: Props) {
     'permohonan',
     'persetujuan',
     'bast',
+    'baut',
+    'bapp',
+    'ba_progress',
+    'do_file',
+    'prsap',
+    'posap',
   ];
   let fieldDocumentFilter: string[] = ['no', 'tanggal', 'file_name'];
 

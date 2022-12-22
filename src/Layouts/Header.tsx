@@ -38,7 +38,7 @@ export default function Header() {
           </h1>
         </div>
         {/* Search Bar */}
-        <div className="relative w-1/2">
+        <div className="relative w-1/2 hidden">
           <div className="relative">
             <input
               type="text"

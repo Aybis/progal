@@ -10,6 +10,9 @@ export default {
   // Project for PIC
   detailProject: (params: Object) =>
     axios.get(`procurement/project/detail`, params),
+  // params => id
+  detailProjectMitra: (params: Object) =>
+    axios.get(`procurement/project-mitra/detail`, params),
   listProject: (data?: Object) =>
     axios.get('procurement/project/doesnt-have-mitra', data),
   // document file => file_p6, file_p8, file_kl

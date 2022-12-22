@@ -5,6 +5,7 @@ import {
   Content,
   PreviewDocument,
   PreviewInisiasi,
+  PreviewJusbis,
   PreviewMitra,
 } from '../../Components/molecules';
 import { getDetailProject } from '../../Services/redux/Actions/project';
@@ -23,6 +24,8 @@ export default function Index() {
       return res;
     })();
   }, [dispatch, id]);
+
+  console.log(dataProject?.inisiasi);
 
   return (
     <Content textHeading="Detail Project" backNavigation>
@@ -50,13 +53,24 @@ export default function Index() {
       </div>
 
       <div className="relative mb-20">
-        <Divider nameDivide="Detail Projects" />
+        <Divider nameDivide="Detail Justifikasi Bisnis" colorBg="bg-zinc-50" />
+        {dataProject?.inisiasi?.jasbisis?.[0]! ? (
+          <PreviewJusbis data={dataProject?.inisiasi?.jasbisis?.[0]!} />
+        ) : (
+          <div className="relative flex justify-center items-center py-4">
+            <p className="text-gray-600 font-light text-sm">Tidak ada data</p>
+          </div>
+        )}
 
+        <Divider nameDivide="Detail Inisiasi" colorBg="bg-zinc-50" />
         {/* Inisiasi */}
         <PreviewInisiasi data={dataProject?.inisiasi} />
 
+        <Divider nameDivide="Detail Project" colorBg="bg-zinc-50" />
         {/* Project  */}
         <PreviewDocument data={dataProject} />
+
+        <Divider nameDivide="Detail Project Mitra" colorBg="bg-zinc-50" />
 
         {/* Mitra */}
         {dataProject?.project_mitra?.length > 0

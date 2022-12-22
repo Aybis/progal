@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { Content, FormInput } from '../../../Components/molecules';
+import { Divider } from '../../../Components/atoms';
+import { Content, FormPreview } from '../../../Components/molecules';
 import { useAppSelector } from '../../../Services/redux/hook';
 
 export default function Index() {
@@ -31,6 +32,18 @@ export default function Index() {
     'durasi_id',
     'io',
     'jasbisis',
+    'inisiasi_id',
+    'dokumen',
+  ];
+
+  let filterCurrency = [
+    'indirect_cost',
+    'down_payment',
+    'harga_penawaran',
+    'cogs',
+    'ebitda_project',
+    'indirect_cost',
+    'revenue',
   ];
 
   if (Object.entries(inisiasiSelected).length < 2) {
@@ -51,23 +64,58 @@ export default function Index() {
       </div>
 
       <div className="relative mt-8">
-        <div className="relative flex flex-col gap-4 bg-white p-4">
+        <Divider
+          nameDivide="Detail Inisiasi"
+          colorBg="bg-zinc-50"
+          classRoot="mb-4"
+        />
+
+        <div className="relative flex flex-col gap-4 bg-white p-6 rounded-lg">
           {Object.entries(inisiasiSelected)
             .filter((form) => filterKey.includes(form[0]) === false)
-            .map((item) => (
-              <FormInput
-                isDisabled={true}
-                isReadOnly={true}
-                key={item[0]}
-                classLabel="capitalize"
-                labelName={item[0].replace(/_/g, ' ')}
-                inputValue={
-                  item[0].includes('nilai')
-                    ? item[1].toLocaleString('id-ID')
-                    : item[1] || '-'
-                }
-              />
-            ))}
+            .map((item) => {
+              return (
+                <FormPreview
+                  isDocument={item[0].includes('dokumen')}
+                  key={item[0]}
+                  label={item[0].replace(/_/g, ' ')}
+                  value={
+                    item[0].includes('nilai') ||
+                    filterCurrency.includes(item[0])
+                      ? item[1].toLocaleString('id-ID')
+                      : item[1] || '-'
+                  }
+                />
+              );
+            })}
+        </div>
+
+        <Divider
+          nameDivide="Detail Justifikasi Bisnis"
+          colorBg="bg-zinc-50"
+          classRoot="my-6"
+        />
+        <div className="relative flex flex-col gap-4 bg-white p-6 rounded-lg">
+          {inisiasiSelected?.jasbisis?.[0] &&
+            Object.entries(inisiasiSelected?.jasbisis?.[0])
+              .filter((form) => filterKey.includes(form[0]) === false)
+              .map((item) => {
+                return (
+                  <FormPreview
+                    isDocument={item[0].includes('dokumen')}
+                    key={item[0]}
+                    label={item[0].replace(/_/g, ' ')}
+                    value={
+                      item[0].includes('nilai') ||
+                      filterCurrency.includes(item[0])
+                        ? item[1].toLocaleString('id-ID')
+                        : item[0].includes('margin')
+                        ? `${item[1]}%`
+                        : item[1] || '-'
+                    }
+                  />
+                );
+              })}
         </div>
       </div>
     </Content>

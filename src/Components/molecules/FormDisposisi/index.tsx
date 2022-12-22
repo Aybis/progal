@@ -13,7 +13,7 @@ import { Button } from '../../atoms';
 type Form = {
   pic_procurement?: string;
   pic_legal?: string;
-  no_io?: string | number;
+  no_io?: string;
   inisiasi_id?: string | number;
 };
 
@@ -31,8 +31,8 @@ export default function Index(props: FormProps) {
   const [form, setForm] = useState<Form>({
     pic_procurement: '',
     pic_legal: '',
-    no_io: '',
-    inisiasi_id: '',
+    no_io: inisiasiSelected?.io?.io_format,
+    inisiasi_id: inisiasiSelected?.id,
   });
 
   const handlerOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,19 +52,16 @@ export default function Index(props: FormProps) {
         'PIC Procurement dan PIC Legal tidak boleh kosong',
         'warning',
       );
-    } else {
-      // if user has been selected set id from inisiasiSelected
-      form.no_io = inisiasiSelected?.io.internal_order;
-      form.inisiasi_id = inisiasiSelected?.id;
     }
+
+    form.no_io = inisiasiSelected?.io?.io_format;
+    form.inisiasi_id = inisiasiSelected?.id;
 
     // handler submit disposisi
     const result = await dispatch(DisposisiProjectToPIC(form));
     if (result.status === 200) {
       Swal.fire('Success', result?.data ?? 'Disposisi Berhasil', 'success');
       props.handlerClose?.(false);
-    } else {
-      Swal.fire('Error', result?.message ?? 'Disposisi Gagal!', 'error');
     }
   };
 
@@ -85,6 +82,8 @@ export default function Index(props: FormProps) {
     }
   }, [USER?.procurement, USER?.legal, dispatch]);
 
+  // console.log(inisiasiSelected?.jasbisis?.[0].cogs! > 100000000);
+
   return (
     <form onSubmit={handlerSubmit} className="relative flex flex-col gap-4">
       <InputSelect
@@ -104,7 +103,7 @@ export default function Index(props: FormProps) {
           ))}
       </InputSelect>
 
-      {inisiasiSelected?.nilai_cogs > 100000000 && (
+      {inisiasiSelected?.jasbisis?.[0]?.cogs! > 100000000 && (
         <InputSelect
           label="PIC Legal :"
           placeholder="PIC"

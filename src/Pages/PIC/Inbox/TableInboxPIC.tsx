@@ -11,12 +11,11 @@ import { useAppSelector } from '../../../Services/redux/hook';
 import { DataProject } from '../../../Services/redux/Types/project';
 
 type Props = {
-  dataProject?: DataProject[] | [];
   handlerMapping: (type: string, item: any) => void;
 };
 
 export default function TableInboxPIC(props: Props) {
-  const { loading } = useAppSelector((state) => state.project);
+  const { loading, filterProject } = useAppSelector((state) => state.project);
 
   return (
     <Table classRoot="mt-5">
@@ -35,7 +34,7 @@ export default function TableInboxPIC(props: Props) {
             Judul Proyek
           </Thead>
 
-          <Thead colSpan={5} className="sticky top-0 border-l border-b">
+          <Thead colSpan={6} className="sticky top-0 border-l border-b">
             Jusbis
           </Thead>
         </tr>
@@ -45,6 +44,7 @@ export default function TableInboxPIC(props: Props) {
           <Thead className="sticky top-0 border-l">Project Margin</Thead>
           <Thead className="sticky top-0 border-l">Status</Thead>
           <Thead className="sticky top-0 border-l">Metode Pembiayaan</Thead>
+          <Thead className="sticky top-0 border-l">Dokumen</Thead>
         </tr>
       </thead>
       <tbody>
@@ -55,12 +55,12 @@ export default function TableInboxPIC(props: Props) {
               Loading...
             </Tbody>
           </tr>
-        ) : props?.dataProject?.length === 0 ? (
+        ) : filterProject?.length === 0 ? (
           // state when data is null
           <TableData isEmpty colSpan={9} />
         ) : (
           // state when data is not null
-          props?.dataProject?.map((item: DataProject, index: number) => (
+          filterProject?.map((item: DataProject, index: number) => (
             <tr
               key={item.id}
               className="text-sm text-center border-b border-zinc-100 hover:bg-zinc-50 transition-all duration-300">
@@ -87,18 +87,44 @@ export default function TableInboxPIC(props: Props) {
               <Tbody className="text-left whitespace-nowrap">
                 {item.inisiasi.title_project}
               </Tbody>
+              <Tbody className="">
+                <TableDataCurrency
+                  className="w-40"
+                  currency="Rp"
+                  value={item.inisiasi.jasbisis?.[0]?.cogs!}
+                />
+              </Tbody>
               <Tbody className="whitespace-nowrap">
                 <TableDataCurrency
                   className="w-40"
-                  value={item.inisiasi.nilai_cogs}
+                  value={item.inisiasi.jasbisis?.[0]?.revenue!}
                   currency="Rp"
                 />
-                {/* Rp {.toLocaleString('id-ID')} */}
               </Tbody>
-              <Tbody className="whitespace-nowrap">-</Tbody>
-              <Tbody className="whitespace-nowrap">-</Tbody>
-              <Tbody className="whitespace-nowrap">-</Tbody>
-              <Tbody className="whitespace-nowrap">-</Tbody>
+              <Tbody className="whitespace-nowrap">
+                {item.inisiasi.jasbisis?.[0]
+                  ? item.inisiasi.jasbisis?.[0].ebitda_project_margin + '%'
+                  : '-'}
+              </Tbody>
+              <Tbody className="whitespace-nowrap">
+                {item?.inisiasi.jasbisis?.[0]?.status ?? '-'}
+              </Tbody>
+              <Tbody className="whitespace-nowrap">
+                {item?.inisiasi.jasbisis?.[0]?.metode_pembiayaan ?? '-'}
+              </Tbody>
+              <Tbody className="whitespace-nowrap">
+                {item?.inisiasi.jasbisis?.[0] ? (
+                  <a
+                    href={item?.inisiasi.jasbisis?.[0]?.dokumen_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-500 hover:text-blue-700">
+                    View
+                  </a>
+                ) : (
+                  '-'
+                )}
+              </Tbody>
             </tr>
           ))
         )}

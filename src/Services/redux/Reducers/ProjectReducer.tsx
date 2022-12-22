@@ -1,5 +1,6 @@
 import {
   DataProject,
+  FILTER_LIST_PROJECT,
   LIST_PROJECT,
   PROJECT_ERROR,
   PROJECT_LOADING,
@@ -11,6 +12,7 @@ interface InitialState {
   loading: boolean;
   listProject: DataProject[];
   selectedProject: DataProject;
+  filterProject: DataProject[];
   isError: boolean;
   message?: string;
 }
@@ -20,6 +22,7 @@ const initialState: InitialState = {
   isError: false,
   message: '',
   listProject: [],
+  filterProject: [],
   selectedProject: {} as DataProject,
 };
 
@@ -33,6 +36,13 @@ const projectReducer = (
         ...state,
         loading: false,
         listProject: action.payload,
+      };
+
+    case FILTER_LIST_PROJECT:
+      return {
+        ...state,
+        loading: false,
+        filterProject: action.payload,
       };
 
     case PROJECT_SELECTED:

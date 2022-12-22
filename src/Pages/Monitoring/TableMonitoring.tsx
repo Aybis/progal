@@ -263,15 +263,15 @@ export default function TableMonitoring(props: Props) {
                   />
                 </Tbody>
                 <Tbody className="border-l py-3 px-8">
-                  <LinkDocument data={item?.pr_sap} />
+                  <LinkDocument data={item?.prsap} />
                 </Tbody>
 
                 <Tbody className="border-l py-3 px-8">
-                  <LinkDocument data={item?.po_sap} />
+                  <LinkDocument data={item?.posap} />
                 </Tbody>
 
                 <Tbody className="border-l py-3 px-8">
-                  <LinkDocument data={item?.do} />
+                  <LinkDocument data={item?.do_file} />
                 </Tbody>
 
                 <Tbody className="border-l py-3 px-8">

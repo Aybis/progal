@@ -1,6 +1,6 @@
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
-import { FormInput } from '..';
+import { FormPreview } from '..';
 import { Button } from '../../atoms';
 
 type Props = {
@@ -38,14 +38,6 @@ export default function Index(props: Props) {
     'jasbisis',
   ];
 
-  const handlerClick = () => {
-    sethandlerPreview(!handlerPreview);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-
   return (
     <div className="relative mt-4">
       <div className="relative flex justify-between items-center">
@@ -54,7 +46,7 @@ export default function Index(props: Props) {
         </h1>
 
         <Button
-          handlerClick={() => handlerClick()}
+          handlerClick={() => sethandlerPreview(!handlerPreview)}
           typeClass="others"
           classButton="transition-all duration-500">
           <ArrowUpIcon
@@ -76,13 +68,10 @@ export default function Index(props: Props) {
             {Object.entries(props.data)
               .filter((form) => filterKey.includes(form[0]) === false)
               .map((item: any) => (
-                <FormInput
-                  isDisabled={true}
-                  isReadOnly={true}
+                <FormPreview
                   key={item[0]}
-                  classLabel="capitalize"
-                  labelName={item[0].replace(/_/g, ' ')}
-                  inputValue={
+                  label={item[0].replace(/_/g, ' ')}
+                  value={
                     item[0].includes('nilai')
                       ? item[1].toLocaleString('id-ID')
                       : item[1] || '-'

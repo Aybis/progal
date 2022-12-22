@@ -5,6 +5,7 @@ export const PROJECT_SUCCESS = 'PROJECT_SUCCESS';
 export const PROJECT_MESSAGE = 'PROJECT_MESSAGE';
 export const PROJECT_SELECTED = 'PROJECT_SELECTED';
 export const PROJECT_MITRA_SELECTED = 'PROJECT_MITRA_SELECTED';
+export const FILTER_LIST_PROJECT = 'FILTER_LIST_PROJECT';
 
 // type data
 export type DataProject = {
@@ -32,11 +33,33 @@ export type DataProject = {
     no_insisasi: string;
     tgl_target_win: string;
     title_project: string;
+    jasbisis: DataJasbis[];
   };
+};
+
+export type DataJasbis = {
+  id: number;
+  inisiasi_id: number;
+  cogs: number | 0;
+  indirect_cost: number;
+  ebitda_project: number;
+  ebitda_project_margin: number;
+  revenue: number;
+  metode_pembiayaan: string;
+  status: string;
+  dokumen: string;
+  created_at: string;
+  updated_at: string;
+  dokumen_url: string;
 };
 
 export interface ListProject {
   type: typeof LIST_PROJECT;
+  payload: DataProject[];
+}
+
+export interface FilterListProject {
+  type: typeof FILTER_LIST_PROJECT;
   payload: DataProject[];
 }
 
@@ -66,6 +89,7 @@ export interface ProjectSelected {
 
 export type ProjectDispatchTypes =
   | ListProject
+  | FilterListProject
   | ProjectLoading
   | ProjectError
   | ProjectSuccess

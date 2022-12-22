@@ -106,7 +106,7 @@ export default function Index(props: FormMitraProps) {
       case 'ba-progress':
         return await dispatch(uploadFileBaProgress(form));
 
-      case 'do':
+      case 'do_file':
         return await dispatch(uploadFileDo(form));
 
       case 'pr-sap':
@@ -182,7 +182,7 @@ export default function Index(props: FormMitraProps) {
           updateFileBapProgress(props?.dataDocument?.id?.toString(), form),
         );
 
-      case 'do':
+      case 'do_file':
         return await dispatch(
           updateFileDo(props?.dataDocument?.id?.toString(), form),
         );

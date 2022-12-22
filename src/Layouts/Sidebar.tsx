@@ -1,5 +1,5 @@
 import { ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Badges } from '../Components/atoms';
 import { getListInisiasiWon } from '../Services/redux/Actions/inisiasi';
@@ -12,7 +12,6 @@ export default function Sidebar() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const INISIASI = useAppSelector((state) => state.inisiasi);
-  const [listMenu, setlistMenu] = useState<string[]>([]);
   const { listProject } = useAppSelector((state) => state.project);
 
   const checkIsManager = async () => {
@@ -21,8 +20,9 @@ export default function Sidebar() {
       element.child.forEach((child: any) => {
         data.push(child.link);
       });
-      setlistMenu(data);
     });
+
+    data.includes('/inbox') && getInisiasiWonForManager();
   };
 
   const getInisiasiWonForManager = async () => {
@@ -38,15 +38,9 @@ export default function Sidebar() {
   useEffect(() => {
     // when manager load inbox manager
     checkIsManager();
-    // get data inisiasi won if manager
-    listMenu.includes('/inbox') && getInisiasiWonForManager();
 
     // when route is inbox pic load data disposisi
     location.pathname === '/pic/inbox' && getDisposisiForPIC();
-
-    if (location.pathname === '/inbox' && listMenu.includes('/inbox')) {
-      dispatch(getListProject());
-    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.menu]);

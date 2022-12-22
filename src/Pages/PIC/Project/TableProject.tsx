@@ -1,7 +1,13 @@
 import { DocumentIcon, DocumentPlusIcon } from '@heroicons/react/24/outline';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { useNavigate } from 'react-router-dom';
-import { Button, Table, Tbody, Thead } from '../../../Components/atoms';
+import {
+  Button,
+  Table,
+  TableDataCurrency,
+  Tbody,
+  Thead,
+} from '../../../Components/atoms';
 import { useAppSelector } from '../../../Services/redux/hook';
 
 type Props = {
@@ -23,7 +29,7 @@ export default function TableProject(props: Props) {
           <Thead colSpan={2} className="border-b border-l">
             Mitra
           </Thead>
-          <Thead colSpan={3} className="border-b border-l">
+          <Thead colSpan={6} className="border-b border-l">
             Jusbis
           </Thead>
           <Thead colSpan={3} className="border-b border-l">
@@ -36,9 +42,12 @@ export default function TableProject(props: Props) {
         <tr>
           <Thead className="border-l">Jumlah</Thead>
           <Thead className="border-l">Nilai COGS</Thead>
-          <Thead className="border-l">Revenue</Thead>
-          <Thead className="border-l">Project Margin</Thead>
-          <Thead className="border-l">Nilai COGS</Thead>
+          <Thead className="sticky top-0 border-l">Nilai COGS</Thead>
+          <Thead className="sticky top-0 border-l">Revenue</Thead>
+          <Thead className="sticky top-0 border-l">Project Margin</Thead>
+          <Thead className="sticky top-0 border-l">Status</Thead>
+          <Thead className="sticky top-0 border-l">Metode Pembiayaan</Thead>
+          <Thead className="sticky top-0 border-l">Dokumen</Thead>
           <Thead className="border-l">P6</Thead>
           <Thead className="border-l">P8</Thead>
           <Thead className="border-l">KL</Thead>
@@ -103,17 +112,43 @@ export default function TableProject(props: Props) {
               </Tbody>
 
               {/* Jusbis */}
-              <Tbody className="text-center py-3 px-4 whitespace-nowrap">
-                -
+              <Tbody className="text-center">
+                <TableDataCurrency
+                  className="w-40"
+                  currency="Rp"
+                  value={item.inisiasi.jasbisis?.[0]?.cogs!}
+                />
               </Tbody>
-              <Tbody className="text-center py-3 px-4 whitespace-nowrap">
-                -
+              <Tbody className="whitespace-nowrap text-center">
+                <TableDataCurrency
+                  className="w-40"
+                  value={item.inisiasi.jasbisis?.[0]?.revenue!}
+                  currency="Rp"
+                />
               </Tbody>
-              <Tbody className="text-center py-3 px-2 whitespace-nowrap border-l border-r">
-                <div className="relative flex w-40 justify-between items-center">
-                  <p>Rp</p>
-                  <p>{item.inisiasi.nilai_project.toLocaleString('id-ID')}</p>
-                </div>
+              <Tbody className="whitespace-nowrap text-center">
+                {item.inisiasi.jasbisis?.[0]
+                  ? item.inisiasi.jasbisis?.[0].ebitda_project_margin + '%'
+                  : '-'}
+              </Tbody>
+              <Tbody className="whitespace-nowrap text-center">
+                {item?.inisiasi.jasbisis?.[0]?.status ?? '-'}
+              </Tbody>
+              <Tbody className="whitespace-nowrap text-center">
+                {item?.inisiasi.jasbisis?.[0]?.metode_pembiayaan ?? '-'}
+              </Tbody>
+              <Tbody className="whitespace-nowrap text-center">
+                {item?.inisiasi.jasbisis?.[0] ? (
+                  <a
+                    href={item?.inisiasi.jasbisis?.[0]?.dokumen_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-500 hover:text-blue-700">
+                    View
+                  </a>
+                ) : (
+                  '-'
+                )}
               </Tbody>
 
               {/* DOKUMEN */}

@@ -17,22 +17,24 @@ export type DataInisiasi = {
   desc_project?: string;
   nilai_cogs: number;
   end_customer?: string;
-  jasbisis?: {
-    id: number;
-    inisiasi_id: number;
-    cogs: number;
-    indirect_cost: number;
-    ebitda_project: number;
-    ebitda_project_margin: number;
-    revenue: number;
-    metode_pembiayaan: string;
-    status: string;
-    dokumen: string;
-    created_at: string;
-    updated_at: string;
-    dokumen_url: string;
-  };
+  jasbisis?: DataJasbis[];
   title_project?: string;
+};
+
+export type DataJasbis = {
+  id: number;
+  inisiasi_id: number;
+  cogs: number | 0;
+  indirect_cost: number;
+  ebitda_project: number;
+  ebitda_project_margin: number;
+  revenue: number;
+  metode_pembiayaan: string;
+  status: string;
+  dokumen: string;
+  created_at: string;
+  updated_at: string;
+  dokumen_url: string;
 };
 
 // interface

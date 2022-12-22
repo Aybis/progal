@@ -37,7 +37,7 @@ export default function TableInboxManager(props: Props) {
           <Thead rowSpan={2} className="sticky top-0">
             End Customer
           </Thead>
-          <Thead colSpan={5} className="sticky top-0 border-l border-b">
+          <Thead colSpan={6} className="sticky top-0 border-l border-b">
             Jusbis
           </Thead>
         </tr>
@@ -47,6 +47,7 @@ export default function TableInboxManager(props: Props) {
           <Thead className="sticky top-0 border-l">Project Margin</Thead>
           <Thead className="sticky top-0 border-l">Status</Thead>
           <Thead className="sticky top-0 border-l">Metode Pembiayaan</Thead>
+          <Thead className="sticky top-0 border-l">Dokumen</Thead>
         </tr>
       </thead>
       <tbody>
@@ -88,30 +89,47 @@ export default function TableInboxManager(props: Props) {
                 </div>
               </Tbody>
               <Tbody>{item?.io?.io_format}</Tbody>
-              <Tbody className="text-left whitespace-pre-line">
+              <Tbody className="text-left whitespace-nowrap">
                 {item?.title_project ?? item?.desc_project}
               </Tbody>
-              <Tbody className="whitespace-pre-line">
-                {item?.end_customer}
-              </Tbody>
+              <Tbody className="whitespace-nowrap">{item?.end_customer}</Tbody>
               <Tbody className="">
                 <TableDataCurrency
                   className="w-40"
                   currency="Rp"
-                  value={item.nilai_cogs}
+                  value={item.jasbisis?.[0]?.cogs ?? 0}
                 />
               </Tbody>
               <Tbody className="whitespace-nowrap">
-                {item.jasbisis?.revenue}
+                <TableDataCurrency
+                  className="w-40"
+                  value={item.jasbisis?.[0]?.revenue ?? 0}
+                  currency="Rp"
+                />
               </Tbody>
               <Tbody className="whitespace-nowrap">
-                {item.jasbisis?.ebitda_project_margin}
+                {item.jasbisis?.[0]
+                  ? item.jasbisis?.[0].ebitda_project_margin + '%'
+                  : '-'}
               </Tbody>
               <Tbody className="whitespace-nowrap">
-                {item?.jasbisis?.status}
+                {item?.jasbisis?.[0]?.status ?? '-'}
               </Tbody>
               <Tbody className="whitespace-nowrap">
-                {item?.jasbisis?.status}
+                {item?.jasbisis?.[0]?.metode_pembiayaan ?? '-'}
+              </Tbody>
+              <Tbody className="whitespace-nowrap">
+                {item?.jasbisis?.[0] ? (
+                  <a
+                    href={item?.jasbisis?.[0]?.dokumen_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-500 hover:text-blue-700">
+                    View
+                  </a>
+                ) : (
+                  '-'
+                )}
               </Tbody>
             </tr>
           ))
