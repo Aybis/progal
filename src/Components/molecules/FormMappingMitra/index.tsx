@@ -131,7 +131,7 @@ export default function Index(props: FormProps) {
         <Button
           isDisabled={
             jenis_dokumen === '' ||
-            mitraSelected?.id === '' ||
+            mitraSelected?.id === undefined ||
             form.nilai_realisasi_cogs === ''
           }
           type="submit"

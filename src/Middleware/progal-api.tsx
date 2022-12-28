@@ -8,21 +8,42 @@ export default {
     axios.post('procurement/project/disposition', data),
 
   // Project for PIC
+  /**
+   * Endpoint detail project beserta list mitra dan inisiasi
+   * @param id project => model binding
+   * @returns
+   */
   detailProject: (params: Object) =>
     axios.get(`procurement/project/detail`, params),
-  // params => id
-  detailProjectMitra: (params: Object) =>
-    axios.get(`procurement/project-mitra/detail`, params),
-  listProject: (data?: Object) =>
-    axios.get('procurement/project/doesnt-have-mitra', data),
   // document file => file_p6, file_p8, file_kl
   updateProject: (id: string, data: Object) =>
     axios.post(`procurement/project/update/${id}`, data),
+  listProject: (data?: Object) =>
+    axios.get('procurement/project/doesnt-have-mitra', data),
+
+  /**
+   * Endpoint untuk detail spesifik proejct mitra
+   * @param id
+   * @returns
+   */
+  detailProjectMitra: (params: Object) =>
+    axios.get(`procurement/project-mitra/detail`, params),
   listProjectMitra: (data: Object) =>
     axios.get('procurement/project/has-mitra', data),
+  listProjectMitraDone: (data: Object) =>
+    axios.get('procurement/project-mitra/done', data),
+  listProjectMonitorinng: (data: Object) =>
+    axios.get('procurement/project-mitra/all', data),
   mappingMitra: (data: Object) => axios.post('procurement/project-mitra', data),
   updateMitra: (id: string, data: Object) =>
     axios.post(`procurement/project-mitra/update/${id}`, data),
+
+  /**
+   * Endpoint untuk list monitoring
+   * berdasarkan PIC jika pic_id === null maka tarik semua data
+   * @param pic_id
+   * @returns
+   */
   mitra: (params: Object) =>
     axios.get('procurement/project-mitra/by-pic', params),
 
@@ -88,4 +109,19 @@ export default {
 
   // boq
   insertBoQ: (data: Object) => axios.post('procurement/boq-item', data),
+  updateBoq: (id: string, data: Object) =>
+    axios.post(`procurement/boq-item/update/${id}`, data),
+  deleteBoq: (id: string) => axios.delete(`procurement/boq-item/delete/${id}`),
+  // "project_mitra_id": 3
+  listBoqByProject: (params: Object) =>
+    axios.get('procurement/boq-item/by-project-mitra', params),
+
+  //amandemen
+  insertAmandemen: (data: Object) => axios.post('procurement/amandemen', data),
+  // "id": 1
+  detailAmandemenId: (params: Object) =>
+    axios.get('procurement/amandemen/by-id', params),
+  //"project_mitra_id": 3
+  listAmandemenByMitra: (params: Object) =>
+    axios.get('procurement/amandemen/by-project-mitra', params),
 };

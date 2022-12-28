@@ -1,8 +1,14 @@
 import {
   DataMitraHasProject,
   DataProjectHasMitra,
+  LIST_MITRA_MONITORING,
+  LIST_MITRA_MONITORING_FILTER,
+  LIST_MITRA_MONITORING_LOADING,
   LIST_MITRA_PIC,
+  LIST_MITRA_PIC_DONE,
+  LIST_MITRA_PIC_DONE_LOADING,
   LIST_MITRA_PIC_FILTER,
+  LIST_MITRA_PIC_FILTER_DONE,
   LIST_MITRA_PIC_SELECTED,
   LIST_PROJECT_MITRA,
   LIST_PROJECT_MITRA_ERROR,
@@ -23,6 +29,12 @@ interface InitialState {
   message?: string;
   loadingUpdateMitra?: boolean;
   listMitraFilter: DataMitraHasProject[];
+  listMitraFilterDone: DataMitraHasProject[];
+  listMitraDone: DataMitraHasProject[];
+  listMitraDoneLoading: boolean;
+  listMonitoring: DataMitraHasProject[];
+  listMonitoringLoading: boolean;
+  listMonitoringFilter: DataMitraHasProject[];
 }
 
 const initialState: InitialState = {
@@ -35,6 +47,12 @@ const initialState: InitialState = {
   selectedMitraPic: {} as DataMitraHasProject,
   loadingUpdateMitra: false,
   listMitraFilter: [],
+  listMitraFilterDone: [],
+  listMitraDone: [],
+  listMitraDoneLoading: false,
+  listMonitoring: [],
+  listMonitoringLoading: false,
+  listMonitoringFilter: [],
 };
 
 const hasMitraReducer = (
@@ -97,6 +115,45 @@ const hasMitraReducer = (
       return {
         ...state,
         listMitraFilter: action.payload,
+      };
+
+    // mitra done
+    case LIST_MITRA_PIC_DONE_LOADING:
+      return {
+        ...state,
+        listMitraDoneLoading: action.payload,
+      };
+
+    case LIST_MITRA_PIC_FILTER_DONE:
+      return {
+        ...state,
+        listMitraFilterDone: action.payload,
+      };
+
+    case LIST_MITRA_PIC_DONE:
+      return {
+        ...state,
+        listMitraDone: action.payload,
+      };
+
+    // list monitoring
+    case LIST_MITRA_MONITORING:
+      return {
+        ...state,
+        listMonitoring: action.payload,
+        listMonitoringLoading: false,
+      };
+
+    case LIST_MITRA_MONITORING_LOADING:
+      return {
+        ...state,
+        listMonitoringLoading: action.payload,
+      };
+
+    case LIST_MITRA_MONITORING_FILTER:
+      return {
+        ...state,
+        listMonitoringFilter: action.payload,
       };
 
     default:

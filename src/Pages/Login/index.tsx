@@ -57,19 +57,17 @@ export default function Index() {
             alt=""
             className="h-16 object-cover object-top"
           />
-          <img
-            src="https://api.pins.co.id/uploads/app/images/app_688234991668997889.jpg"
-            alt=""
-            className="absolute -left-4 -top-8 h-28 object-cover"
-          />
+          <div className="relative flex flex-col gap-1 flex-shrink-0 items-start">
+            <p className="font-semibold text-lg text-left">
+              Procurement <span className="font-light text-xs">&</span>{' '}
+            </p>
+            <p className="-mt-1.5 font-semibold text-lg">Contract Management</p>
+          </div>
         </div>
         <div className="relative mt-16">
           <h1 className="text-3xl static top-0 font-semibold leading-relaxed tracking-wide text-gray-800">
             Login
           </h1>
-          <p className="text-base font-normal text-gray-800 leading-relaxed text-left">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
         </div>
 
         <form

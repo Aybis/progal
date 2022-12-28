@@ -23,6 +23,10 @@ export default function Sidebar() {
     });
 
     data.includes('/inbox') && getInisiasiWonForManager();
+
+    data.includes('/allocate') &&
+      location.pathname === '/allocate' &&
+      getDisposisiForPIC();
   };
 
   const getInisiasiWonForManager = async () => {
@@ -39,9 +43,6 @@ export default function Sidebar() {
     // when manager load inbox manager
     checkIsManager();
 
-    // when route is inbox pic load data disposisi
-    location.pathname === '/pic/inbox' && getDisposisiForPIC();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.menu]);
 
@@ -50,24 +51,14 @@ export default function Sidebar() {
       <div className="flex min-h-0 flex-1 flex-col shadow-lg shadow-gray-200/50 bg-white transition-all duration-500">
         <div className="flex flex-1 flex-col overflow-y-auto pt-6 pb-4 transition-all duration-500">
           {/* Logo */}
-          <div className="relative flex gap-1 flex-shrink-0 items-center -mt-4">
-            <img
-              src="https://api.pins.co.id/uploads/app/images/app_688234991668997889.jpg"
-              alt=""
-              className="relative h-28 object-cover"
-            />
-            <div className="relative text-center h-14 w-14 p-3 justify-center items-center bg-blue-500 border border-gray-100 rounded-lg font-bold text-4xl text-white shadow-inner hidden">
-              <h1 className="-mt-2">e-</h1>
-            </div>
-            <div className="relative text-sm uppercase text-zinc-800 leading-relaxed tracking-wide">
-              <p className="font-semibold">Procurement</p>
-              <p className="-mt-1 font-light">&</p>
-              <p className="-mt-1.5 font-semibold">Legal</p>
-            </div>
+          <div className="relative flex flex-col gap-1 flex-shrink-0 items-start -mt-2 pl-5">
+            <p className="font-semibold text-lg text-left">
+              Procurement <span className="font-light text-xs">&</span>{' '}
+            </p>
+            <p className="-mt-1.5 font-semibold text-lg">Contract Management</p>
           </div>
-
           {/* Navigation */}
-          <nav className="flex-1 px-4 mt-4 space-y-4">
+          <nav className="flex-1 px-4 py-4 mt-5 space-y-4">
             {user?.menu?.length > 0
               ? user?.menu?.map((item: any, index: number) => (
                   <div className="relative mt-2" key={index}>

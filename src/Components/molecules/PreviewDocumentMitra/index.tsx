@@ -21,10 +21,15 @@ export default function Index(props: Props) {
     'prsap',
     'posap',
   ];
-  let fieldDocumentFilter: string[] = ['no', 'tanggal', 'file_name'];
+  let fieldDocumentFilter: string[] = [
+    'no',
+    'tanggal',
+    'file_name',
+    'file_bast',
+  ];
 
   return (
-    <div className="relative grid grid-flow-row-dense md:grid-cols-2 xl:grid-cols-3 mt-4 gap-4">
+    <div className="bg-white p-4 rounded-lg relative grid grid-flow-row-dense md:grid-cols-2 xl:grid-cols-3 mt-4 gap-4">
       {Object.entries(props.data)
         .filter((form) => fielDocument.includes(form[0]) === true)
         ?.map((item: any) => (
@@ -57,22 +62,6 @@ export default function Index(props: Props) {
                             <span>:</span>
                           </p>
 
-                          {/* File bast split */}
-                          {/* {doc[0] === 'file_name' ? (
-                          <a
-                            href={item[1].file_url}
-                            target="_blank"
-                            className="text-sm font-medium text-blue-500 leading-relaxed "
-                            rel="noreferrer">
-                            View Dokumen{' '}
-                            {item[0].replace(/_/g, ' ').toUpperCase()}
-                          </a>
-                        ) : (
-                          <p className="text-base font-semibold text-gray-800">
-                            {doc[1]}
-                          </p>
-                        )} */}
-
                           {/* FIle bast bundling */}
                           {doc[0].includes('file') ? (
                             item[1][doc[0]] !== null ? (
@@ -83,14 +72,9 @@ export default function Index(props: Props) {
                                     : item[1].file_url
                                 }
                                 target="_blank"
-                                className="text-sm font-medium text-blue-500 leading-relaxed cursor-pointer text-right w-32 text-clip"
+                                className="text-sm font-medium text-blue-500 leading-relaxed cursor-pointer text-right  text-ellipsis"
                                 rel="noreferrer">
-                                View Dokumen
-                                {/* {item[0] === 'permohonan'
-                                  ? 'Permohonan Perpanjangan Waktu'
-                                  : item[0] === 'persetujuan'
-                                  ? 'Persetujuan Perpanjangan Waktu'
-                                  : item[0].replace(/_/g, ' ').toUpperCase()} */}
+                                {doc[1].split('_').slice(1).join('_')}
                               </a>
                             ) : (
                               '-'

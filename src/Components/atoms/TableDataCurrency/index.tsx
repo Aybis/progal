@@ -20,6 +20,6 @@ export default function Index(props: Props) {
       <p>{props.value !== 0 ? props.value?.toLocaleString('id-ID') : 0}</p>
     </div>
   ) : (
-    <p>-</p>
+    <p className="text-center">-</p>
   );
 }

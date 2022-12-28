@@ -44,7 +44,6 @@ type FormMitraProps = {
 };
 
 export default function Index(props: FormMitraProps) {
-  console.log(props.name?.toLowerCase());
   const dispatch = useAppDispatch();
   const { profile } = useAppSelector((state) => state.user);
   const [tempFile, settempFile] = useState<string>('');

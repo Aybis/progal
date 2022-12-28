@@ -5,13 +5,25 @@ import progalApi from '../../../Middleware/progal-api';
 import {
   DataMitraHasProject,
   DataProjectHasMitra,
+  ListMitraMonitoring,
+  ListMitraMonitoringFilter,
+  ListMitraMonitoringLoading,
   ListMitraPIC,
+  ListMitraPicDone,
+  ListMitraPicDoneFilter,
+  ListMitraPicDoneLoading,
   ListMitraPICFilter,
   ListMitraPICSelected,
   ListMitraPICUpdate,
   ListProjectMitra,
+  LIST_MITRA_MONITORING,
+  LIST_MITRA_MONITORING_FILTER,
+  LIST_MITRA_MONITORING_LOADING,
   LIST_MITRA_PIC,
+  LIST_MITRA_PIC_DONE,
+  LIST_MITRA_PIC_DONE_LOADING,
   LIST_MITRA_PIC_FILTER,
+  LIST_MITRA_PIC_FILTER_DONE,
   LIST_MITRA_PIC_SELECTED,
   LIST_PROJECT_MITRA,
   LIST_PROJECT_MITRA_LOADING,
@@ -74,6 +86,51 @@ export const setListMitraPicFilter = (
   payload: data,
 });
 
+// Reducer data mitra pic with status done
+
+export const setListMitraPicDone = (
+  data: DataMitraHasProject[],
+): ListMitraPicDone => ({
+  type: LIST_MITRA_PIC_DONE,
+  payload: data,
+});
+
+export const setListMitraPicDoneFilter = (
+  data: DataMitraHasProject[],
+): ListMitraPicDoneFilter => ({
+  type: LIST_MITRA_PIC_FILTER_DONE,
+  payload: data,
+});
+
+export const setListMitraPicDoneLoading = (
+  data: boolean,
+): ListMitraPicDoneLoading => ({
+  type: LIST_MITRA_PIC_DONE_LOADING,
+  payload: data,
+});
+
+// reducer data mitra for monitoring
+export const setListMonitoring = (
+  data: DataMitraHasProject[],
+): ListMitraMonitoring => ({
+  type: LIST_MITRA_MONITORING,
+  payload: data,
+});
+
+export const setListMonitoringFilter = (
+  data: DataMitraHasProject[],
+): ListMitraMonitoringFilter => ({
+  type: LIST_MITRA_MONITORING_FILTER,
+  payload: data,
+});
+
+export const setListMonitoringLoading = (
+  data: boolean,
+): ListMitraMonitoringLoading => ({
+  type: LIST_MITRA_MONITORING_LOADING,
+  payload: data,
+});
+
 // get project has mitra
 export const getProjectHasMitra =
   (id?: number | string) =>
@@ -116,6 +173,48 @@ export const getMitraHasProject =
     }
   };
 
+// get mitra pic with status done bast and done all
+export const getMitraHasProjectDone =
+  (id?: number) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    dispatch(setListMitraPicDoneLoading(true));
+    try {
+      setHeader();
+      const response: any = await progalApi.listProjectMitraDone({
+        params: {
+          pic_id: id,
+        },
+      });
+      dispatch(setListMitraPicDoneLoading(false));
+      dispatch(setListMitraPicDone(response.data));
+      dispatch(setListMitraPicDoneFilter(response.data));
+      return await response.data;
+    } catch (error: any) {
+      dispatch(setListMitraPicDoneLoading(false));
+      return error;
+    }
+  };
+
+// get list mitra for monitoring
+export const getListMonitoringMitra =
+  (id?: number) => async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {
+    dispatch(setListMonitoringLoading(false));
+    try {
+      setHeader();
+      const res = await progalApi.listProjectMonitorinng({
+        params: {
+          pic_id: id,
+        },
+      });
+
+      dispatch(setListMonitoring(res.data));
+      dispatch(setListMonitoringFilter(res.data));
+      return res;
+    } catch (error: unknown) {
+      return error;
+    }
+  };
+
+// update data mitra pic
 export const updateMitraHasProject =
   (id: string, data: any, user_id?: any) =>
   async (dispatch: Dispatch<ProjectMitraDispatchTypes>) => {

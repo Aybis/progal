@@ -31,7 +31,7 @@ export default function Index(props: FormProps) {
   const [form, setForm] = useState<Form>({
     pic_procurement: '',
     pic_legal: '',
-    no_io: inisiasiSelected?.io?.io_format,
+    no_io: parseInt(inisiasiSelected?.io?.internal_order).toString(),
     inisiasi_id: inisiasiSelected?.id,
   });
 
@@ -44,18 +44,6 @@ export default function Index(props: FormProps) {
 
   const handlerSubmit = async (e: any) => {
     e.preventDefault();
-
-    // condition when user dont selected
-    if (form.pic_legal === '' || form.pic_procurement === '') {
-      Swal.fire(
-        'Warning',
-        'PIC Procurement dan PIC Legal tidak boleh kosong',
-        'warning',
-      );
-    }
-
-    form.no_io = inisiasiSelected?.io?.io_format;
-    form.inisiasi_id = inisiasiSelected?.id;
 
     // handler submit disposisi
     const result = await dispatch(DisposisiProjectToPIC(form));

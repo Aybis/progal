@@ -83,37 +83,37 @@ export default function TableInboxPIC(props: Props) {
                   </Button>
                 </div>
               </Tbody>
-              <Tbody>{item.no_io}</Tbody>
+              <Tbody>{parseInt(item.no_io)}</Tbody>
               <Tbody className="text-left whitespace-nowrap">
-                {item.inisiasi.title_project}
+                {item?.inisiasi?.title_project}
               </Tbody>
               <Tbody className="">
                 <TableDataCurrency
                   className="w-40"
                   currency="Rp"
-                  value={item.inisiasi.jasbisis?.[0]?.cogs!}
+                  value={item?.inisiasi?.jasbisis?.[0]?.cogs!}
                 />
               </Tbody>
               <Tbody className="whitespace-nowrap">
                 <TableDataCurrency
                   className="w-40"
-                  value={item.inisiasi.jasbisis?.[0]?.revenue!}
+                  value={item?.inisiasi?.jasbisis?.[0]?.revenue!}
                   currency="Rp"
                 />
               </Tbody>
               <Tbody className="whitespace-nowrap">
-                {item.inisiasi.jasbisis?.[0]
-                  ? item.inisiasi.jasbisis?.[0].ebitda_project_margin + '%'
+                {item?.inisiasi?.jasbisis?.[0]
+                  ? item?.inisiasi?.jasbisis?.[0].ebitda_project_margin + '%'
                   : '-'}
               </Tbody>
               <Tbody className="whitespace-nowrap">
-                {item?.inisiasi.jasbisis?.[0]?.status ?? '-'}
+                {item?.inisiasi?.jasbisis?.[0]?.status ?? '-'}
               </Tbody>
               <Tbody className="whitespace-nowrap">
-                {item?.inisiasi.jasbisis?.[0]?.metode_pembiayaan ?? '-'}
+                {item?.inisiasi?.jasbisis?.[0]?.metode_pembiayaan ?? '-'}
               </Tbody>
               <Tbody className="whitespace-nowrap">
-                {item?.inisiasi.jasbisis?.[0] ? (
+                {item?.inisiasi?.jasbisis?.[0] ? (
                   <a
                     href={item?.inisiasi.jasbisis?.[0]?.dokumen_url}
                     target="_blank"

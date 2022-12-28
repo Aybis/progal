@@ -33,7 +33,7 @@ export default function Index(props: Props) {
             </Tbody>
           </tr>
         ) : (
-          props.data.map((item: any, index: number) => {
+          props?.data?.map((item: any, index: number) => {
             return (
               <tr key={index}>
                 <Tbody className="px-4 py-2">{index + 1}</Tbody>

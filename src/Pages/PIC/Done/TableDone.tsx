@@ -1,4 +1,4 @@
-import { DocumentIcon, PencilIcon } from '@heroicons/react/24/outline';
+import { DocumentIcon } from '@heroicons/react/24/outline';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -15,16 +15,16 @@ import { DataMitraHasProject } from '../../../Services/redux/Types/hasmitra';
 type Props = {
   handlerModalForm: (
     type: string,
-    data: any,
+    data?: any,
     document?: any,
     typeForm?: any,
   ) => void;
   data: DataMitraHasProject[];
 };
 
-export default function TableMitra(props: Props) {
+export default function TableDone(props: Props) {
   const navigate = useNavigate();
-  const { loading } = useAppSelector((state) => state.hasMitra);
+  const { listMitraDoneLoading } = useAppSelector((state) => state.hasMitra);
 
   return (
     <Table classRoot="my-5">
@@ -39,6 +39,11 @@ export default function TableMitra(props: Props) {
             rowSpan={2}
             className="text-center py-3 px-4 font-medium text-gray-700 whitespace-nowrap">
             Action
+          </Thead>
+          <Thead
+            rowSpan={2}
+            className="text-center py-3 px-4 font-medium text-gray-700 whitespace-nowrap">
+            Amandemen
           </Thead>
           <Thead
             rowSpan={2}
@@ -159,9 +164,9 @@ export default function TableMitra(props: Props) {
         </tr>
       </thead>
       <tbody>
-        {loading && props.data.length === 0 ? (
-          <TableData colSpan={30} isLoading={loading} />
-        ) : props.data.length === 0 ? (
+        {listMitraDoneLoading && props?.data?.length === 0 ? (
+          <TableData colSpan={30} isLoading={listMitraDoneLoading} />
+        ) : props?.data?.length === 0 ? (
           <TableData colSpan={30} isEmpty />
         ) : (
           props.data.map((item: DataMitraHasProject, index: number) => (
@@ -169,44 +174,24 @@ export default function TableMitra(props: Props) {
               key={item?.id}
               className="text-sm border-b border-zinc-100 hover:bg-zinc-50 transition-all duration-300">
               <Tbody className="text-center py-3 px-4">{index + 1}</Tbody>
-              <Tbody className="text-center py-3 px-4">
-                <div className="relative flex justify-center gap-2">
-                  <Button
-                    handlerClick={() => props.handlerModalForm('update', item)}
-                    title="Update Mitra"
-                    type="button"
-                    classButton="gap-1"
-                    isTransparent="update">
-                    <PencilIcon className="h-3" /> Mitra
-                  </Button>
-                  <Button
-                    handlerClick={() => props.handlerModalForm('boq', item)}
-                    title="Tambah BoQ"
-                    type="button"
-                    classButton="gap-1"
-                    isTransparent="primary">
-                    <PlusIcon className="h-4" /> BoQ
-                  </Button>
-                  <Button
-                    handlerClick={() =>
-                      navigate(`/project/mitra/boq/${item?.id}`)
-                    }
-                    title="Update BoQ"
-                    type="button"
-                    classButton="gap-1"
-                    isTransparent="update">
-                    <PencilIcon className="h-3" /> BoQ
-                  </Button>
-                  <Button
-                    handlerClick={() => navigate(`/project/mitra/${item?.id}`)}
-                    title="Preview Project"
-                    type="button"
-                    classButton="gap-1"
-                    isTransparent="warning">
-                    <DocumentIcon className="h-4" /> Preview
-                  </Button>
-                </div>
+              <Tbody className="text-center py-3 px-4 flex justify-center items-center gap-2">
+                <Button
+                  handlerClick={() => props.handlerModalForm('amandemen', item)}
+                  isTransparent="primary"
+                  classButton="text-sm gap-1">
+                  <PlusIcon className="h-4" />
+                  Amandemen
+                </Button>
+                <Button
+                  handlerClick={() => navigate(`/project/mitra/${item?.id}`)}
+                  title="Preview Project"
+                  type="button"
+                  classButton="gap-1"
+                  isTransparent="warning">
+                  <DocumentIcon className="h-4" /> Preview
+                </Button>
               </Tbody>
+              <Tbody className="text-center">{item.amandemen?.length}</Tbody>
 
               <Tbody className="text-center py-3 px-4">
                 {parseInt(item?.project?.no_io!)}

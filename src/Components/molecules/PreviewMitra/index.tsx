@@ -1,14 +1,17 @@
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
-import { FormInput, PreviewBoQ, PreviewDocumentMitra } from '..';
+import { FormPreview, PreviewBoQ, PreviewDocumentMitra } from '..';
 import { Button, Divider } from '../../atoms';
 
 type Props = {
   data?: any;
+  handlerPreview?: boolean;
 };
 
 export default function Index(props: Props) {
-  const [handlerPreview, sethandlerPreview] = useState<boolean>(false);
+  const [handlerPreview, sethandlerPreview] = useState<boolean>(
+    props.handlerPreview ?? false,
+  );
   let filterField: string[] = [
     'project_id',
     'id',
@@ -71,26 +74,23 @@ export default function Index(props: Props) {
             {Object.entries(props.data)
               .filter((form) => filterField.includes(form[0]) === false)
               .map((item: any) => (
-                <FormInput
+                <FormPreview
                   key={item[0]}
-                  isReadOnly={true}
-                  classLabel="capitalize"
-                  labelName={item[0].replace(/_/g, ' ')}
-                  inputValue={
+                  label={item[0].replace(/_/g, ' ')}
+                  value={
                     item[0].includes('nilai')
                       ? item[1] !== null
                         ? item[1].toLocaleString('id-ID')
                         : '-'
                       : item[1] || '-'
                   }
-                  isDisabled={true}
                 />
               ))}
 
             {/* end detail Mitra */}
 
             <Divider nameDivide="Dokumen Pendukung" colorBg="bg-white" />
-            <PreviewDocumentMitra data={props.data} />
+            <PreviewDocumentMitra data={props?.data} />
 
             <Divider nameDivide="BoQ Item" colorBg="bg-white" />
             <PreviewBoQ
@@ -98,7 +98,7 @@ export default function Index(props: Props) {
               nameVendor={
                 props.data !== undefined ? props.data?.mitra?.nama_vendor : null
               }
-              data={props.data.boq_item}
+              data={props?.data?.boq_item}
             />
           </div>
         </div>

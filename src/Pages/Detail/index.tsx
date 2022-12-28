@@ -25,8 +25,6 @@ export default function Index() {
     })();
   }, [dispatch, id]);
 
-  console.log(dataProject?.inisiasi);
-
   return (
     <Content textHeading="Detail Project" backNavigation>
       {/* Detail Project  */}

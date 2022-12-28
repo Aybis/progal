@@ -37,6 +37,9 @@ export default function TableInboxManager(props: Props) {
           <Thead rowSpan={2} className="sticky top-0">
             End Customer
           </Thead>
+          <Thead rowSpan={2} className="sticky top-0">
+            AM
+          </Thead>
           <Thead colSpan={6} className="sticky top-0 border-l border-b">
             Jusbis
           </Thead>
@@ -54,13 +57,13 @@ export default function TableInboxManager(props: Props) {
         {loading ? (
           // state when fetch data
           <tr>
-            <Tbody colSpan={10} className="text-center text-sm py-4">
+            <Tbody colSpan={11} className="text-center text-sm py-4">
               Loading...
             </Tbody>
           </tr>
         ) : props?.data?.length === 0 ? (
           // state when data is null
-          <TableData isEmpty colSpan={9} />
+          <TableData isEmpty colSpan={11} />
         ) : (
           // state when data is not null
           props?.data?.map((item: DataInisiasi, index: number) => (
@@ -93,6 +96,7 @@ export default function TableInboxManager(props: Props) {
                 {item?.title_project ?? item?.desc_project}
               </Tbody>
               <Tbody className="whitespace-nowrap">{item?.end_customer}</Tbody>
+              <Tbody className="whitespace-nowrap">{item?.am?.name}</Tbody>
               <Tbody className="">
                 <TableDataCurrency
                   className="w-40"

@@ -13,6 +13,7 @@ type InputProps = {
   isError?: boolean;
   message?: string;
   accept?: string;
+  isMessage?: boolean;
 };
 
 export default function Index(props: InputProps) {
@@ -41,6 +42,10 @@ export default function Index(props: InputProps) {
         <p className="text-red-500 text-xs italic">
           {props.message ?? '  Please fill out this field.'}
         </p>
+      )}
+
+      {props.isMessage && (
+        <p className="text-gray-500 text-xs italic">{props.message}</p>
       )}
     </>
   );

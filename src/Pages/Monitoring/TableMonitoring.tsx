@@ -175,7 +175,7 @@ export default function TableMonitoring(props: Props) {
                   <div className="relative flex justify-center gap-2">
                     <Button
                       handlerClick={() =>
-                        navigate(`/project/${item?.project?.id}`)
+                        navigate(`/project/mitra/${item?.id}`)
                       }
                       title="Preview Project"
                       type="button"
@@ -187,7 +187,7 @@ export default function TableMonitoring(props: Props) {
                 </Tbody>
 
                 <Tbody className="text-center py-3 px-4">
-                  {item?.project?.no_io ?? ''}
+                  {parseInt(item?.project?.no_io!)}
                 </Tbody>
                 <Tbody className="text-left py-3 px-4 whitespace-nowrap">
                   {item.project?.inisiasi?.title_project ?? '-'}

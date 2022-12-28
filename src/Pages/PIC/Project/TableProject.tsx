@@ -26,6 +26,7 @@ export default function TableProject(props: Props) {
           <Thead rowSpan={2}>Action</Thead>
           <Thead rowSpan={2}>No. IO</Thead>
           <Thead rowSpan={2}>Judul Proyek</Thead>
+          <Thead rowSpan={2}>AM</Thead>
           <Thead colSpan={2} className="border-b border-l">
             Mitra
           </Thead>
@@ -91,9 +92,14 @@ export default function TableProject(props: Props) {
                   </Button>
                 </div>
               </Tbody>
-              <Tbody className="text-center py-3 px-4">{item.no_io}</Tbody>
-              <Tbody className="text-left py-3 px-4 uppercase whitespace-nowrap">
-                {item.inisiasi?.tile_project ?? '-'}
+              <Tbody className="text-center py-3 px-4">
+                {parseInt(item.no_io)}
+              </Tbody>
+              <Tbody className="text-left py-3 px-4 uppercase whitespace-pre-line">
+                {item.inisiasi?.title_project ?? '-'}
+              </Tbody>
+              <Tbody className="text-left py-3 px-4 uppercase whitespace-pre-line">
+                {item.inisiasi?.am?.name ?? '-'}
               </Tbody>
 
               {/* Mitra */}
@@ -101,14 +107,14 @@ export default function TableProject(props: Props) {
                 {item.project_mitra.length}
               </Tbody>
               <Tbody className="text-center py-3 px-2 whitespace-nowrap">
-                <div className="relative w-40 flex justify-between items-center">
-                  <p>Rp</p>
-                  <p>
-                    {item.project_mitra
-                      .reduce((a, b) => a + b.nilai_realisasi_cogs, 0)
-                      .toLocaleString('id-ID')}
-                  </p>
-                </div>
+                <TableDataCurrency
+                  className="w-40"
+                  value={item.project_mitra.reduce(
+                    (a, b) => a + b.nilai_realisasi_cogs,
+                    0,
+                  )}
+                  currency="Rp"
+                />
               </Tbody>
 
               {/* Jusbis */}
@@ -159,8 +165,8 @@ export default function TableProject(props: Props) {
                     href={item.file_p6}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-500">
-                    <DocumentIcon />
+                    className="text-blue-500 flex justify-center items-center">
+                    <DocumentIcon className="h-5" />
                   </a>
                 ) : (
                   '-'
@@ -173,8 +179,8 @@ export default function TableProject(props: Props) {
                     href={item.file_p8}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-500">
-                    <DocumentIcon />
+                    className="text-blue-500 flex justify-center items-center">
+                    <DocumentIcon className="h-5" />
                   </a>
                 ) : (
                   '-'

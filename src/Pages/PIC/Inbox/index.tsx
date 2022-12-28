@@ -42,16 +42,16 @@ export default function Index() {
     } else {
       const filter = listProject.filter((item) => {
         return (
-          item.no_io?.toString()?.includes(event.target.value) ||
-          item.inisiasi.title_project
+          parseInt(item.no_io)?.toString()?.includes(event.target.value) ||
+          item?.inisiasi?.title_project
             ?.toString()
             ?.toLowerCase()
             ?.includes(event.target.value.toLowerCase()) ||
-          item.inisiasi.end_customer
+          item?.inisiasi?.end_customer
             ?.toString()
             ?.toLowerCase()
             ?.includes(event.target.value.toLowerCase()) ||
-          item.inisiasi.nilai_cogs
+          item?.inisiasi?.nilai_cogs
             ?.toString()
             ?.toLowerCase()
             ?.includes(event.target.value.toLowerCase())

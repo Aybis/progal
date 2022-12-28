@@ -7,15 +7,17 @@ export const VENDOR_SELECTED = 'VENDOR_SELECTED';
 
 // type
 export type Vendor = {
-  alamat?: string | null;
-  deskripsi_vendor?: string | null;
-  direktur?: string | null;
-  email?: string | null;
-  id?: string | number;
-  jenis_vendor_id?: number | string;
+  akun_vendor?: string;
+  alamat?: string;
+  deskripsi_vendor?: string;
+  direktur?: string;
+  email?: string;
+  fax?: string;
+  id: number;
+  jenis_vendor_id?: number;
   nama_vendor?: string;
-  no_tlpn?: string | null;
-  pic?: string | null;
+  no_tlpn?: string;
+  pic?: string;
 };
 
 // interface

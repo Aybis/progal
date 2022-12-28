@@ -1,3 +1,7 @@
+import { DataInisiasi } from './inisiasi';
+import { DataProject } from './project';
+import { Vendor } from './vendor';
+
 export const LIST_PROJECT_MITRA = 'LIST_PROJECT_MITRA';
 export const LIST_PROJECT_MITRA_LOADING = 'LIST_PROJECT_MITRA_LOADING';
 export const LIST_PROJECT_MITRA_ERROR = 'LIST_PROJECT_MITRA_ERROR';
@@ -9,6 +13,12 @@ export const LIST_MITRA_PIC_SELECTED = 'LIST_MITRA_PIC_SELECTED';
 export const LIST_MITRA_PIC_LOADING = 'LIST_MITRA_PIC_LOADING';
 export const LOADING_UPDATE_MITRA = 'LOADING_UPDATE_MITRA';
 export const LIST_MITRA_PIC_FILTER = 'LIST_MITRA_PIC_FILTER';
+export const LIST_MITRA_PIC_FILTER_DONE = 'LIST_MITRA_PIC_FILTER_DONE';
+export const LIST_MITRA_PIC_DONE = 'LIST_MITRA_PIC_DONE';
+export const LIST_MITRA_PIC_DONE_LOADING = 'LIST_MITRA_PIC_DONE_LOADING';
+export const LIST_MITRA_MONITORING = 'LIST_MITRA_MONITORING';
+export const LIST_MITRA_MONITORING_LOADING = 'LIST_MITRA_MONITORING_LOADING';
+export const LIST_MITRA_MONITORING_FILTER = 'LIST_MITRA_MONITORING_FILTER';
 
 // type data
 export type DataMitraHasProject = {
@@ -29,43 +39,13 @@ export type DataMitraHasProject = {
   jenis_dokumen?: string;
   khs?: any;
   kontrak?: any;
-  mitra?: {
-    akun_vendor?: string;
-    alamat?: string;
-    deskripsi_vendor?: string;
-    direktur?: string;
-    email?: string;
-    fax?: string;
-    id: number;
-    jenis_vendor_id?: number;
-    nama_vendor?: string;
-    no_tlpn?: string;
-    pic?: string;
-  };
+  mitra?: Vendor;
   nilai_down_payment?: any;
   nilai_pekerjaan?: any;
   nilai_realisasi_cogs?: any;
   permohonan?: any;
   persetujuan?: any;
-  project?: {
-    inisiasi?: {
-      desc_project: string;
-      title_project: string;
-    };
-    id: number;
-    kl_document: any;
-    no_io?: string | any;
-    p6_dokument: any;
-    p8_dokument: any;
-    pic_legal: {
-      id: number;
-      name: string;
-    };
-    pic_procurement: {
-      id: number;
-      name: string;
-    };
-  };
+  project?: DataProject;
   sph?: any;
   spph?: any;
   start_jangka_waktu_pekerjaan: string;
@@ -91,40 +71,13 @@ export type DataProjectHasMitra = {
     id: number;
     name: string;
   };
-  inisiasi: {
-    desc_project: string;
-    end_customer: string;
-    nilai_cogs: number;
-    nilai_kl: number;
-    nilai_penawaran: number;
-    nilai_project: number;
-    no_insisasi: string;
-    tgl_target_win: string;
-    tile_project: string;
-    jasbisis: DataJasbis[];
-  };
+  inisiasi: DataInisiasi;
   project_mitra: {
     id: number;
     nilai_down_payment: any;
     nilai_pekerjaan: any;
     nilai_realisasi_cogs: any;
   }[];
-};
-
-export type DataJasbis = {
-  id: number;
-  inisiasi_id: number;
-  cogs: number | 0;
-  indirect_cost: number;
-  ebitda_project: number;
-  ebitda_project_margin: number;
-  revenue: number;
-  metode_pembiayaan: string;
-  status: string;
-  dokumen: string;
-  created_at: string;
-  updated_at: string;
-  dokumen_url: string;
 };
 
 // interfaces
@@ -177,6 +130,38 @@ export interface ListMitraPICFilter {
   payload: DataMitraHasProject[];
 }
 
+// Project Mitra done
+export interface ListMitraPicDone {
+  type: typeof LIST_MITRA_PIC_DONE;
+  payload: DataMitraHasProject[];
+}
+
+export interface ListMitraPicDoneFilter {
+  type: typeof LIST_MITRA_PIC_FILTER_DONE;
+  payload: DataMitraHasProject[];
+}
+
+export interface ListMitraPicDoneLoading {
+  type: typeof LIST_MITRA_PIC_DONE_LOADING;
+  payload: boolean;
+}
+
+// Project mitra monitoring
+export interface ListMitraMonitoring {
+  type: typeof LIST_MITRA_MONITORING;
+  payload: DataMitraHasProject[];
+}
+
+export interface ListMitraMonitoringLoading {
+  type: typeof LIST_MITRA_MONITORING_LOADING;
+  payload: boolean;
+}
+
+export interface ListMitraMonitoringFilter {
+  type: typeof LIST_MITRA_MONITORING_FILTER;
+  payload: DataMitraHasProject[];
+}
+
 export type ProjectMitraDispatchTypes =
   | ListProjectMitra
   | ProjectMitraLoading
@@ -187,4 +172,10 @@ export type ProjectMitraDispatchTypes =
   | ListMitraPIC
   | ListMitraPICSelected
   | ListMitraPICUpdate
-  | ListMitraPICFilter;
+  | ListMitraPICFilter
+  | ListMitraPicDone
+  | ListMitraPicDoneFilter
+  | ListMitraPicDoneLoading
+  | ListMitraMonitoring
+  | ListMitraMonitoringLoading
+  | ListMitraMonitoringFilter;

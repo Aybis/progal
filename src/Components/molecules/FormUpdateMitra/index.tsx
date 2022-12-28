@@ -21,6 +21,9 @@ export default function Index(props: ProjectMitra) {
   const [caraBayarSelected, setcaraBayarSelected] = useState(
     props.projectMitra?.tata_cara_pembayaran ?? '',
   );
+  const [status, setStatus] = useState(props.projectMitra?.status ?? '');
+
+  const dataStatus: Array<string> = ['in progress', 'done all', 'done bast'];
 
   const dataCaraBayar: Array<string> = [
     'One Time Charge',
@@ -42,6 +45,8 @@ export default function Index(props: ProjectMitra) {
     end_jangka_waktu_pekerjaan:
       props.projectMitra?.end_jangka_waktu_pekerjaan ?? '',
     tata_cara_pembayaran: props.projectMitra?.tata_cara_pembayaran ?? '',
+    status: props.projectMitra?.status ?? '',
+    notes: props.projectMitra?.notes ?? '',
   });
 
   const handlerInputChange = (e: any) => {
@@ -58,6 +63,7 @@ export default function Index(props: ProjectMitra) {
     e.preventDefault();
 
     // set form value currency
+    form.status = status;
     form.tata_cara_pembayaran = caraBayarSelected;
     form.is_down_payment = form.nilai_down_payment.length > 0;
     form.nilai_realisasi_cogs =
@@ -92,14 +98,17 @@ export default function Index(props: ProjectMitra) {
       {Object.keys(form)
         .filter((form) => form !== 'is_down_payment')
         .map((key) => {
-          if (key === 'tata_cara_pembayaran') {
+          if (key === 'tata_cara_pembayaran' || key === 'status') {
             return (
               <RadioGroup
                 key={key}
-                label="Tata Cara Pembayaran"
-                setDokumenSelected={setcaraBayarSelected}
-                dokumenSelected={caraBayarSelected}
-                listData={dataCaraBayar}
+                addClassLabel="capitalize"
+                label={key.replace(/_/g, ' ')}
+                setDokumenSelected={
+                  key === 'status' ? setStatus : setcaraBayarSelected
+                }
+                dokumenSelected={key === 'status' ? status : caraBayarSelected}
+                listData={key === 'status' ? dataStatus : dataCaraBayar}
               />
             );
           } else {

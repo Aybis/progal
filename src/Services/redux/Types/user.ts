@@ -14,6 +14,20 @@ export type User = {
   email?: string;
   token?: string;
   thumb_url?: string;
+  company: string;
+  direktorat: string;
+  image_url: string;
+  is_shifting: any;
+  job_prefix: string;
+  nik: string;
+  phone: string;
+  position: string;
+  position_id: number;
+  status_kepegawaian: string;
+  subunit: string;
+  unit: string;
+  username: string;
+  workplace: string;
 };
 
 export type UserSession = {

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Content, FormSearch } from '../../Components/molecules';
 import {
-  getMitraHasProject,
+  getListMonitoringMitra,
   setListMitraPicFilter,
 } from '../../Services/redux/Actions/hasMitra';
 import { useAppDispatch, useAppSelector } from '../../Services/redux/hook';
@@ -9,18 +9,19 @@ import TableMonitoring from './TableMonitoring';
 
 export default function Index() {
   const dispatch = useAppDispatch();
-  const { listMitraPic, listMitraFilter } = useAppSelector(
+  const { listMonitoring, listMonitoringFilter } = useAppSelector(
     (state) => state.hasMitra,
   );
 
+  const { profile } = useAppSelector((state) => state.user);
+
   const handlerSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === '') {
-      dispatch(setListMitraPicFilter(listMitraPic));
+      dispatch(setListMitraPicFilter(listMonitoring));
     } else {
-      const filter = listMitraPic.filter((item) => {
+      const filter = listMonitoring.filter((item) => {
         return (
-          item.project?.no_io
-
+          parseInt(item.project?.no_io!)
             ?.toString()
             ?.toLowerCase()
             ?.includes(event.target.value.toLowerCase()) ||
@@ -43,10 +44,16 @@ export default function Index() {
 
   useEffect(() => {
     (async () => {
-      return await dispatch(getMitraHasProject());
+      if (profile?.job_prefix !== undefined) {
+        if (profile?.job_prefix === 'AVP') {
+          return await dispatch(getListMonitoringMitra());
+        } else {
+          return await dispatch(getListMonitoringMitra(profile?.id));
+        }
+      }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [profile?.id]);
 
   return (
     <Content
@@ -62,12 +69,12 @@ export default function Index() {
         />
         <div className="mt-4 relative">
           <p className="font-normal text-sm leading-relaxed text-gray-600">
-            Result : {listMitraFilter.length} project
+            Result : {listMonitoringFilter.length} project
           </p>
         </div>
 
         {/* Section Table */}
-        <TableMonitoring data={listMitraFilter} />
+        <TableMonitoring data={listMonitoringFilter} />
       </div>
     </Content>
   );

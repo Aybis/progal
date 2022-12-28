@@ -28,8 +28,7 @@ export default function Index() {
     } else {
       const filter = listMitraPic.filter((item) => {
         return (
-          item.project?.no_io
-
+          parseInt(item.project?.no_io!)
             ?.toString()
             ?.toLowerCase()
             ?.includes(event.target.value.toLowerCase()) ||
@@ -56,6 +55,7 @@ export default function Index() {
     document: {},
     typeForm: '',
   });
+
   const handlerModalForm = (
     type: string,
     data: any,

@@ -1,3 +1,5 @@
+import { DataInisiasi } from './inisiasi';
+
 export const LIST_PROJECT = 'LIST_PROJECT';
 export const PROJECT_LOADING = 'PROJECT_LOADING';
 export const PROJECT_ERROR = 'PROJECT_ERROR';
@@ -23,34 +25,7 @@ export type DataProject = {
     id: number;
     name: string;
   };
-  inisiasi: {
-    desc_project: string;
-    end_customer: string;
-    nilai_cogs: number | 0;
-    nilai_kl: number;
-    nilai_penawaran: number;
-    nilai_project: number;
-    no_insisasi: string;
-    tgl_target_win: string;
-    title_project: string;
-    jasbisis: DataJasbis[];
-  };
-};
-
-export type DataJasbis = {
-  id: number;
-  inisiasi_id: number;
-  cogs: number | 0;
-  indirect_cost: number;
-  ebitda_project: number;
-  ebitda_project_margin: number;
-  revenue: number;
-  metode_pembiayaan: string;
-  status: string;
-  dokumen: string;
-  created_at: string;
-  updated_at: string;
-  dokumen_url: string;
+  inisiasi?: DataInisiasi;
 };
 
 export interface ListProject {

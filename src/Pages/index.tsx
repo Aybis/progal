@@ -11,3 +11,6 @@ export { default as DetailProject } from './Detail';
 export { default as DetailInisiasi } from './Manager/DetailInisiasi';
 export { default as Monitoring } from './Monitoring';
 export { default as Done } from './PIC/Done';
+export { default as DetailMitra } from './DetailMitra';
+export { default as DetailAmandemen } from './DetailAmandemen';
+export { default as DetailBoQ } from './DetailBoQ';

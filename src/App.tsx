@@ -3,8 +3,10 @@ import { lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import {
   Amandemen,
-  CheckProject,
+  DetailAmandemen,
+  DetailBoQ,
   DetailInisiasi,
+  DetailMitra,
   Done,
   Login,
   NotFound,
@@ -27,14 +29,6 @@ function App() {
   const dispatch = useAppDispatch();
   const token = Cookies.get('session');
   const user = useAppSelector((state) => state.user);
-
-  // function for get token from apps
-  // function useQuery() {
-  //   const { search } = useLocation();
-  //   return useMemo(() => new URLSearchParams(search), [search]);
-  // }
-
-  // let query = useQuery().get('tkey');
 
   // get profile user
   const getProfile = async () => {
@@ -73,8 +67,13 @@ function App() {
           <Route path="/project-mitra" element={<Mitra />} />
           <Route path="/project-done" element={<Done />} />
           <Route path="/amandemen" element={<Amandemen />} />
-          <Route path="/project-detail" element={<CheckProject />} />
           <Route path="/project/:id" element={<DetailProject />} />
+          <Route path="/project/mitra/:id" element={<DetailMitra />} />
+          <Route
+            path="project/mitra/amandemen/:id"
+            element={<DetailAmandemen />}
+          />
+          <Route path="/project/mitra/boq/:id" element={<DetailBoQ />} />
           <Route path="/monitoring" element={<Monitoring />} />
           <Route path="/inbox/:id" element={<DetailInisiasi />} />
         </Route>

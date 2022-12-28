@@ -9,13 +9,18 @@ type PropsRadioGroup = {
   setDokumenSelected?: (data: string) => void;
   dokumenSelected?: string;
   listData?: Array<string>;
+  addClassLabel?: string;
 };
 
 export default function Index(props: PropsRadioGroup) {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h2 className="block text-sm font-medium text-gray-700">
+        <h2
+          className={[
+            'block text-sm font-medium text-gray-700 upp',
+            props.addClassLabel,
+          ].join(' ')}>
           {props.label}
         </h2>
       </div>

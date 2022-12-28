@@ -19,3 +19,4 @@ export { default as LengthData } from './LengthData';
 export { default as Content } from './Content';
 export { default as FormPreview } from './FormPreview';
 export { default as PreviewJusbis } from './PreviewJusbis';
+export { default as FormAmandemen } from './FormAmandemen';

@@ -19,6 +19,7 @@ type FormProps = {
   message?: string;
   typeForm?: string;
   accept?: string;
+  isMessage?: boolean;
 };
 
 export default function Index(props: FormProps) {
@@ -47,6 +48,7 @@ export default function Index(props: FormProps) {
           isError={props.isError}
           message={props.message}
           accept={props.accept}
+          isMessage={props.isMessage}
         />
 
         {props.typeForm === 'currency' ? (
