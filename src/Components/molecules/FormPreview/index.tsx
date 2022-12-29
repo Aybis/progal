@@ -5,6 +5,9 @@ type Props = {
   value?: any;
   name?: string;
   isDocument?: boolean;
+  nameFile?: string;
+  isDate?: boolean;
+  isCurrency?: boolean;
 };
 
 export default function Index(props: Props) {
@@ -23,7 +26,7 @@ export default function Index(props: Props) {
             target="_blank"
             rel="noreferrer"
             className="text-blue-500 hover:text-blue-700 text-sm">
-            View Dokumen
+            {props?.nameFile ?? 'View Document'}
           </a>
         </div>
       ) : (
@@ -33,10 +36,20 @@ export default function Index(props: Props) {
             type="text"
             disabled
             readOnly
-            value={props.value}
+            value={
+              props.isDate
+                ? `${new Date(props.value).getDate()} - ${new Date(
+                    props.value,
+                  ).getMonth()} - ${new Date(props.value).getFullYear()} `
+                : props.isCurrency
+                ? `Rp ${props.value}`
+                : props.value
+            }
             name={props.name}
             autoComplete="given-name"
-            className="block w-full text-gray-800 font-semibold rounded-md border-gray-300 bg-zinc-50 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className={[
+              'block w-full text-gray-800 font-semibold rounded-md border-gray-300 bg-zinc-50 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm',
+            ].join(' ')}
           />
         </div>
       )}

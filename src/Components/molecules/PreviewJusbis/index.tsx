@@ -15,7 +15,7 @@ export default function Index(props: Props) {
     'dokumen',
     'inisiasi_id',
     'created_at',
-    'ipdated_at',
+    'updated_at',
   ];
   let filterCurrency = [
     'indirect_cost',
@@ -64,6 +64,7 @@ export default function Index(props: Props) {
                     isDocument={item[0].includes('dokumen')}
                     key={item[0]}
                     label={item[0].replace(/_/g, ' ')}
+                    isCurrency={filterCurrency.includes(item[0]) ? true : false}
                     value={
                       item[0].includes('nilai') ||
                       filterCurrency.includes(item[0])

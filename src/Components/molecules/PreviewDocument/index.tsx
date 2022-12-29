@@ -35,7 +35,7 @@ export default function Index(props: Props) {
         className={[
           'relative overflow-auto rounded-lg mt-4 transition-all duration-500 ease-in-out bg-white grid grid-cols-3 place-items-center pt-8',
           handlerPreview
-            ? 'overflow-scroll h-[10vh] max-h-full'
+            ? 'overflow-scroll h-[24vh] max-h-full'
             : 'h-8 overflow-hidden',
         ].join(' ')}>
         {filterFieldDocument.map((item) => {

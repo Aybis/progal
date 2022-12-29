@@ -43,8 +43,8 @@ export default function TableProject(props: Props) {
         <tr>
           <Thead className="border-l">Jumlah</Thead>
           <Thead className="border-l">Nilai COGS</Thead>
-          <Thead className="sticky top-0 border-l">Nilai COGS</Thead>
           <Thead className="sticky top-0 border-l">Revenue</Thead>
+          <Thead className="sticky top-0 border-l">Nilai COGS</Thead>
           <Thead className="sticky top-0 border-l">Project Margin</Thead>
           <Thead className="sticky top-0 border-l">Status</Thead>
           <Thead className="sticky top-0 border-l">Metode Pembiayaan</Thead>
@@ -108,7 +108,15 @@ export default function TableProject(props: Props) {
               </Tbody>
               <Tbody className="text-center py-3 px-2 whitespace-nowrap">
                 <TableDataCurrency
-                  className="w-40"
+                  className={[
+                    'w-40',
+                    item.project_mitra.reduce(
+                      (a, b) => a + b.nilai_realisasi_cogs,
+                      0,
+                    ) > item.inisiasi.jasbisis?.[0]?.cogs!
+                      ? 'text-red-500'
+                      : 'text-gray-800',
+                  ].join(' ')}
                   value={item.project_mitra.reduce(
                     (a, b) => a + b.nilai_realisasi_cogs,
                     0,
@@ -118,18 +126,19 @@ export default function TableProject(props: Props) {
               </Tbody>
 
               {/* Jusbis */}
-              <Tbody className="text-center">
-                <TableDataCurrency
-                  className="w-40"
-                  currency="Rp"
-                  value={item.inisiasi.jasbisis?.[0]?.cogs!}
-                />
-              </Tbody>
+
               <Tbody className="whitespace-nowrap text-center">
                 <TableDataCurrency
                   className="w-40"
                   value={item.inisiasi.jasbisis?.[0]?.revenue!}
                   currency="Rp"
+                />
+              </Tbody>
+              <Tbody className="text-center">
+                <TableDataCurrency
+                  className="w-40"
+                  currency="Rp"
+                  value={item.inisiasi.jasbisis?.[0]?.cogs!}
                 />
               </Tbody>
               <Tbody className="whitespace-nowrap text-center">

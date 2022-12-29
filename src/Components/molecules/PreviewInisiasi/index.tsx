@@ -36,6 +36,8 @@ export default function Index(props: Props) {
     'durasi_id',
     'io',
     'jasbisis',
+    'am',
+    'dokumen_kelengkapan_url',
   ];
 
   return (
@@ -67,17 +69,31 @@ export default function Index(props: Props) {
           <div className="relative flex flex-col gap-4 bg-white p-4">
             {Object.entries(props.data)
               .filter((form) => filterKey.includes(form[0]) === false)
-              .map((item: any) => (
-                <FormPreview
-                  key={item[0]}
-                  label={item[0].replace(/_/g, ' ')}
-                  value={
-                    item[0].includes('nilai')
-                      ? item[1].toLocaleString('id-ID')
-                      : item[1] || '-'
-                  }
-                />
-              ))}
+              .map((item: any) => {
+                if (item[0].includes('dokumen_kelengkapan')) {
+                  return (
+                    <FormPreview
+                      isDocument
+                      key={item[0]}
+                      label={item[0]}
+                      nameFile={props?.data?.dokumen_kelengkapan}
+                      value={props?.data?.dokumen_kelengkapan_url}
+                    />
+                  );
+                } else {
+                  return (
+                    <FormPreview
+                      key={item[0]}
+                      label={item[0].replace(/_/g, ' ')}
+                      value={
+                        item[0].includes('nilai')
+                          ? item[1].toLocaleString('id-ID')
+                          : item[1] || '-'
+                      }
+                    />
+                  );
+                }
+              })}
           </div>
         </div>
       ) : null}

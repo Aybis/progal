@@ -20,37 +20,49 @@ export default function TableInboxManager(props: Props) {
 
   return (
     <Table classRoot="mt-5">
-      <thead className="bg-zinc-50 border">
+      <thead className="bg-zinc-50 border border-white">
         <tr className="">
-          <Thead rowSpan={2} className="sticky top-0">
+          <Thead rowSpan={2} isFreeze>
             No
           </Thead>
-          <Thead rowSpan={2} className="sticky top-0">
+          <Thead rowSpan={2} isFreeze>
             Action
           </Thead>
-          <Thead rowSpan={2} className="sticky top-0">
+          <Thead rowSpan={2} isFreeze>
             No. IO
           </Thead>
-          <Thead rowSpan={2} className="sticky top-0">
+          <Thead rowSpan={2} isFreeze>
             Judul Proyek
           </Thead>
-          <Thead rowSpan={2} className="sticky top-0">
+          <Thead rowSpan={2} isFreeze>
             End Customer
           </Thead>
-          <Thead rowSpan={2} className="sticky top-0">
+          <Thead rowSpan={2} isFreeze>
             AM
           </Thead>
-          <Thead colSpan={6} className="sticky top-0 border-l border-b">
+          <Thead colSpan={6} isFreeze className="border-l border-b">
             Jusbis
           </Thead>
         </tr>
         <tr>
-          <Thead className="sticky top-0 border-l">Nilai COGS</Thead>
-          <Thead className="sticky top-0 border-l">Revenue</Thead>
-          <Thead className="sticky top-0 border-l">Project Margin</Thead>
-          <Thead className="sticky top-0 border-l">Status</Thead>
-          <Thead className="sticky top-0 border-l">Metode Pembiayaan</Thead>
-          <Thead className="sticky top-0 border-l">Dokumen</Thead>
+          <Thead className="border-l" isFreeze isChildThead>
+            Revenue
+          </Thead>
+          <Thead className="border-l" isFreeze isChildThead>
+            Nilai COGS
+          </Thead>
+          <Thead className="border-l" isFreeze isChildThead>
+            Project Margin
+          </Thead>
+          <Thead className="border-l" isFreeze isChildThead>
+            Status
+          </Thead>
+          <Thead className="border-l" isFreeze isChildThead>
+            Metode Pembiayaan
+          </Thead>
+          <Thead className="border-l" isFreeze isChildThead>
+            Dokumen
+          </Thead>
         </tr>
       </thead>
       <tbody>
@@ -92,22 +104,22 @@ export default function TableInboxManager(props: Props) {
                 </div>
               </Tbody>
               <Tbody>{item?.io?.io_format}</Tbody>
-              <Tbody className="text-left whitespace-nowrap">
+              <Tbody className="text-left">
                 {item?.title_project ?? item?.desc_project}
               </Tbody>
-              <Tbody className="whitespace-nowrap">{item?.end_customer}</Tbody>
+              <Tbody>{item?.end_customer}</Tbody>
               <Tbody className="whitespace-nowrap">{item?.am?.name}</Tbody>
               <Tbody className="">
                 <TableDataCurrency
                   className="w-40"
                   currency="Rp"
-                  value={item.jasbisis?.[0]?.cogs ?? 0}
+                  value={item.jasbisis?.[0]?.revenue ?? 0}
                 />
               </Tbody>
               <Tbody className="whitespace-nowrap">
                 <TableDataCurrency
                   className="w-40"
-                  value={item.jasbisis?.[0]?.revenue ?? 0}
+                  value={item.jasbisis?.[0]?.cogs ?? 0}
                   currency="Rp"
                 />
               </Tbody>

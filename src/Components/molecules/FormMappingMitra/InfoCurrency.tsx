@@ -15,7 +15,7 @@ export default function InfoCurrency(props: FormProps) {
   );
 
   let finalCurrency =
-    selectedProjectMitra?.inisiasi?.nilai_project -
+    selectedProjectMitra?.inisiasi?.jasbisis?.[0]?.cogs! -
     (props.form.nilai_realisasi_cogs === ''
       ? akumulasiMitraCogs
       : akumulasiMitraCogs +
@@ -26,19 +26,23 @@ export default function InfoCurrency(props: FormProps) {
       <div className="relative grid grid-cols-3 gap-4">
         <FormInput
           isDisabled={true}
-          labelName="Nilai COGS"
-          inputValue={selectedProjectMitra?.inisiasi?.nilai_project?.toLocaleString(
+          labelName="Nilai COGS Jusbis"
+          inputValue={selectedProjectMitra?.inisiasi?.jasbisis?.[0]?.cogs!.toLocaleString(
             'id-ID',
           )}
         />
         <FormInput
           isDisabled={true}
           labelName="Akumulasi COGS Mitra"
-          inputValue={akumulasiMitraCogs?.toLocaleString('id-ID')}
+          inputValue={(props.form.nilai_realisasi_cogs === ''
+            ? akumulasiMitraCogs
+            : akumulasiMitraCogs +
+              convertCurrencyToNumber(props.form.nilai_realisasi_cogs)
+          )?.toLocaleString('id-ID')}
         />
         <FormInput
           isDisabled={true}
-          labelName="Nilai Sisa COGS"
+          labelName="Nilai Sisa COGS Jusbis"
           inputValue={finalCurrency.toLocaleString('id-ID')}
         />
       </div>
