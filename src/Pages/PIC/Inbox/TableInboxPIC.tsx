@@ -21,30 +21,44 @@ export default function TableInboxPIC(props: Props) {
     <Table classRoot="mt-5">
       <thead className="bg-zinc-50 border">
         <tr className="">
-          <Thead rowSpan={2} className="sticky top-0">
+          <Thead rowSpan={2} isFreeze>
             No
           </Thead>
-          <Thead rowSpan={2} className="sticky top-0">
+          <Thead rowSpan={2} isFreeze>
             Action
           </Thead>
-          <Thead rowSpan={2} className="sticky top-0">
+          <Thead rowSpan={2} isFreeze>
             No. IO
           </Thead>
-          <Thead rowSpan={2} className="sticky top-0">
+          <Thead rowSpan={2} isFreeze>
             Judul Proyek
           </Thead>
-
-          <Thead colSpan={6} className="sticky top-0 border-l border-b">
+          <Thead rowSpan={2} isFreeze>
+            AM
+          </Thead>
+          <Thead colSpan={6} isFreeze className="border-l border-b">
             Jusbis
           </Thead>
         </tr>
         <tr>
-          <Thead className="sticky top-0 border-l">Nilai COGS</Thead>
-          <Thead className="sticky top-0 border-l">Revenue</Thead>
-          <Thead className="sticky top-0 border-l">Project Margin</Thead>
-          <Thead className="sticky top-0 border-l">Status</Thead>
-          <Thead className="sticky top-0 border-l">Metode Pembiayaan</Thead>
-          <Thead className="sticky top-0 border-l">Dokumen</Thead>
+          <Thead isChildThead isFreeze className="border-l">
+            Revenue
+          </Thead>
+          <Thead isChildThead isFreeze className="border-l">
+            Nilai COGS
+          </Thead>
+          <Thead isChildThead isFreeze className="border-l">
+            Project Margin
+          </Thead>
+          <Thead isChildThead isFreeze className="border-l">
+            Status
+          </Thead>
+          <Thead isChildThead isFreeze className="border-l">
+            Metode Pembiayaan
+          </Thead>
+          <Thead isChildThead isFreeze className="border-l">
+            Dokumen
+          </Thead>
         </tr>
       </thead>
       <tbody>
@@ -86,6 +100,9 @@ export default function TableInboxPIC(props: Props) {
               <Tbody>{parseInt(item.no_io)}</Tbody>
               <Tbody className="text-left whitespace-nowrap">
                 {item?.inisiasi?.title_project}
+              </Tbody>
+              <Tbody className="text-left whitespace-nowrap">
+                {item?.inisiasi?.am?.name}
               </Tbody>
               <Tbody className="">
                 <TableDataCurrency

@@ -43,12 +43,12 @@ export default function TableProject(props: Props) {
         <tr>
           <Thead className="border-l">Jumlah</Thead>
           <Thead className="border-l">Nilai COGS</Thead>
-          <Thead className="sticky top-0 border-l">Revenue</Thead>
-          <Thead className="sticky top-0 border-l">Nilai COGS</Thead>
-          <Thead className="sticky top-0 border-l">Project Margin</Thead>
-          <Thead className="sticky top-0 border-l">Status</Thead>
-          <Thead className="sticky top-0 border-l">Metode Pembiayaan</Thead>
-          <Thead className="sticky top-0 border-l">Dokumen</Thead>
+          <Thead className="border-l">Revenue</Thead>
+          <Thead className="border-l">Nilai COGS</Thead>
+          <Thead className="border-l">Project Margin</Thead>
+          <Thead className="border-l">Status</Thead>
+          <Thead className="border-l">Metode Pembiayaan</Thead>
+          <Thead className="border-l">Dokumen</Thead>
           <Thead className="border-l">P6</Thead>
           <Thead className="border-l">P8</Thead>
           <Thead className="border-l">KL</Thead>

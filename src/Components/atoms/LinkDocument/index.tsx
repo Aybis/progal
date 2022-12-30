@@ -21,7 +21,7 @@ export default function Index(props: Props) {
       <p className="text-xs text-gray-400 text-center my-2 whitespace-nowrap">
         {new Date(props?.data?.created_at).getDate() +
           '/' +
-          new Date(props?.data?.created_at).getMonth() +
+          (new Date(props?.data?.created_at).getMonth() + 1) +
           '/' +
           new Date(props?.data?.created_at).getFullYear() +
           ' - ' +
